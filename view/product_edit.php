@@ -4,10 +4,9 @@
 
 $id = $_GET['id'];
 
-//echo $id;
 global $adapter;
 
-$result=$adapter->fetchAll("select * from product where productId='$id'");
+$result=$adapter->fetchRow("select * from product where productId='$id'");
 ?>
 
 <!DOCTYPE html>
@@ -16,9 +15,6 @@ $result=$adapter->fetchAll("select * from product where productId='$id'");
 	<title>Product Edit Page</title>
 </head>
 <body>
-
-	<?php foreach ($result as $row): ?>
-
 
 	<form method="POST" action="index.php?a=save&c=product">
 		<table border="1" width="100%" cellspacing="4">
@@ -29,24 +25,24 @@ $result=$adapter->fetchAll("select * from product where productId='$id'");
 
 			<tr>
 				<td width="10%">Name</td>
-				<td><input type="text" name="product[name]" value="<?php echo $row['name'] ?>"></td>
+				<td><input type="text" name="product[name]" value="<?php echo $result['name'] ?>"></td>
 			</tr>
 
 			<tr>
 				<td width="10%">Price</td>
-				<td><input type="text" name="product[price]" value="<?php echo $row['price'] ?>"></td>
+				<td><input type="text" name="product[price]" value="<?php echo $result['price'] ?>"></td>
 			</tr>
 			
 			<tr>
 				<td width="10%">Quantity</td>
-				<td><input type="text" name="product[quantity]" value="<?php echo $row['quantity'] ?>"></td>
-				<input type="hidden" name="product[hiddenId]" value="<?php echo $row['productId'] ?>">
+				<td><input type="text" name="product[quantity]" value="<?php echo $result['quantity'] ?>"></td>
+				<input type="hidden" name="product[hiddenId]" value="<?php echo $result['productId'] ?>">
 			</tr>
 					
 			<tr>
 				<td>Status</td>
 				<td width="10%">
-					<select name="product[status]" value="<?php echo $row['status'] ?>" >
+					<select name="product[status]" value="<?php echo $result['status'] ?>" >
 						<?php if ($row['status']==1):?>
 						<option value="1" selected>Active</option>
 						<option value="2">Inactive</option>
@@ -57,8 +53,7 @@ $result=$adapter->fetchAll("select * from product where productId='$id'");
 					</select>
 				</td>
 			</tr>
-			<?php endforeach; ?>
-
+			
 			<tr>
 				<td width="10%">&nbsp;</td>
 				<td>
@@ -71,6 +66,5 @@ $result=$adapter->fetchAll("select * from product where productId='$id'");
 
 		</table>
 	</form>
-
 </body>
 </html>

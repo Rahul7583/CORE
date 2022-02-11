@@ -5,7 +5,7 @@
 class Ccc{
 	public static function loadFile($path)
 	{
-		require_once ($path);
+		require_once($path);
 
 	}
 

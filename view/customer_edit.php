@@ -9,7 +9,7 @@ global $adapter;
 
 //$result=$adapter->fetchAll("SELECT * FROM customer WHERE customerId='$id'");
 
-$result=$adapter->fetchAll("SELECT c.*,a.*
+$result=$adapter->fetchRow("SELECT c.*,a.*
 							FROM customer c
 							JOIN address a
 							ON a.customerId = c.customerId
@@ -23,8 +23,6 @@ $result=$adapter->fetchAll("SELECT c.*,a.*
 </head>
 <body>
 
-	<?php foreach ($result as $row): ?>
-
 	<form method="post" action="index.php?a=save&c=customer">
 		<table border="1" width="100%" cellspacing="4">
 			
@@ -34,29 +32,29 @@ $result=$adapter->fetchAll("SELECT c.*,a.*
 
 			<tr>
 				<td width="10%">First Name</td>
-				<td><input type="text" name="customer[firstName]" value="<?php echo $row['firstName'] ?>"></td>
+				<td><input type="text" name="customer[firstName]" value="<?php echo $result['firstName'] ?>"></td>
 			</tr>
 
 			<tr>
 				<td width="10%">Last Name</td>
-				<td><input type="text" name="customer[lastName]" value="<?php echo $row['lastName'] ?>"></td>
+				<td><input type="text" name="customer[lastName]" value="<?php echo $result['lastName'] ?>"></td>
 			</tr>
 			
 			<tr>
 				<td width="10%">Email</td>
-				<td><input type="text" name="customer[email]" value="<?php echo $row['email'] ?>"></td>
+				<td><input type="text" name="customer[email]" value="<?php echo $result['email'] ?>"></td>
 			</tr>
 			
 			<tr>
 				<td width="10%">Mobile</td>
-				<td><input type="text" name="customer[mobile]" value="<?php echo $row['mobile'] ?>"></td>
-				<input type="hidden" name="customer[hid]" value="<?php echo $row['customerId'] ?>">
+				<td><input type="text" name="customer[mobile]" value="<?php echo $result['mobile'] ?>"></td>
+				<input type="hidden" name="customer[hid]" value="<?php echo $result['customerId'] ?>">
 			</tr>
 			
 			<tr>
 				<td>Status</td>
 				<td width="10%">
-					<select name="customer[status]" value="<?php echo $row['status'] ?>" >
+					<select name="customer[status]" value="<?php echo $result['status'] ?>" >
 						<?php if ($row['status']==1):?>
 						<option value="1" selected>Active</option>
 						<option value="2">Inactive</option>
@@ -74,40 +72,40 @@ $result=$adapter->fetchAll("SELECT c.*,a.*
 
 			<tr>
 				<td width="10%">Address</td>
-				<td><input type="text" name="address[address]" value="<?php echo $row['address'] ?>"></td>
+				<td><input type="text" name="address[address]" value="<?php echo $result['address'] ?>"></td>
 			</tr>
 			
 			<tr>
 				<td width="10%">Postal Code</td>
-				<td><input type="text" name="address[postalCode]" value="<?php echo $row['postalCode'] ?>"></td>
+				<td><input type="text" name="address[postalCode]" value="<?php echo $result['postalCode'] ?>"></td>
 			</tr>
 
 			<tr>
 				<td width="10%">City</td>
-				<td><input type="text" name="address[city]" value="<?php echo $row['city'] ?>"></td>
+				<td><input type="text" name="address[city]" value="<?php echo $result['city'] ?>"></td>
 			</tr>
 			
 			<tr>
 				<td width="10%">State</td>
-				<td><input type="text" name="address[state]" value="<?php echo $row['state'] ?>"></td>
+				<td><input type="text" name="address[state]" value="<?php echo $result['state'] ?>"></td>
 			</tr>
 
 			<tr>
 				<td width="10%">Country</td>
-				<td><input type="text" name="address[country]" value="<?php echo $row['country'] ?>"></td>
+				<td><input type="text" name="address[country]" value="<?php echo $result['country'] ?>"></td>
 			</tr>
 			
 			<tr>
 				<td>Address Type</td>
 				<td>
-					<?php if ($row['billing']==1):?>
+					<?php if ($result['billing']==1):?>
 						<input type="checkbox" name="address[billing]" value="1" checked>
 					<?php else:?>
 						<input type="checkbox" name="address[billing]" value="1" >
 					<?php endif; ?>
 					<label>Billing</label>
 
-					<?php if ($row['shipping']==1):?>
+					<?php if ($result['shipping']==1):?>
 						<input type="checkbox" name="address[shipping]" value="1" checked>
 					<?php else:?>
 						<input type="checkbox" name="address[shipping]" value="1" >
@@ -118,7 +116,6 @@ $result=$adapter->fetchAll("SELECT c.*,a.*
 				</td>
 			</tr>
 
-			<?php endforeach; ?>
 
 			<tr>
 				<td width="10%">&nbsp;</td>

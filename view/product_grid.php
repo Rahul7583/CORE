@@ -1,9 +1,9 @@
+<?php  require_once 'menu_header.php'; ?>
 <?php date_default_timezone_set("Asia/Kolkata");?>
 
 <?php 
 global $adapter;
 $products=$adapter->fetchAll('select * from product');
-
 
 ?>
 
@@ -13,8 +13,9 @@ $products=$adapter->fetchAll('select * from product');
 	<title>Product Grid</title>
 </head>
 <body>
+	<br><br>
 	<button type="button" name="addNew"><a href="index.php?a=add&c=product"> Add New </a></button>
-	<table border="1" width="100" cellspacing="4">
+	<table border="1" width="100%" cellspacing="4">
 		<tr>
 			<th>Product_Id</th>
 			<th>Name</th>
@@ -46,10 +47,7 @@ $products=$adapter->fetchAll('select * from product');
 					<td><a href="index.php?a=delete&c=product&id=<?php echo $product['productId']; ?>">Delete</a></td>
 				</tr>
 			<?php endforeach; ?>
-		<?php endif; ?>	
-
-		
+		<?php endif; ?>			
 	</table>
-
 </body>
 </html>

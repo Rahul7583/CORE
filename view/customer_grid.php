@@ -1,7 +1,5 @@
+<?php  require_once 'menu_header.php'; ?>
 <?php 
-// require_once ('Adapter.php');
-//$adapter = new Model_Customer();
-
 global $adapter;
 //$customers=$adapter->fetchAll('select * from customer');
 
@@ -19,8 +17,9 @@ $customers=$adapter->fetchAll("SELECT c.*,a.*
 	<title>Customer Grid</title>
 </head>
 <body>
+	<br><br>
 	<button type="button" name="addNew"><a href="index.php?a=add&c=customer"> Add New </a></button>
-	<table border="1" width="100" cellspacing="4">
+	<table border="1" width="100%" cellspacing="4">
 		<tr>
 			<th>Customer_Id</th>
 			<th>First Name</th>

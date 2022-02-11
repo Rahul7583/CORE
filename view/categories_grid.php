@@ -1,3 +1,5 @@
+<?php  require_once 'menu_header.php'; ?>
+
 <?php 
 
 global $adapter;
@@ -11,11 +13,13 @@ $categories=$adapter->fetchAll('select * from categories');
 	<title>Categories Grid</title>
 </head>
 <body>
+	<br><br>
 	<button type="button" name="addNew"><a href="index.php?a=add&c=categories"> Add New </a></button>
-	<table border="1" width="100" cellspacing="4">
+	<table border="1" width="100%" cellspacing="4">
 		<tr>
 			<th>CategoryId</th>
 			<th>Name</th>
+			<th>Path</th>
 			<th>Status</th>
 			<th>Created_Date</th>
 			<th>Updated_Date</th>
@@ -33,6 +37,7 @@ $categories=$adapter->fetchAll('select * from categories');
 				<tr>
 					<td><?php echo $category['categoryId']; ?></td>
 					<td><?php echo $category['name']; ?></td>
+					<td><?php echo $category['path'] ?></td>
 					<td><?php echo $category['status']; ?></td>
 					<td><?php echo $category['createdDate']; ?></td>
 					<td><?php echo $category['updatedDate']; ?></td>

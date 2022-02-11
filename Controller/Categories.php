@@ -86,6 +86,31 @@ class Controller_Categories{
 		}
 	}
 
+	public function testAction()
+	{
+		global $adapter;
+		$row=$_POST['category'];
+		$parentName = $row['parentName'];
+		$name=$row['name'];
+		$status=$row['status'];
+		$date=date('y-m-d h:m:s');
+		$insert="INSERT INTO `categories` (`name`, `status`, `createdDate`,`path`) VALUES ( '$name' , '$status', '$date' , '$parentName')";
+		$insert=$adapter->insert($insert);
+		$path = $adapter->fetchRow("SELECT * FROM `categories` WHERE `name` = '$parentName' ");
+					print_r($path);
+					//print_r($insert);
+					//$parentId = $path->fetch_array(MYSQLI_ASSOC);
+					$parentPath = $path['path']."/".$insert;
+
+					print_r($parentPath);
+					//print_r($parentId);
+					//print_r($parentPath);
+					//exit();
+					$newPath = $adapter->update(" UPDATE `categories` SET `path` = '$parentPath' WHERE `categoryId` = '$insert' ");
+		
+					//$adapter->redirect('index.php?a=grid&c=categories');
+	}
+
 
 	public function errorAction()
 	{
@@ -97,5 +122,6 @@ class Controller_Categories{
 
 //$categories = new Categories();
 //$categories->$action();
-
+/*$categories=new Controller_Categories();
+$categories->testAction();*/
 ?>

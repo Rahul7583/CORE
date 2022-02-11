@@ -6,7 +6,7 @@ $id=$_GET['id'];
 
 global $adapter;
 
-$result=$adapter->fetchAll("select * from categories where categoryId='$id'");
+$result=$adapter->fetchRow("select * from categories where categoryId='$id'");
 
 
 ?>
@@ -18,8 +18,6 @@ $result=$adapter->fetchAll("select * from categories where categoryId='$id'");
 </head>
 <body>
 
-	<?php foreach ($result as $row): ?>
-
 	<form method="post" action="index.php?a=save&c=categories">
 		<table border="1" width="100%" cellspacing="4">
 			
@@ -29,15 +27,15 @@ $result=$adapter->fetchAll("select * from categories where categoryId='$id'");
 
 			<tr>
 				<td width="10%">Name</td>
-				<td><input type="text" name="category[name]" value="<?php echo $row['name'] ?>"></td>
-				<input type="hidden" name="category[hiddenId]" value="<?php echo $row['categoryId'] ?>">
+				<td><input type="text" name="category[name]" value="<?php echo $result['name'] ?>"></td>
+				<input type="hidden" name="category[hiddenId]" value="<?php echo $result['categoryId'] ?>">
 			
 			</tr>
 
 			<tr>
 				<td>Status</td>
 				<td width="10%">
-					<select name="category[status]" value="<?php echo $row['status'] ?>" >
+					<select name="category[status]" value="<?php echo $result['status'] ?>" >
 						<?php if ($row['status']==1):?>
 						<option value="1" selected>Active</option>
 						<option value="2">Inactive</option>
@@ -48,7 +46,7 @@ $result=$adapter->fetchAll("select * from categories where categoryId='$id'");
 					</select>
 				</td>
 			</tr>
-			<?php endforeach; ?>
+			
 		
 
 			<tr>
