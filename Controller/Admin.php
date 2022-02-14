@@ -1,21 +1,40 @@
 <?php date_default_timezone_set("Asia/Kolkata");?>
 <?php 
 
-class Controller_Admin{
+Ccc::loadClass('Controller_Core_Action');
+class Controller_Admin extends Controller_Core_Action{
 
 	public function gridAction()			
 	{
-		require_once 'view\admin_grid.php';
+		global $adapter;
+		$admin=$adapter->fetchAll('select * from admin');
+		
+		$view=$this->getView();
+		$view->setTemplate('view\admin_grid.php');
+		$view->addData('adminGrid',$admin);
+		$view->toHtml();
+		//require_once 'view\admin_grid.php';
 	}
 
 	public function addAction()
 	{
-		require_once 'view\admin_add.php';
+		$view=$this->getView();
+		$view->setTemplate('view\admin_add.php');
+		$view->toHtml();
+		//require_once 'view\admin_add.php';
 	}
 
 	public function editAction()
 	{
-		require 'view\admin_edit.php';
+		$id = $_GET['id'];
+		global $adapter;
+		$result=$adapter->fetchRow("select * from admin where adminId='$id'");
+
+		$view=$this->getView();
+		$view->setTemplate('view\admin_edit.php');
+		$view->addData('adminEdit',$result);
+		$view->toHtml();
+		//require 'view\admin_edit.php';
 	}
 
 	public function saveAction()

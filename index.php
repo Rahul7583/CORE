@@ -3,10 +3,10 @@
 <?php 
 
 class Ccc{
+	
 	public static function loadFile($path)
 	{
 		require_once($path);
-
 	}
 
 	public static function loadClass($className)

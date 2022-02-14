@@ -5,7 +5,7 @@ class Model_Customer{
 	public $config=[
 		'host'=>'localhost',
 		'username'=>'root',
-		'password'=>'Root',
+		'password'=>'',
 		'db_name'=>'test'
 	];
 
@@ -106,11 +106,7 @@ class Model_Customer{
 			
 		}
 
-		public function redirect($url)				
-		{
-			header("location:$url");
-			exit();
-		}
+		
 
 }
 

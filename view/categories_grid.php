@@ -2,8 +2,9 @@
 
 <?php 
 
-global $adapter;
-$categories=$adapter->fetchAll('select * from categories');
+/*global $adapter;
+$categories=$adapter->fetchAll('select * from categories');*/
+$categories=$this->getData('categoryGrid');
 
 ?>
 
@@ -26,7 +27,6 @@ $categories=$adapter->fetchAll('select * from categories');
 			<th>Edit</th>
 			<th>Delete</th>
 		</tr>
-
 			<?php if(!$categories):?>
 		<tr>
 			<td colspan="7">No record Available</td>
@@ -36,8 +36,8 @@ $categories=$adapter->fetchAll('select * from categories');
 			<?php foreach ($categories as $category): ?>
 				<tr>
 					<td><?php echo $category['categoryId']; ?></td>
-					<td><?php echo $category['name']; ?></td>
-					<td><?php echo $category['path'] ?></td>
+					<td><?php $this->path($category['path']) ?></td>
+					<td><?php echo $category['path']; ?></td>
 					<td><?php echo $category['status']; ?></td>
 					<td><?php echo $category['createdDate']; ?></td>
 					<td><?php echo $category['updatedDate']; ?></td>
@@ -47,9 +47,7 @@ $categories=$adapter->fetchAll('select * from categories');
 							echo $category['categoryId']; ?>">Delete</a></td>
 				</tr>
 			<?php endforeach; ?>
-		<?php endif; ?>	
-
-		
+		<?php endif; ?>			
 	</table>
 
 </body>

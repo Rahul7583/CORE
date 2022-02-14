@@ -2,8 +2,7 @@
 <?php date_default_timezone_set("Asia/Kolkata");?>
 
 <?php 
-global $adapter;
-$admin=$adapter->fetchAll('select * from admin');
+$admin=$this->getData('adminGrid');
 ?>
 
 <!DOCTYPE html>

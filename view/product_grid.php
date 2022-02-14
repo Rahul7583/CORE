@@ -2,8 +2,9 @@
 <?php date_default_timezone_set("Asia/Kolkata");?>
 
 <?php 
-global $adapter;
-$products=$adapter->fetchAll('select * from product');
+/*global $adapter;
+$products=$adapter->fetchAll('select * from product');*/
+$products=$this->getData('productGrid');
 
 ?>
 

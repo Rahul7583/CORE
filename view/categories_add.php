@@ -1,13 +1,12 @@
-
 <?php 
 global $adapter;
-$categories = $adapter->fetchAll("SELECT name 
-									FROM categories");
- ?>
+$categories = $adapter->fetchAll("SELECT name,path FROM categories");
+
+?>
 
 <html>
     <body>
-<form id="category_form" method="post" action="index.php?c=categories&a=test">
+<form id="category_form" method="post" action="index.php?c=categories&a=save">
 
   <table border="1" width="100%" cellspacing="4">
     <tr>
@@ -17,14 +16,15 @@ $categories = $adapter->fetchAll("SELECT name
       <td width="10%">Parent Id</td>
       <td>
       <select name="category[parentName]">
-      <option value="0">Root</option>
+       <option value="0">Parent Category</option> 
         <?php
         if(!$categories): 
           echo 'No data';
         endif;
           foreach($categories as $category) :?>
             <?php
-            echo "<option value='". $category['name'] ."'>" .$category['name'] ."</option>" ;
+            
+            echo "<option value='".$category['name']."'>".$this->path($category['path'])."</option>" ;
           endforeach;
         ?>
       </select>

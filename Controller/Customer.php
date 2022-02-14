@@ -1,21 +1,47 @@
 <?php date_default_timezone_set("Asia/Kolkata");?>
 <?php 
+Ccc::loadClass('Controller_Core_Action');
 
-class Controller_Customer{
+class Controller_Customer extends Controller_Core_Action{
 
 	public function gridAction()			
 	{
-		require_once 'view\customer_grid.php';
+		global $adapter;
+		$customers=$adapter->fetchAll("SELECT c.*,a.*
+							FROM customer c
+							JOIN address a
+							ON a.customerId= c.customerId");
+
+		$view=$this->getView();
+		$view->setTemplate('view\customer_grid.php');
+		$view->addData('customerGrid',$customers);
+		$view->toHtml();
+		//require_once 'view\customer_grid.php';
 	}
 
 	public function addAction()
 	{
-		require_once 'view\customer_add.php';
+		$view=$this->getView();
+		$view->setTemplate('view\customer_add.php');
+		$view->toHtml();
+		//require_once 'view\customer_add.php';
 	}
 
 	public function editAction()
 	{
-		require 'view\customer_edit.php';
+		$id = $_GET['id'];
+		global $adapter;
+		$result=$adapter->fetchRow("SELECT c.*,a.*
+							FROM customer c
+							JOIN address a
+							ON a.customerId = c.customerId
+							WHERE c.customerId = $id");
+		
+		$view=$this->getView();
+		$view->setTemplate('view\customer_edit.php');
+		$view->addData('customerEdit',$result);
+		$view->toHtml();
+		//require 'view\customer_edit.php';
 	}
 
 	public function saveCustomer()

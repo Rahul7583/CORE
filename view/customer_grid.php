@@ -1,13 +1,12 @@
 <?php  require_once 'menu_header.php'; ?>
 <?php 
-global $adapter;
-//$customers=$adapter->fetchAll('select * from customer');
+/*global $adapter;
 
 $customers=$adapter->fetchAll("SELECT c.*,a.*
 							FROM customer c
 							JOIN address a
-							ON a.customerId= c.customerId");
-//print_r($result);
+							ON a.customerId= c.customerId");*/
+$customers=$this->getData('customerGrid');
 
 ?>
 
