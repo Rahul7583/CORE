@@ -1,11 +1,11 @@
 <?php
 
-class Model_Customer{
+class Model_Core_Adapter{
 	
 	public $config=[
 		'host'=>'localhost',
 		'username'=>'root',
-		'password'=>'Root',
+		'password'=>'',
 		'db_name'=>'test'
 	];
 
@@ -103,19 +103,7 @@ class Model_Customer{
 			}
 			$result = array_combine($keys, $values);
 			return $result;
-			
-		}
-
-		public function redirect($url)				
-		{
-			header("location:$url");
-			exit();
-		}
-
+		}	
 }
-
-$adapter = new Model_Customer();
-
-
 ?>
 

@@ -1,111 +1,85 @@
 <?php date_default_timezone_set("Asia/Kolkata");?>
 <?php 
-
-class Controller_Admin{
+Ccc::loadClass('Controller_Core_Action');
+Ccc::loadClass('Model_Core_Request');
+class Controller_Admin extends Controller_Core_Action{
 
 	public function gridAction()			
 	{
-		require_once 'view\admin_grid.php';
-	}
+		Ccc::getBlock('Admin_Grid')->toHtml();
+	}	
 
 	public function addAction()
 	{
-		require_once 'view\admin_add.php';
+		Ccc::getBlock('Admin_Add')->toHtml();
 	}
 
 	public function editAction()
 	{
-		require 'view\admin_edit.php';
+		$request = $this->getRequest();
+		$id = $request->getRequest('id');
+
+		$adminTable = Ccc::getModel('admin');
+		$result=$adminTable->fetchRow("SELECT * FROM admin WHERE adminId = {$id}");
+		Ccc::getBlock('Admin_Edit')->addData('adminEdit', $result)->toHtml();		
 	}
 
 	public function saveAction()
 	{	
 		try {
-			 global $adapter;
-			if(!isset($_POST['admin'])){
+			 $adminTable = Ccc::getModel('admin');
+			 $request = $this->getRequest();
+			 $row = $request->getPost('admin');
+			if(!isset($row))
+			{
 				throw new Exception("Missing admin data in request.", 1);
 			}
-
-			$row=$_POST['admin'];
-
-			print_r($row);
-
-			$firstName=$row['firstName'];
-			$lastName=$row['lastName'];
-			$email=$row['email'];
-			$password=$row['password'];
-			$status=$row['status'];
-			$date = date('Y-m-d H:i:s');
-
+			
 			if(array_key_exists('hiddenId', $row)){
 				if(!(int)$row['hiddenId']){
 					throw new Exception("Invalid Request", 1);
 				}
 
-				$adminId=$row['hiddenId'];
+				$adminId = $row['hiddenId'];
 
-				$query = "UPDATE admin 
-							SET firstName ='$firstName',
-					 			lastName ='$lastName', 
-					 			email ='$email', 
-					 			password ='$password', 
-					 			status ='$status',
-					 			updatedDate ='$date'
-				 			WHERE
-				 				adminId = '$adminId'";			
-			
-				$result=$adapter->update($query);
+				$row['updatedDate'] = date('Y-m-d H:i:s');
+				unset($row['hiddenId']);
+				$result = $adminTable->update($row, ['adminId' => $adminId]);
+
 			  		if(!$result){
 			  			throw new Exception("system is unable to update.", 1);
 			  		}
-			  	$adapter->redirect('index.php?a=grid&c=admin');	
+			  	$this->redirect($this->getView()->getUrl('admin', 'grid'));	
 				 	
 			}
 			else{
-						
-					$query = "INSERT INTO 
-			 				admin(`firstName`,
-			 						 `lastName`,
-			 						 `email`,
-			 						 `password`,
-			 						 `status`,
-			 						 `createdDate`) 
-			 				VALUES('$firstName',
-			 						'$lastName',
-			 						'$email',
-			 						'$password',
-			 						'$status',
-			 						'$date')";
-		
-			 		$adminId = $adapter->insert($query);
-			 		
-
+			 		$row['createdDate'] = date('Y-m-d H:i:s');
+			 		$adminId = $adminTable->insert($row);	
 			 		if (!$adminId) {
 			 			throw new Exception("system is unable to insert.", 1);
 			 		}
-			 		$adapter->redirect('index.php?a=grid&c=admin');
+			 		$this->redirect($this->getView()->getUrl('admin', 'grid'));
 			 	}
 			 } catch (Exception $e) {
-			 	$adapter->redirect('index.php?a=grid&c=admin');
+			 	$this->redirect($this->getView()->getUrl('admin', 'grid'));
 			 }	 
 	}
 
 	public function deleteAction()
 	{
 		try {
-			global $adapter;
-			$id=$_GET['id'];
-			$query="delete 
-					from admin
-					where adminId=$id";
-
-			$result=$adapter->delete($query);
-			if(!$result){
-				throw new Exception("system is unable to delete", 1);
+			$adminTable = Ccc::getModel('admin');
+ 			$request = $this->getRequest();
+			$id = $request->getRequest('id');
+		
+			$result = $adminTable->delete(['adminId' => $id]);
+			if(!$result)
+			{
+				throw new Exception("system is unable to delete.", 1);
 			}
-			$adapter->redirect('index.php?a=grid&c=admin');
+			$this->redirect($this->getView()->getUrl('admin', 'grid'));
 		} catch (Exception $e) {
-			$adapter->redirect('index.php?a=grid&c=admin');
+			$this->redirect($this->getView()->getUrl('admin', 'grid'));
 		}
 	}
 

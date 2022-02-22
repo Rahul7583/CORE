@@ -1,101 +1,84 @@
-<?php date_default_timezone_set("Asia/Kolkata");?>
+<?php
+Ccc::loadClass('Controller_Core_Action'); 
+Ccc::loadClass('Model_Core_Request');
 
-
-<?php 
-class Controller_Product{
+class Controller_Product extends Controller_Core_Action{
 
 	public function gridAction()			
 	{
-		require_once 'view\product_grid.php';
+		Ccc::getBlock('Product_Grid')->toHtml();
 	}
 
 	public function addAction()
 	{
-		require_once 'view\product_add.php';
+		Ccc::getBlock('Product_Add')->toHtml();
 	}
 
 	public function editAction()
 	{
-		require 'view\product_edit.php';
+		global $adapter;
+		$request = $this->getRequest();
+		$id = $request->getRequest('id');
+		$productTable = Ccc::getModel('product');
+		$result = $productTable->fetchRow("SELECT * FROM product WHERE productId = {$id} ");
+		Ccc::getBlock('Product_Edit')->addData('productEdit', $result)->toHtml();
+
 	}
 
 	public function saveAction()
 	{	
 		try {
-			global $adapter;
-			//$hid=$_POST['hid'];
-
-			$row=$_POST['product'];
-			
-			$hiddenId=$row['hiddenId'];
-			 $name=$row['name'];
-			 $price=$row['price'];
-			 $quantity=$row['quantity'];
-			 $status=$row['status'];		 
-			 $date = date('Y-m-d H:i:s');
-
-			 if(array_key_exists('hiddenId', $row)){
-
-			 	if(!(int)$hiddenId){
+			$productTable = Ccc::getModel('product');
+			$request = $this->getRequest();
+			$row = $request->getPost('product');
+			if(array_key_exists('hiddenId', $row))
+			 {
+			 	if(!(int)$row['hiddenId'])
+			 	{
 			 		throw new Exception("Invalid Request.", 1);
 			 	}
-			 		$query="UPDATE product 
-							SET name='$name',
-				 				price='$price',
-				 				quantity='$quantity',
-				 				status='$status',
-				 				updatedDate='$date' 
-				 			WHERE productId='$hiddenId'";
-
-			  		$result=$adapter->update($query);
-			  		if(!$result){
+				 	$productId = $row['hiddenId'];
+					$row['updatedDate'] = date('Y-m-d H:i:s');
+					unset($row['hiddenId']);
+					$result = $productTable->update($row, ['productId' => $productId]);
+			  		if(!$result)
+			  		{
 			  			throw new Exception("System is unable to update. ", 1);
-			  		}
-				 	
+			  		} 	
 			}
 			else{
-					$query="INSERT INTO product(`name`,
-			 						 			`price`,
-			 						 			`quantity`,
-			 						 			`status`,
-			 						 			`createdDate`) 
-			 							VALUES('$name',
-			 									'$price',
-			 									'$quantity',
-			 									'$status',
-			 									'$date')";
-			 		$result = $adapter->insert($query);
-			 		if(!$result){
-			 			throw new Exception("System is unable to insert.", 1);
-			 			
+			 		$row['createdDate'] = date('Y-m-d H:i:s');
+			 		$insertId = $productTable->insert($row);	
+			 		if(!$insertId)
+			 		{
+			 			throw new Exception("System is unable to insert.", 1);	
 			 		}			
 				}
-					$adapter->redirect('index.php?a=grid&c=product');
+					$this->redirect($this->getView()->getUrl('product','grid'));
 			
 		} catch (Exception $e) {
-			$adapter->redirect('index.php?a=grid&c=product');
+			$this->redirect($this->getView()->getUrl('product','grid'));
 		}
 	}
 
 	public function deleteAction()
 	{
 		try {
-			global $adapter;
-		
-			$id=$_GET['id'];
-			$query="delete 
-					from product 
-					where productId=$id";
-
-			$result=$adapter->delete($query);
-				if (!$result) {
-						throw new Exception("system is unable to delete.", 1);
+			$productTable = Ccc::getModel('product');
+			$request = $this->getRequest();
+			$id = $request->getRequest('id');
+			$result = $productTable->delete(['productId' => $id]);
+				if (!$result)
+				{
+					throw new Exception("system is unable to delete.", 1);
 				}
 
-			$adapter->redirect("index.php?a=grid&c=product");
+			$this->redirect($this->getView()->getUrl('product','grid'));
 	
-		} catch (Exception $e) {
-			//$adapter->redirect("index.php?a=grid&c=product");			
+		} 
+		catch (Exception $e)
+		{
+			$adapter->redirect($this->getView()->getUrl('product','grid'));			
 		}	
 	}
 	public function errorAction()
@@ -103,10 +86,5 @@ class Controller_Product{
 		echo "Error.";
 	}
 }
-
-//$action=($_GET['a'] )? $_GET['a'] : 'errorAction';
-
-//$product = new Product();
-//$product->$action();
 
 ?>
