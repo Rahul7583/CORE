@@ -3,6 +3,11 @@ Ccc::loadClass('Controller_Core_Action');
 Ccc::loadClass('Model_Core_Request');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<?php
+Ccc::loadClass('Controller_Core_Action'); 
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 <?php
 Ccc::loadClass('Controller_Core_Action'); 
@@ -12,8 +17,11 @@ class Controller_Product extends Controller_Core_Action{
 	public function gridAction()			
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Ccc::getBlock('Product_Grid')->toHtml();
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 		global $adapter;
 		$products=$adapter->fetchAll('select * from product');
 		
@@ -23,24 +31,34 @@ class Controller_Product extends Controller_Core_Action{
 		$view->toHtml();
 
 		//require_once 'view\product_grid.php';
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 	}
 
 	public function addAction()
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Ccc::getBlock('Product_Add')->toHtml();
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 		$view=$this->getView();
 		$view->setTemplate('view\product_add.php');
 		$view->toHtml();
 		//require_once 'view\product_add.php';
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 	}
 
 	public function editAction()
 	{
 		global $adapter;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		$request = $this->getRequest();
 		$id = $request->getRequest('id');
@@ -49,6 +67,8 @@ class Controller_Product extends Controller_Core_Action{
 		Ccc::getBlock('Product_Edit')->addData('productEdit', $result)->toHtml();
 
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 		$id = $_GET['id'];
 		$result=$adapter->fetchRow("select * from product where productId='$id'");
 		
@@ -57,6 +77,9 @@ class Controller_Product extends Controller_Core_Action{
 		$view->addData('productEdit',$result);
 		$view->toHtml();
 		//require 'view\product_edit.php';
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 	}
 

@@ -69,6 +69,7 @@ class Model_Core_View
 		return $finalPath;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	public function getUrl($c=null, $a=null, array $id=null)
 	{
@@ -111,6 +112,8 @@ class Model_Core_View
 		return $finalUrl;
 
 	}
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 }

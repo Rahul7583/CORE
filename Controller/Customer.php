@@ -2,7 +2,10 @@
 <?php 
 Ccc::loadClass('Controller_Core_Action');
 <<<<<<< HEAD
+<<<<<<< HEAD
 Ccc::loadClass('Model_Core_Request');
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 
@@ -11,8 +14,11 @@ class Controller_Customer extends Controller_Core_Action{
 	public function gridAction()			
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Ccc::getBlock('Customer_Grid')->toHtml();
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 		global $adapter;
 		$customers=$adapter->fetchAll("SELECT c.*,a.*
 							FROM customer c
@@ -24,23 +30,33 @@ class Controller_Customer extends Controller_Core_Action{
 		$view->addData('customerGrid',$customers);
 		$view->toHtml();
 		//require_once 'view\customer_grid.php';
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 	}
 
 	public function addAction()
 	{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Ccc::getBlock('Customer_Add')->toHtml();
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 		$view=$this->getView();
 		$view->setTemplate('view\customer_add.php');
 		$view->toHtml();
 		//require_once 'view\customer_add.php';
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 	}
 
 	public function editAction()
 	{
+<<<<<<< HEAD
 <<<<<<< HEAD
 		$request = $this->getRequest();
 		$id = $request->getRequest('id');
@@ -53,6 +69,8 @@ class Controller_Customer extends Controller_Core_Action{
 							WHERE c.customerId = {$id}");
 		Ccc::getBlock('Customer_Edit')->addData('customerEdit', $result)->toHtml();
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 		$id = $_GET['id'];
 		global $adapter;
 		$result=$adapter->fetchRow("SELECT c.*,a.*
@@ -66,6 +84,9 @@ class Controller_Customer extends Controller_Core_Action{
 		$view->addData('customerEdit',$result);
 		$view->toHtml();
 		//require 'view\customer_edit.php';
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 	}
 
