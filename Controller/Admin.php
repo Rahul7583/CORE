@@ -7,6 +7,9 @@ Ccc::loadClass('Model_Core_Request');
 
 Ccc::loadClass('Controller_Core_Action');
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
@@ -16,6 +19,7 @@ class Controller_Admin extends Controller_Core_Action{
 	{
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Ccc::getBlock('Admin_Grid')->toHtml();
 	}	
 
@@ -23,6 +27,8 @@ class Controller_Admin extends Controller_Core_Action{
 	{
 		Ccc::getBlock('Admin_Add')->toHtml();
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 		global $adapter;
@@ -42,6 +48,9 @@ class Controller_Admin extends Controller_Core_Action{
 		$view->toHtml();
 		//require_once 'view\admin_add.php';
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
@@ -51,6 +60,7 @@ class Controller_Admin extends Controller_Core_Action{
 	{
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		$request = $this->getRequest();
 		$id = $request->getRequest('id');
 
@@ -58,6 +68,8 @@ class Controller_Admin extends Controller_Core_Action{
 		$result=$adminTable->fetchRow("SELECT * FROM admin WHERE adminId = {$id}");
 		Ccc::getBlock('Admin_Edit')->addData('adminEdit', $result)->toHtml();		
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 		$id = $_GET['id'];
@@ -70,6 +82,9 @@ class Controller_Admin extends Controller_Core_Action{
 		$view->toHtml();
 		//require 'view\admin_edit.php';
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6

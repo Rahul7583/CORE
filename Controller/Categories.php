@@ -7,8 +7,11 @@ class Controller_Categories extends Controller_Core_Action{
 	{
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Ccc::getBlock('Category_Grid')->toHtml();
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 		global $adapter;
@@ -20,6 +23,9 @@ class Controller_Categories extends Controller_Core_Action{
 		$view->toHtml();
 		//require_once 'view\categories_grid.php';
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
@@ -29,8 +35,11 @@ class Controller_Categories extends Controller_Core_Action{
 	{
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Ccc::getBlock('Category_Add')->toHtml();
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 		$view=$this->getView();
@@ -38,6 +47,9 @@ class Controller_Categories extends Controller_Core_Action{
 		$view->toHtml();
 		//require_once 'view\categories_add.php';
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
@@ -47,12 +59,15 @@ class Controller_Categories extends Controller_Core_Action{
 	{
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		$request = $this->getRequest();
 		$id = $request->getRequest('id');
 		global $adapter;
 		$result = $adapter->fetchRow("SELECT * FROM categories WHERE categoryId = {$id}");
 		Ccc::getBlock('Category_Edit')->addData('categoryEdit', $result)->toHtml();
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 		
@@ -65,6 +80,7 @@ class Controller_Categories extends Controller_Core_Action{
 		global $adapter;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		$row = $_POST['category'];
 		$parentName = $row['parentName'];
 		$name = $row['name'];
@@ -74,6 +90,8 @@ class Controller_Categories extends Controller_Core_Action{
 =======
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 		$row=$_POST['category'];
 		$parentName = $row['parentName'];
 		$name=$row['name'];
@@ -81,6 +99,9 @@ class Controller_Categories extends Controller_Core_Action{
 		$date=date('y-m-d h:m:s');	
 		$parentPath=NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
@@ -90,10 +111,16 @@ class Controller_Categories extends Controller_Core_Action{
 		{
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			$insert="INSERT INTO `categories` (`parentId`,`name`, `status`, `createdDate`) 
 					VALUES ('$parentName','$name' , '$status', '$date' )";
 			
 			$insertId = $adapter->insert($insert);
+=======
+			$insert="INSERT INTO `categories` (`parentId`,`name`, `status`, `createdDate`) VALUES ('$parentName','$name' , '$status', '$date' )";
+			
+			$insertId=$adapter->insert($insert);
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 			$insert="INSERT INTO `categories` (`parentId`,`name`, `status`, `createdDate`) VALUES ('$parentName','$name' , '$status', '$date' )";
 			
@@ -111,10 +138,15 @@ class Controller_Categories extends Controller_Core_Action{
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			$updateQuery = "UPDATE `categories` 
 							SET `path` = '$parentPath' 
 							WHERE `categories`.`categoryId` = '$insertId'";
 			$result = $adapter->update($updateQuery);
+=======
+			$updateQuery="UPDATE `categories` SET `path` = '$parentPath' WHERE `categories`.`categoryId` = '$insertId'";
+			$result=$adapter->update($updateQuery);
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 			$updateQuery="UPDATE `categories` SET `path` = '$parentPath' WHERE `categories`.`categoryId` = '$insertId'";
 			$result=$adapter->update($updateQuery);
@@ -134,6 +166,7 @@ class Controller_Categories extends Controller_Core_Action{
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			$insert = "INSERT INTO `categories` (`name`, `status`,`createdDate`,`path`)
 					  VALUES ('$name' , $status, '$date','$parentName' )";
 
@@ -144,12 +177,17 @@ class Controller_Categories extends Controller_Core_Action{
 =======
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 			$insert="INSERT INTO `categories` (`name`, `status`,`createdDate`,`path`) VALUES ('$name' , $status, '$date','$parentName' )";
 
 			$insertId=$adapter->insert($insert);
 			
 			$path = $adapter->fetchRow("SELECT * FROM `categories` WHERE `name` = '$parentName' ");
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
@@ -159,9 +197,13 @@ class Controller_Categories extends Controller_Core_Action{
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			$updateQuery = "UPDATE `categories` 
 							SET `path` = '$parentPath', `parentId` = '$parentId' 
 							WHERE `categories`.`categoryId` = '$insertId'";			
+=======
+			$updateQuery="UPDATE `categories` SET `path` = '$parentPath', `parentId` = '$parentId' WHERE `categories`.`categoryId` = '$insertId'";			
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 			$updateQuery="UPDATE `categories` SET `path` = '$parentPath', `parentId` = '$parentId' WHERE `categories`.`categoryId` = '$insertId'";			
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
@@ -174,6 +216,10 @@ class Controller_Categories extends Controller_Core_Action{
 					throw new Exception("System is unable to Update.", 1);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+					
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 					
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
@@ -192,6 +238,7 @@ class Controller_Categories extends Controller_Core_Action{
 			global $adapter;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			$id = "%".$_GET['id']."%"; 
 			$query="DELETE FROM categories 
 					WHERE path LIKE '$id'";	
@@ -202,6 +249,8 @@ class Controller_Categories extends Controller_Core_Action{
 =======
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 			$id=$_GET['id']."%";
 			$query="DELETE 
 					FROM categories 
@@ -210,6 +259,9 @@ class Controller_Categories extends Controller_Core_Action{
 			$result=$adapter->delete($query);
 			if (!$result) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
@@ -224,10 +276,13 @@ class Controller_Categories extends Controller_Core_Action{
 	}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	public function testAction()
 	{
 		
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 
@@ -236,6 +291,9 @@ class Controller_Categories extends Controller_Core_Action{
 		
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6

@@ -4,6 +4,11 @@ Ccc::loadClass('Model_Core_Request');
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<?php
+Ccc::loadClass('Controller_Core_Action'); 
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 <?php
 Ccc::loadClass('Controller_Core_Action'); 
@@ -18,8 +23,11 @@ class Controller_Product extends Controller_Core_Action{
 	{
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Ccc::getBlock('Product_Grid')->toHtml();
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 		global $adapter;
@@ -32,6 +40,9 @@ class Controller_Product extends Controller_Core_Action{
 
 		//require_once 'view\product_grid.php';
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
@@ -41,8 +52,11 @@ class Controller_Product extends Controller_Core_Action{
 	{
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Ccc::getBlock('Product_Add')->toHtml();
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 		$view=$this->getView();
@@ -50,6 +64,9 @@ class Controller_Product extends Controller_Core_Action{
 		$view->toHtml();
 		//require_once 'view\product_add.php';
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
@@ -58,6 +75,7 @@ class Controller_Product extends Controller_Core_Action{
 	public function editAction()
 	{
 		global $adapter;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 		$request = $this->getRequest();
@@ -69,6 +87,8 @@ class Controller_Product extends Controller_Core_Action{
 =======
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 		$id = $_GET['id'];
 		$result=$adapter->fetchRow("select * from product where productId='$id'");
 		
@@ -78,6 +98,9 @@ class Controller_Product extends Controller_Core_Action{
 		$view->toHtml();
 		//require 'view\product_edit.php';
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
