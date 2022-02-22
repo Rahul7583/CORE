@@ -1,22 +1,47 @@
 <?php date_default_timezone_set("Asia/Kolkata");?>
 <?php 
 Ccc::loadClass('Controller_Core_Action');
+<<<<<<< HEAD
 Ccc::loadClass('Model_Core_Request');
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 
 class Controller_Customer extends Controller_Core_Action{
 
 	public function gridAction()			
 	{
+<<<<<<< HEAD
 		Ccc::getBlock('Customer_Grid')->toHtml();
+=======
+		global $adapter;
+		$customers=$adapter->fetchAll("SELECT c.*,a.*
+							FROM customer c
+							JOIN address a
+							ON a.customerId= c.customerId");
+
+		$view=$this->getView();
+		$view->setTemplate('view\customer_grid.php');
+		$view->addData('customerGrid',$customers);
+		$view->toHtml();
+		//require_once 'view\customer_grid.php';
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 	}
 
 	public function addAction()
 	{
+<<<<<<< HEAD
 		Ccc::getBlock('Customer_Add')->toHtml();
+=======
+		$view=$this->getView();
+		$view->setTemplate('view\customer_add.php');
+		$view->toHtml();
+		//require_once 'view\customer_add.php';
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 	}
 
 	public function editAction()
 	{
+<<<<<<< HEAD
 		$request = $this->getRequest();
 		$id = $request->getRequest('id');
 
@@ -27,6 +52,21 @@ class Controller_Customer extends Controller_Core_Action{
 							ON a.customerId = c.customerId
 							WHERE c.customerId = {$id}");
 		Ccc::getBlock('Customer_Edit')->addData('customerEdit', $result)->toHtml();
+=======
+		$id = $_GET['id'];
+		global $adapter;
+		$result=$adapter->fetchRow("SELECT c.*,a.*
+							FROM customer c
+							JOIN address a
+							ON a.customerId = c.customerId
+							WHERE c.customerId = $id");
+		
+		$view=$this->getView();
+		$view->setTemplate('view\customer_edit.php');
+		$view->addData('customerEdit',$result);
+		$view->toHtml();
+		//require 'view\customer_edit.php';
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 	}
 
 	public function saveCustomer()

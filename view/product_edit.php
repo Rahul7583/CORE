@@ -2,11 +2,13 @@
 
 <?php 
 
-$id = $_GET['id'];
+//$id = $_GET['id'];
 
-global $adapter;
 
-$result=$adapter->fetchRow("select * from product where productId='$id'");
+$result=$this->getData('productEdit');
+/*global $adapter;
+
+$result=$adapter->fetchRow("select * from product where productId='$id'");*/
 ?>
 
 <!DOCTYPE html>

@@ -1,15 +1,5 @@
-
-
 <?php 
-
-$id = $_GET['id'];
-
-//echo $id;
-global $adapter;
-
-$result=$adapter->fetchRow("select * from admin where adminId='$id'");
-print_r($result);
-
+$result=$this->getData('adminEdit');
 ?>
 
 <!DOCTYPE html>

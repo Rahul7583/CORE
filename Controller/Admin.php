@@ -1,27 +1,63 @@
 <?php date_default_timezone_set("Asia/Kolkata");?>
 <?php 
+<<<<<<< HEAD
 Ccc::loadClass('Controller_Core_Action');
 Ccc::loadClass('Model_Core_Request');
+=======
+
+Ccc::loadClass('Controller_Core_Action');
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 class Controller_Admin extends Controller_Core_Action{
 
 	public function gridAction()			
 	{
+<<<<<<< HEAD
 		Ccc::getBlock('Admin_Grid')->toHtml();
 	}	
 
 	public function addAction()
 	{
 		Ccc::getBlock('Admin_Add')->toHtml();
+=======
+		global $adapter;
+		$admin=$adapter->fetchAll('select * from admin');
+		
+		$view=$this->getView();
+		$view->setTemplate('view\admin_grid.php');
+		$view->addData('adminGrid',$admin);
+		$view->toHtml();
+		//require_once 'view\admin_grid.php';
+	}
+
+	public function addAction()
+	{
+		$view=$this->getView();
+		$view->setTemplate('view\admin_add.php');
+		$view->toHtml();
+		//require_once 'view\admin_add.php';
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 	}
 
 	public function editAction()
 	{
+<<<<<<< HEAD
 		$request = $this->getRequest();
 		$id = $request->getRequest('id');
 
 		$adminTable = Ccc::getModel('admin');
 		$result=$adminTable->fetchRow("SELECT * FROM admin WHERE adminId = {$id}");
 		Ccc::getBlock('Admin_Edit')->addData('adminEdit', $result)->toHtml();		
+=======
+		$id = $_GET['id'];
+		global $adapter;
+		$result=$adapter->fetchRow("select * from admin where adminId='$id'");
+
+		$view=$this->getView();
+		$view->setTemplate('view\admin_edit.php');
+		$view->addData('adminEdit',$result);
+		$view->toHtml();
+		//require 'view\admin_edit.php';
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 	}
 
 	public function saveAction()

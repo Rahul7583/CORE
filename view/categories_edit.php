@@ -8,7 +8,6 @@ global $adapter;
 
 $result=$adapter->fetchRow("select * from categories where categoryId='$id'");
 
-
 ?>
 
 <!DOCTYPE html>
@@ -24,6 +23,23 @@ $result=$adapter->fetchRow("select * from categories where categoryId='$id'");
 			<tr>
 				<td colspan="2"><b>Categories Information</b></td>
 			</tr>
+
+			<tr>
+      			<td width="10%">Select Parent Category</td>
+      			<td>
+      				<select name="category[parentName]"> 
+        				<?php
+        					if(!$result): 
+          						echo 'No data';
+        					endif;
+          					foreach($result as $row) :?>
+            			<?php
+            				//echo "<option value='".$row['name']."'>".$this->path($row['path'])."</option>" ;
+          					endforeach;
+        				?>
+      				</select>
+      			</td>
+    		</tr>
 
 			<tr>
 				<td width="10%">Name</td>
