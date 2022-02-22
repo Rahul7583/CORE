@@ -4,7 +4,10 @@ Ccc::loadClass('Controller_Core_Action');
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Ccc::loadClass('Model_Core_Request');
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
@@ -19,8 +22,11 @@ class Controller_Customer extends Controller_Core_Action{
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Ccc::getBlock('Customer_Grid')->toHtml();
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
@@ -38,6 +44,9 @@ class Controller_Customer extends Controller_Core_Action{
 		//require_once 'view\customer_grid.php';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
@@ -50,8 +59,11 @@ class Controller_Customer extends Controller_Core_Action{
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		Ccc::getBlock('Customer_Add')->toHtml();
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
@@ -62,6 +74,9 @@ class Controller_Customer extends Controller_Core_Action{
 		//require_once 'view\customer_add.php';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
@@ -71,6 +86,7 @@ class Controller_Customer extends Controller_Core_Action{
 
 	public function editAction()
 	{
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -85,6 +101,8 @@ class Controller_Customer extends Controller_Core_Action{
 							WHERE c.customerId = {$id}");
 		Ccc::getBlock('Customer_Edit')->addData('customerEdit', $result)->toHtml();
 =======
+=======
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
@@ -104,6 +122,9 @@ class Controller_Customer extends Controller_Core_Action{
 		//require 'view\customer_edit.php';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
+=======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 =======
 >>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
