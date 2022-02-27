@@ -103,15 +103,7 @@ class Model_Core_Adapter{
 			}
 			$result = array_combine($keys, $values);
 			return $result;
-<<<<<<< HEAD
 		}	
-=======
-			
-		}
-
-		
-
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 }
 ?>
 

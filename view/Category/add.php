@@ -1,4 +1,5 @@
-<?php $categories = $this->getData('categoryAdd');?>
+<?php $categories = $this->getData('categoryAdd');
+?>
 
 <html>
     <body>

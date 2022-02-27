@@ -25,10 +25,6 @@ class Controller_Core_Action
 		header("location:$url");
 		exit();
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 	public function getRequest()
 	{
@@ -36,14 +32,6 @@ class Controller_Core_Action
 	}
 
 	
-=======
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
-=======
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
-=======
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
-=======
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 }
 
 ?>

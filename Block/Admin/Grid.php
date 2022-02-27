@@ -9,7 +9,7 @@ class Block_Admin_Grid extends Block_Core_Template
 
 	public function getAdminData()
 	{
-		$adminModel = Ccc::getModel('admin'); 
+		$adminModel = Ccc::getModel('Admin'); 
 		$admin = $adminModel->fetchAll("SELECT * FROM admin");
 		return $admin;
 	}
