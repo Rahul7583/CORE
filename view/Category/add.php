@@ -1,4 +1,6 @@
-<?php $categories = $this->getData('categoryAdd');?>
+
+<?php $categories = $this->getCategoryData('categoryAdd');
+?>
 
 <html>
     <body>
@@ -20,7 +22,7 @@
           foreach($categories as $category) :?>
             <?php
             
-            echo "<option value='".$category['name']."'>".$this->path($category['path'])."</option>" ;
+            echo "<option value='".$category->name."'>".$this->path($category->path)."</option>" ;
           endforeach;
         ?>
       </select>

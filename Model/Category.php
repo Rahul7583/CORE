@@ -1,10 +1,10 @@
-<?php Ccc::loadClass('Model_Core_Table'); ?>
+<?php Ccc::loadClass('Model_Core_Row'); ?>
 <?php
-class Model_Category extends Model_Core_Table{
+class Model_Category extends Model_Core_Row{
 
 	public function __construct()
 	{
-		$this->setTableName('categories')->setPrimaryKey('categoryId');		
+		$this->setTableClassName('Category_Resource');	
 	}
 }
 

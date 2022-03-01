@@ -1,26 +1,32 @@
-<?php Ccc::loadClass('Model_Core_Table'); ?>
+<?php Ccc::loadClass('Model_Core_Row'); ?>
 <?php
-class Model_Admin extends Model_Core_Table{
+class Model_Admin extends Model_Core_Row{
 
+	const STATUS_ENABLED = 1;
+	const STATUS_DISABLED = 2;
+	const STATUS_DISABLED_DEFAULT = 1;
+	const STATUS_ENABLED_LBL = 'Enabled';
+	const STATUS_DISABLED_LBL = 'Disabled';
+	
 	public function __construct()
 	{
-		$this->setTableName('admin')->setPrimaryKey('adminId');		
+		$this->setTableClassName('Admin_Resource');
 	}
 
-	public function load($id)
+	public function getStatus($key = NULL)
 	{
-		$rowData = $this->fetchRow("SELECT * FROM {$this->getTableName()}
-									WHERE {$this->getPrimaryKey()} = {$id}");
-		if(!$rowData)
-		{
-			return false;
+		$status = [
+			self::STATUS_ENABLED => self::STATUS_ENABLED_LBL,
+			self::STATUS_DISABLED => self::STATUS_DISABLED_LBL,
+		];
+		if(!$key){
+			return $status;
 		}
-		$row = $this->getRow();
-		$row->setData($rowData);
-		return $row;
+		if(array_key_exists($key, $status)){
+			return $status[$key];
+		}
+		return self::STATUS_DISABLED_DEFAULT;
 	}
-
-
 }
 
 

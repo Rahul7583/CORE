@@ -1,23 +1,29 @@
 <?php 
-
 Ccc::loadClass('Model_Core_View');
+Ccc::loadClass('Block_Core_Layout');
 
 class Controller_Core_Action 
 {
-	public $view = NULL;
+	public $layout = NULL;
 
-	public function setView($view)
+	public function setLayout($layout)
 	{
-		$this->view = $view;
+		$this->layout = $layout;
 		return $this;
 	}
 
-	public function getView()
+	public function getLayout()
 	{
-		if(!$this->view){
-			$this->setView(new Model_Core_View());
+		if(!$this->layout){
+			$this->setLayout(new Block_Core_Layout());
 		}
-		return $this->view;
+		return $this->layout;
+	}
+
+	public function renderLayout()
+	{
+		$this->getLayout()->toHtml();
+		return $this;
 	}
 
 	public function redirect($url)				
@@ -25,25 +31,11 @@ class Controller_Core_Action
 		header("location:$url");
 		exit();
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 	public function getRequest()
 	{
 		return Ccc::getFront()->getRequest();
 	}
-
-	
-=======
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
-=======
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
-=======
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
-=======
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 }
 
 ?>

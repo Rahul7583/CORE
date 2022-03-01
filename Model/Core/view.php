@@ -49,42 +49,23 @@ class Model_Core_View
 		if(array_key_exists($key, $this->data)){
 			unset($this->data[$key]);
 		}
-		return $this;
+		return null;
 	}
-
-	public function path($path)
-	{
-		global $adapter;	
-		$value=explode('/',$path); 
-		foreach ($value as $path1) {
-			$query=$adapter->fetchRow("SELECT  `name` FROM `categories` WHERE categoryId='$path1';");
-			$parentName[]=$query['name'];
-
-			$temp=[];
-			$temp=implode("=>", $parentName);
-		}
-
-		$finalPath=$temp;
-		echo $finalPath;
-		return $finalPath;
-	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	public function getUrl($c=null, $a=null, array $id=null)
+	
+	
+	
+	public function getUrl($action=null, $controller=null,  array $id=null)
 	{
 		$parameter = $_GET;
 		$newParameter = [];
-		if($c)
+		if($controller)
 		{
-			$newParameter['c'] = $c;
+			$newParameter['c'] = $controller;
 		}
 
-		if($a)
+		if($action)
 		{
-			$newParameter['a'] = $a;
+			$newParameter['a'] = $action;
 		}
 
 		if(is_array($id))
@@ -114,14 +95,6 @@ class Model_Core_View
 		return $finalUrl;
 
 	}
-=======
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
-=======
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
-=======
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
-=======
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 }
 
 ?>

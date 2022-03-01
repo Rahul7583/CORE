@@ -5,10 +5,6 @@
 
 <?php 
 class Ccc{
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 	public static $front = null;
 
@@ -27,14 +23,6 @@ class Ccc{
 		}
 		return self::$front;
 	}
-=======
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
-=======
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
-=======
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
-=======
->>>>>>> c9c862e1062c0764e4d939a70b90359653ebb7a6
 	
 	public static function loadFile($path)
 	{

@@ -1,7 +1,5 @@
-<?php 
-$result=$this->getAdminData();
-?>
 
+<?php $result = $this->getAdminData(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +7,7 @@ $result=$this->getAdminData();
 </head>
 <body>
 
-	<form method="POST" action="<?php echo $this->getUrl('admin','save');?>">
+	<form method="POST" action="<?php echo $this->getUrl('save','admin');?>">
 		<table border="1" width="100%" cellspacing="4">
 			
 			<tr>
@@ -18,36 +16,32 @@ $result=$this->getAdminData();
 
 			<tr>
 				<td width="10%">First Name</td>
-				<td><input type="text" name="admin[firstName]" value="<?php echo $result['firstName'] ?>"></td>
+				<td><input type="text" name="admin[firstName]" value="<?php echo $result->firstName ?>"></td>
 			</tr>
 
 			<tr>
 				<td width="10%">LastName</td>
-				<td><input type="text" name="admin[lastName]" value="<?php echo $result['lastName'] ?>"></td>
+				<td><input type="text" name="admin[lastName]" value="<?php echo $result->lastName ?>"></td>
 			</tr>
 			
 			<tr>
 				<td width="10%">Email</td>
-				<td><input type="email" name="admin[email]" value="<?php echo $result['email'] ?>"></td>
-				<input type="hidden" name="admin[hiddenId]" value="<?php echo $result['adminId'] ?>">
+				<td><input type="email" name="admin[email]" value="<?php echo $result->email ?>"></td>
+				<input type="hidden" name="admin[adminId]" value="<?php echo $result->adminId ?>">
 			</tr>
 
 			<tr>
 				<td width="10%">Password</td>
-				<td><input type="passowrd" name="admin[password]" value="<?php echo $result['password'] ?>"></td>
+				<td><input type="passowrd" name="admin[password]" value="<?php echo $result->password ?>"></td>
 			</tr>
 					
 			<tr>
 				<td>Status</td>
 				<td width="10%">
-					<select name="admin[status]" value="<?php echo $result['status'] ?>" >
-						<?php if ($row['status']==1):?>
-						<option value="1" selected>Active</option>
-						<option value="2">Inactive</option>
-					<?php else:?>
-						<option value="1">Active</option>
-						<option value="2" selected>Inactive</option>
-					<?php endif; ?>
+					<select name="admin[status]">
+						<?php foreach ($result->getStatus() as $key => $value): ?>
+						<option value="<?php echo $key?>" <?php if($result->status == $key){?> selected <?php }?> ><?php echo $value; ?></option>
+					<?php endforeach; ?>
 					</select>
 				</td>
 			</tr>

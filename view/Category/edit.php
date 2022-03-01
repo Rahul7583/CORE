@@ -27,7 +27,6 @@
 				<td width="10%">Name</td>
 				<td><input type="text" name="category[name]" value="<?php echo $result['name'] ?>"></td>
 				<input type="hidden" name="category[hiddenId]" value="<?php echo $result['categoryId'] ?>">
-			
 			</tr>
 
 			<tr>
@@ -44,8 +43,6 @@
 					</select>
 				</td>
 			</tr>
-			
-		
 
 			<tr>
 				<td width="10%">&nbsp;</td>
@@ -55,10 +52,7 @@
 
 				</td>
 			</tr>
-			
-
 		</table>
 	</form>
-
 </body>
 </html>
