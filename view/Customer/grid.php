@@ -6,7 +6,7 @@
 </head>
 <body>
 	<br><br>
-	<button type="button" name="addNew"><a href="<?php echo $this->getUrl('customer','add')?>"> Add New </a></button>
+	<button type="button" name="addNew"><a href="<?php echo $this->getUrl('edit','customer')?>"> Add New </a></button>
 	<table border="1" width="100%" cellspacing="4">
 		<tr>
 			<th>Customer_Id</th>
@@ -51,8 +51,8 @@
 					<td><?php echo $customer->shipping; ?></td>
 					<td><?php echo $customer->createdDate;  ?></td>
 					<td><?php echo $customer->updatedDate;  ?></td>
-					<td><a href="<?php echo $this->getUrl('customer','edit',['id' => $customer->customerId])?>">Edit</a></td>
-					<td><a href="<?php echo $this->getUrl('customer','delete',['id' => $customer->customerId])?>">Delete</a></td>
+					<td><a href="<?php echo $this->getUrl('edit','customer',['id' => $customer->customerId])?>">Edit</a></td>
+					<td><a href="<?php echo $this->getUrl('delete','customer',['id' => $customer->customerId])?>">Delete</a></td>
 				</tr>
 			<?php endforeach; ?>
 		<?php endif; ?>	

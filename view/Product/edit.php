@@ -6,7 +6,7 @@
 	<title>Product Edit Page</title>
 </head>
 <body>
-	<form method="POST" action="<?php echo $this->getUrl('product','save');?>">
+	<form method="POST" action="<?php echo $this->getUrl('save','product');?>">
 		<table border="1" width="100%" cellspacing="4">
 			
 			<tr>

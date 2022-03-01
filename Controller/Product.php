@@ -13,25 +13,24 @@ class Controller_Product extends Controller_Core_Action{
 		Ccc::getBlock('Product_Grid')->toHtml();
 	}
 
-	public function addAction()
-	{
-		$productModel = Ccc::getModel('Product');
-		Ccc::getBlock('Product_Edit')->setData(['productEdit' => $productModel])->toHtml();
-	}
-
+	
 	public function editAction()
 	{
-		
-		$id = (int)$this->getRequest()->getRequest('id');
-		$productModel = Ccc::getModel('Product')->load($id);
+		if((int)$this->getRequest()->getRequest('id'))
+		{
+			$id = (int)$this->getRequest()->getRequest('id');
+			$productModel = Ccc::getModel('Product')->load($id);
+		}
+		else
+		{
+			$productModel = Ccc::getModel('Product');	
+		}
 		Ccc::getBlock('Product_Edit')->setData(['productEdit' => $productModel])->toHtml();
-
 	}
 
 	public function saveAction()
 	{	
 		try {
-
 			$productModel = Ccc::getModel('product');
 			$request = $this->getRequest();
 			$product = $request->getPost('product');
@@ -64,10 +63,10 @@ class Controller_Product extends Controller_Core_Action{
 			 			throw new Exception("System is unable to insert.", 1);	
 			 		}			
 				}
-					$this->redirect($this->getView()->getUrl('product','grid'));
+					$this->redirect($this->getView()->getUrl('grid','product'));
 			
 		} catch (Exception $e) {
-			$this->redirect($this->getView()->getUrl('product','grid'));
+			$this->redirect($this->getView()->getUrl('grid','product'));
 		}
 	}
 
@@ -81,12 +80,12 @@ class Controller_Product extends Controller_Core_Action{
 				{
 					throw new Exception("system is unable to delete.", 1);
 				}
-			$this->redirect($this->getView()->getUrl('product','grid'));
+			$this->redirect($this->getView()->getUrl('grid','product'));
 	
 		} 
 		catch (Exception $e)
 		{
-			$adapter->redirect($this->getView()->getUrl('product','grid'));			
+			$this->redirect($this->getView()->getUrl('grid','product'));			
 		}	
 	}
 	public function errorAction()

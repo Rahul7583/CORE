@@ -1,3 +1,4 @@
+
 <?php $categories = $this->getCategoryData(); ?>
 
 <!DOCTYPE html>
@@ -18,6 +19,7 @@
 			<th>Updated_Date</th>
 			<th>Edit</th>
 			<th>Delete</th>
+			<th>Media</th>
 		</tr>
 			<?php if(!$categories):?>
 		<tr>
@@ -37,6 +39,7 @@
 							echo $category->categoryId; ?>">Edit</a></td>
 					<td><a href="index.php?a=delete&c=categories&id=<?php 
 							echo $category->categoryId; ?>">Delete</a></td>
+					<td><a href="<?php echo $this->getUrl('grid','category_media',['id' => $category->categoryId])?>">Gallery</a></td>
 				</tr>
 			<?php endforeach; ?>
 		<?php endif; ?>			

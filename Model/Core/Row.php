@@ -117,5 +117,9 @@ class Model_Core_Row
 		return $rowData;
 	}
 
+		public function getPath($path)
+		{
+			return $this->getTable()->path($path);
+		}
 	
 }

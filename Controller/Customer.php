@@ -1,4 +1,3 @@
-<?php date_default_timezone_set("Asia/Kolkata");?>
 <?php 
 Ccc::loadClass('Controller_Core_Action');
 
@@ -9,22 +8,23 @@ class Controller_Customer extends Controller_Core_Action{
 		Ccc::getBlock('Customer_Grid')->toHtml();
 	}
 
-	public function addAction()
-	{
-		$customerModel = Ccc::getModel('Customer');
-		Ccc::getBlock('Customer_Edit')->setData(['customerEdit' => $customerModel])->toHtml();
-	}
-
 	public function editAction()
 	{
-		$id = (int)$this->getRequest()->getRequest('id');
-		$customerModel = Ccc::getModel('Customer');
-		$result=$customerModel->fetchRow("SELECT c.*,a.*
-							FROM customer c
-							JOIN address a
-							ON a.customerId = c.customerId
-							WHERE c.customerId = {$id}");
-		Ccc::getBlock('Customer_Edit')->setData(['customerEdit' => $result])->toHtml();
+		if((int)$this->getRequest()->getRequest('id'))
+		{
+			$id = (int)$this->getRequest()->getRequest('id');
+			$customerModel = Ccc::getModel('Customer');
+			$customerModel=$customerModel->fetchRow("SELECT c.*,a.*
+								FROM customer c
+								JOIN address a
+								ON a.customerId = c.customerId
+								WHERE c.customerId = {$id}");
+		}
+		else
+		{
+			$customerModel = Ccc::getModel('Customer');	
+		}
+		Ccc::getBlock('Customer_Edit')->setData(['customerEdit' => $customerModel])->toHtml();
 	}
 
 	public function saveCustomer()
@@ -113,7 +113,7 @@ class Controller_Customer extends Controller_Core_Action{
 			 			throw new Exception("System is unable to insert.", 1);	
 			 		}
 				}
-				$this->redirect($this->getView()->getUrl('customer','grid'));
+				$this->redirect($this->getView()->getUrl('grid','customer'));
 	}
 
 	public function saveAction()
@@ -125,7 +125,7 @@ class Controller_Customer extends Controller_Core_Action{
 		} 
 		catch (Exception $e) 
 		{
-			//$this->redirect($this->getView()->getUrl('customer','grid'));
+			$this->redirect($this->getView()->getUrl('grid','customer'));
 		}
 			
 	}
@@ -140,9 +140,9 @@ class Controller_Customer extends Controller_Core_Action{
 			{
 				throw new Exception("system is unable to delete", 1);
 			}
-			$this->redirect($this->getView()->getUrl('customer','grid'));
+			$this->redirect($this->getView()->getUrl('grid','customer'));
 		} catch (Exception $e) {
-			$this->redirect($this->getView()->getUrl('customer','grid'));
+			$this->redirect($this->getView()->getUrl('grid','customer'));
 		}
 	}
 

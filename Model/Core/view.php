@@ -51,25 +51,10 @@ class Model_Core_View
 		}
 		return null;
 	}
-
-	public function path($path)
-	{
-		global $adapter;	
-		$value = explode('/',$path); 
-		foreach ($value as $path1) {
-			$query = $adapter->fetchRow("SELECT  `name` FROM `categories` WHERE categoryId='$path1';");
-			$parentName[] = $query['name'];
-
-			$temp = [];
-			$temp = implode("=>", $parentName);
-		}
-
-		$finalPath = $temp;
-		echo $finalPath;
-		return $finalPath;
-	}
-
-	public function getUrl($controller=null, $action=null, array $id=null)
+	
+	
+	
+	public function getUrl($action=null, $controller=null,  array $id=null)
 	{
 		$parameter = $_GET;
 		$newParameter = [];

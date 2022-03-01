@@ -9,17 +9,17 @@ class Controller_Config extends Controller_Core_Action{
 		Ccc::getBlock('Config_Grid')->toHtml();
 	}
 
-	public function addAction()
-	{
-		$configModel = Ccc::getModel('Config');
-		Ccc::getBlock('Config_Edit')->setData(['configEdit' => $configModel])->toHtml();
-
-	}
-
 	public function editAction()
 	{
-		$id = $this->getRequest()->getRequest('id');
-		$configModel = Ccc::getModel('Config')->load($id);
+		if($this->getRequest()->getRequest('id'))
+		{
+			$id = $this->getRequest()->getRequest('id');
+			$configModel = Ccc::getModel('Config')->load($id);
+		}
+		else
+		{
+			$configModel = Ccc::getModel('Config');
+		}
 		Ccc::getBlock('Config_Edit')->setData(['configEdit' => $configModel])->toHtml();
 
 	}
@@ -52,10 +52,10 @@ class Controller_Config extends Controller_Core_Action{
 				 			throw new Exception("System is unable to insert.", 1);	
 				 		}			
 					}
-						$this->redirect($this->getView()->getUrl('config','grid'));
+						$this->redirect($this->getView()->getUrl('grid','config'));
 			}
 		 catch (Exception $e) {
-			$this->redirect($this->getView()->getUrl('config','grid'));
+			$this->redirect($this->getView()->getUrl('grid','config'));
 		}
 	}
 
@@ -70,12 +70,12 @@ class Controller_Config extends Controller_Core_Action{
 					throw new Exception("system is unable to delete.", 1);
 				}
 
-			$this->redirect($this->getView()->getUrl('config','grid'));
+			$this->redirect($this->getView()->getUrl('grid','config'));
 	
 		} 
 		catch (Exception $e)
 		{
-			$this->redirect($this->getView()->getUrl('config','grid'));			
+			$this->redirect($this->getView()->getUrl('grid','config'));			
 		}	
 	}
 	public function errorAction()

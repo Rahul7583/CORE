@@ -6,7 +6,7 @@
 </head>
 <body>
 	<br><br>
-	<button type="button" name="addNew"><a href="<?php echo $this->getUrl('product','add')?>"> Add New </a></button>
+	<button type="button" name="addNew"><a href="<?php echo $this->getUrl('edit','product')?>"> Add New </a></button>
 	<table border="1" width="100%" cellspacing="4">
 		<tr>
 			<th>Product_Id</th>
@@ -35,9 +35,9 @@
 					<td><?php echo $product->status; ?></td>
 					<td><?php echo $product->createdDate; ?></td>
 					<td><?php echo $product->updatedDate; ?></td>
-					<td><a href="<?php echo $this->getUrl('product','edit',['id' => $product->productId])?>">Edit</a></td>
-					<td><a href="<?php echo $this->getUrl('product','delete',['id' => $product->productId])?>">Delete</a></td>
-					<td><a href="<?php echo $this->getUrl('product_media','grid',['id' => $product->productId])?>">Gallery</a></td>
+					<td><a href="<?php echo $this->getUrl('edit','product',['id' => $product->productId])?>">Edit</a></td>
+					<td><a href="<?php echo $this->getUrl('delete','product',['id' => $product->productId])?>">Delete</a></td>
+					<td><a href="<?php echo $this->getUrl('grid','product_media',['id' => $product->productId])?>">Gallery</a></td>
 				</tr>
 			<?php endforeach; ?>
 		<?php endif; ?>			

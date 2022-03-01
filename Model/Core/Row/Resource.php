@@ -107,6 +107,8 @@ class Model_Core_Row_Resource{
 		global $adapter;
 		return $adapter;
 	}
+
+		
 	
 }
 

@@ -1,5 +1,5 @@
-<?php $result = $this->getAdminData(); ?>
 
+<?php $result = $this->getAdminData(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +7,7 @@
 </head>
 <body>
 
-	<form method="POST" action="<?php echo $this->getUrl('admin','save');?>">
+	<form method="POST" action="<?php echo $this->getUrl('save','admin');?>">
 		<table border="1" width="100%" cellspacing="4">
 			
 			<tr>

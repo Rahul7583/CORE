@@ -5,7 +5,7 @@
 	<title>Customer Edit Page</title>
 </head>
 <body>
-	<form method="post" action="<?php echo $this->getUrl('customer','save')?>">
+	<form method="post" action="<?php echo $this->getUrl('save','customer')?>">
 		<table border="1" width="100%" cellspacing="4">
 			
 			<tr>

@@ -7,7 +7,7 @@
 </head>
 <body>
 	<br><br>
-	<button type="button" name="addNew"><a href="<?php echo $this->getUrl('admin','add');?>"> Add New </a></button>
+	<button type="button" name="addNew"><a href="<?php echo $this->getUrl('edit','admin');?>"> Add New </a></button>
 	<table border="1" width="100%" cellspacing="4">
 		<tr>
 			<th>Admin_Id</th>
@@ -38,8 +38,8 @@
 					<td><?php echo $row->status; ?></td>
 					<td><?php echo $row->createdDate; ?></td>
 					<td><?php echo $row->updatedDate; ?></td>
-					<td><a href="<?php echo $this->getUrl('admin','edit',['id' => $row->adminId])?>">Edit</a></td>
-					<td><a href="<?php echo $this->getUrl('admin','delete',['id' => $row->adminId])?>">Delete</a></td>
+					<td><a href="<?php echo $this->getUrl('edit','admin',['id' => $row->adminId])?>">Edit</a></td>
+					<td><a href="<?php echo $this->getUrl('delete','admin',['id' => $row->adminId])?>">Delete</a></td>
 				</tr>
 			<?php endforeach; ?>
 		<?php endif; ?>	

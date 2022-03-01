@@ -6,7 +6,7 @@
 </head>
 <body>
 	<br><br>
-	<button type="button" name="addNew"><a href="<?php echo $this->getUrl('config','add')?>"> Add New </a></button>
+	<button type="button" name="addNew"><a href="<?php echo $this->getUrl('edit','config')?>"> Add New </a></button>
 	<table border="1" width="100%" cellspacing="4">
 		<tr>
 			<th>Config_Id</th>
@@ -34,8 +34,8 @@
 					<td><?php echo $config->status; ?></td>
 					<td><?php echo $config->createdDate; ?></td>
 					<td><?php echo $config->updatedDate; ?></td>
-					<td><a href="<?php echo $this->getUrl('config','edit',['id' => $config->configId])?>">Edit</a></td>
-					<td><a href="<?php echo $this->getUrl('config','delete',['id' => $config->configId])?>">Delete</a></td>
+					<td><a href="<?php echo $this->getUrl('edit','config',['id' => $config->configId])?>">Edit</a></td>
+					<td><a href="<?php echo $this->getUrl('delete','config',['id' => $config->configId])?>">Delete</a></td>
 				</tr>
 			<?php endforeach; ?>
 		<?php endif; ?>			

@@ -5,7 +5,7 @@
 	<title>Config Edit Page</title>
 </head>
 <body>
-	<form method="POST" action="<?php echo $this->getUrl('config','save');?>">
+	<form method="POST" action="<?php echo $this->getUrl('save','config');?>">
 		<table border="1" width="100%" cellspacing="4">
 			
 			<tr>

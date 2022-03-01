@@ -1,4 +1,5 @@
 <?php $media = $this->getMediaData(); 
+
   $id = Ccc::getFront()->getRequest()->getRequest('id');
   ?>
 <!DOCTYPE html>
@@ -8,9 +9,9 @@
 </head>
 <body>
 	<br><br>
-	<form method="POST" action="<?php echo $this->getUrl('product_media', 'edit', ['id' => $id]);?>">
+	<form method="POST" action="<?php echo $this->getUrl('edit', 'product_media', ['id' => $id]);?>">
 		<button type="submit" name="update"> Update </a></button>
-		<button type="button" name="cancel"><a href="<?php echo $this->getUrl('product','grid')?>"> Cancel </a></button>
+		<button type="button" name="cancel"><a href="<?php echo $this->getUrl('grid','product')?>"> Cancel </a></button>
 			<table border="1" width="100%" cellspacing="4">
 				<tr>
 					<th>Image Id</th>
@@ -31,24 +32,32 @@
 					
 					<?php foreach ($media as $row): ?>
 						<tr>
-							<td><?php echo $row->imageId  ?>
-								<input type="hidden" name="image_<?php echo $row->imageId;?>['imageId']">
-							</td>
+							
+								<td><input type="number" readonly  name="image[imageId][]" value="<?php echo $row->imageId;?>"></td>
+							<!-- <td><?php //echo $row->imageId  ?></td> -->
 							<td><?php echo $row->productId ?></td>
 							<td><?php echo $row->name  ?></td>
-							<td><input type="radio" name="image_<?php echo $row->imageId?>[base]" value= "1"<?php if ($row->base == 1):?> checked <?php endif;?> ></td>
-							<td><input type="radio" name="image_<?php echo $row->imageId?>[thumbnail]" value="<?php echo $row->imageId?>"<?php if ($row->thumbnail == 1):?> checked <?php endif;?> ></td>
-							<td><input type="radio" name="image_<?php echo $row->imageId?>[small]" value="<?php echo $row->imageId?>"<?php if ($row->small == 1):?> checked <?php endif;?> ></td>
-							<td><input type="checkbox" name="image[gallery][]" value="<?php echo $row->gallery?>"></td>
-							<td><input type="radio" name="image_<?php echo $row->imageId?>[status]" value="<?php echo $row->status?>"<?php if ($row->status == 1):?> checked <?php endif;?> ></td>
-							<td><input type="checkbox" name="image_<?php echo $row->imageId?>[remove][]" value="<?php echo $row->imageId?>"<?php if ($row->remove == 1):?> checked <?php endif;?>></td>
+							<td><input type="hidden" name="image[productId]" value="<?php echo $row->productId;?>">
+							<input type="radio" name="image[base]" <?php if($row->base == 1){echo('checked');} ?> value="<?php echo($row->imageId); ?>" ></td>
+
+							<td><input type="radio" name="image[thumbnail]" <?php if($row->thumbnail == 1){echo('checked');} ?> value="<?php echo ($row->imageId); ?>"></td>
+
+							<td><input type="radio" name="image[small]" value="<?php echo ($row->imageId); ?>"
+								<?php if ($row->small == 1):?> checked <?php endif;?> ></td>
+
+							<td><input type="checkbox" name="image[gallery][]" value="<?php echo ($row->imageId); ?>"<?php if ($row->gallery == 1):?> checked <?php endif;?> ></td>
+							<td><input type="radio" name="image[status]" value="<?php echo ($row->imageId); ?>"
+								<?php if ($row->status == 1):?> checked <?php endif;?> ></td>
+
+							<td><input type="checkbox" name="image[remove][]" value="<?php echo ($row->imageId); ?>"<?php if ($row->remove == 1):?> checked <?php endif;?>></td>
+
 						</tr>
 					<?php endforeach; ?>
 				<?php endif; ?>			
 			</table>
 	</form>
 	
-	<form method="POST" action="<?php echo $this->getUrl('product_media', 'save', ['id' =>  $id]);?>" enctype="multipart/form-data">
+	<form method="POST" action="<?php echo $this->getUrl('save', 'product_media', ['id' =>  $id]);?>" enctype="multipart/form-data">
 		<table border="1" width="100%" cellspacing="4">
 			
 			<tr>
