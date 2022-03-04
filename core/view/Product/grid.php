@@ -25,7 +25,7 @@
 					<td><?php echo $product->name; ?></td>
 					<td><?php echo $product->price; ?></td>
 					<td><?php echo $product->quantity; ?></td>
-					<td><?php echo $product->status; ?></td>
+					<td><?php echo $product->getStatus($product->status); ?></td>
 					<td><?php echo $product->createdDate; ?></td>
 					<td><?php echo $product->updatedDate; ?></td>
 					<td><a href="<?php echo $this->getUrl('edit','product',['id' => $product->productId])?>">Edit</a></td>

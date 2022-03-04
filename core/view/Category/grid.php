@@ -30,7 +30,7 @@
 					<td><?php echo $category->categoryId ; ?></td>
 					<td><?php $this->path($category->path) ?></td>
 					<td><?php echo $category->path ; ?></td>
-					<td><?php echo $category->status ; ?></td>
+					<td><?php echo $category->getStatus($category->status); ; ?></td>
 					<td><?php echo $category->createdDate ; ?></td>
 					<td><?php echo $category->updatedDate ; ?></td>
 					<td><a href="index.php?a=edit&c=categories&id=<?php 

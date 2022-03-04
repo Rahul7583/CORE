@@ -2,16 +2,17 @@
 <?php
 class Model_Admin extends Model_Core_Row{
 
+	public function __construct()
+	{
+		$this->setTableClassName('Admin_Resource');
+	}
+	
 	const STATUS_ENABLED = 1;
 	const STATUS_DISABLED = 2;
 	const STATUS_DISABLED_DEFAULT = 1;
 	const STATUS_ENABLED_LBL = 'Enabled';
 	const STATUS_DISABLED_LBL = 'Disabled';
 	
-	public function __construct()
-	{
-		$this->setTableClassName('Admin_Resource');
-	}
 
 	public function getStatus($key = NULL)
 	{

@@ -8,9 +8,10 @@ class Block_Product_Grid extends Block_Core_Template
 	}
 
 	public function getProductData()
-	{
+		{
 		$productModel = Ccc::getModel('Product');
 		$product = $productModel->fetchAll("SELECT * FROM product");
 		return $product;
 	}
+
 }

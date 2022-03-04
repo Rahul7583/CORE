@@ -24,7 +24,7 @@
 					<td><?php echo $config->name; ?></td>
 					<td><?php echo $config->code; ?></td>
 					<td><?php echo $config->value; ?></td>
-					<td><?php echo $config->status; ?></td>
+					<td><?php echo $config->getStatus($config->status); ?></td>
 					<td><?php echo $config->createdDate; ?></td>
 					<td><?php echo $config->updatedDate; ?></td>
 					<td><a href="<?php echo $this->getUrl('edit','config',['id' => $config->configId])?>">Edit</a></td>
