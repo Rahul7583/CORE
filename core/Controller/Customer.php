@@ -27,7 +27,7 @@ class Controller_Customer extends Controller_Core_Action{
 		{
 			$customerModel = Ccc::getModel('Customer');	
 		}
-		$customerEdit = Ccc::getBlock('Customer_Edit')->setData(['customerEdit' => $customerModel]);
+		$customerEdit = Ccc::getBlock('Customer_Edit')->setCustomer($customerModel);
 		$content = $this->getLayout()->getContent();
 		$content->addChild($customerEdit);
 		$this->getLayout()->getChild('content')->getChild('Block_Customer_Edit');

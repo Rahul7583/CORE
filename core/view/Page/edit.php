@@ -1,4 +1,4 @@
-<?php $result = $this->getPageData('pageEdit'); ?>
+<?php $result = $this->getPage(); ?>
 	<form method="post" action="<?php echo $this->getUrl('save','page')?>">
 		<table border="1" width="100%" cellspacing="4">
 			

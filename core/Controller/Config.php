@@ -22,7 +22,7 @@ class Controller_Config extends Controller_Core_Action{
 		{
 			$configModel = Ccc::getModel('Config');
 		}
-		$configEdit= Ccc::getBlock('Config_Edit')->setData(['configEdit' => $configModel]);
+		$configEdit= Ccc::getBlock('Config_Edit')->setConfig($configModel);
 		$content = $this->getLayout()->getContent();
 		$content->addChild($configEdit);
 		$this->getLayout()->getChild('content')->getChild('Block_Config_Edit');

@@ -2,13 +2,22 @@
 <?php
 class Block_Salesman_Edit extends Block_Core_Template
 {
+	protected $salesman = null;
+
 	public function __construct()
 	{
 		$this->setTemplate('view/Salesman/edit.php');
 	}
 
-	public function getSalesmanData()
+	public function setSalesman($salesman)
 	{
-		return $this->getData('salesmanEdit');
+		$this->salesman = $salesman;
+		return $this;
 	}
+
+	public function getSalesman()
+	{
+		return $this->salesman;
+	}
+
 }

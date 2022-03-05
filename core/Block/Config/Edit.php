@@ -2,13 +2,21 @@
 <?php
 class Block_Config_Edit extends Block_Core_Template
 {
+	protected $config = null;
+
 	public function __construct()
 	{
 		$this->setTemplate('view/Config/edit.php');
 	}
 
-	public function getProductData()
+	public function setConfig($config)
 	{
-		return $this->getData('configEdit');
+		$this->config = $config;
+		return $this;
+	}
+
+	public function getConfig()
+	{
+		return $this->config;
 	}
 }

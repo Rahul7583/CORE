@@ -4,6 +4,9 @@
 		<tr>
 			<th>Product_Id</th>
 			<th>Name</th>
+			<th>Base</th>
+			<th>Thumbnail</th>
+			<th>Small</th>
 			<th>Price</th>
 			<th>Quantity</th>
 			<th>Status</th>
@@ -23,6 +26,24 @@
 				<tr>
 					<td><?php echo $product->productId; ?></td>
 					<td><?php echo $product->name; ?></td>
+					<td>
+						<?php if(!$product->base): echo "Image Not Available"; ?>
+								<?php else:?>
+						<img src="<?php echo 'Media/Product/'. $product->base; ?>" width="80px" height="80px"> 
+						<?php endif; ?>
+					</td>
+					<td>
+						<?php if(!$product->thumbnail): echo "Image Not Available"; ?>
+								<?php else:?>
+						<img src="<?php echo 'Media/Product/'. $product->thumbnail; ?>" width="80px" height="80px"> 
+						<?php endif; ?>
+					</td>
+					<td>
+						<?php if(!$product->small): echo "Image Not Available"; ?>
+								<?php else:?>
+						<img src="<?php echo 'Media/Product/'. $product->small; ?>" width="80px" height="80px"> 
+						<?php endif; ?>
+					</td>
 					<td><?php echo $product->price; ?></td>
 					<td><?php echo $product->quantity; ?></td>
 					<td><?php echo $product->getStatus($product->status); ?></td>

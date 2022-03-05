@@ -22,7 +22,7 @@ class Controller_Product extends Controller_Core_Action
 		{
 			$productModel = Ccc::getModel('Product');	
 		}
-		$productEdit = Ccc::getBlock('Product_Edit')->setData(['productEdit' => $productModel]);
+		$productEdit = Ccc::getBlock('Product_Edit')->setProduct($productModel);
 		$content = $this->getLayout()->getContent();
 		$content->addChild($productEdit);
 		$this->getLayout()->getChild('content')->getChild('Block_Product_Edit');

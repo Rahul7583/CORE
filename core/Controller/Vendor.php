@@ -27,7 +27,7 @@ class Controller_Vendor extends Controller_Core_Action
 		{
 			$vendorModel = Ccc::getModel('Vendor');
 		}
-		$vendorEdit = Ccc::getBlock('Vendor_Edit')->setData(['vendorEdit' => $vendorModel]);
+		$vendorEdit = Ccc::getBlock('Vendor_Edit')->setVendor($vendorModel);
 		$content = $this->getLayout()->getContent();
 		$content->addChild($vendorEdit);
 		$this->getLayout()->getChild('content')->getChild('Block_Vendor_Edit');

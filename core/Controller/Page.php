@@ -22,7 +22,7 @@ class Controller_Page extends Controller_Core_Action{
 		{
 			$pageModel = Ccc::getModel('Page');	
 		}
-		$pageEdit = Ccc::getBlock('Page_Edit')->setData(['pageEdit' => $pageModel]);
+		$pageEdit = Ccc::getBlock('Page_Edit')->setPage($pageModel);
 		$content = $this->getLayout()->getContent();
 		$content->addChild($pageEdit);
 		$this->getLayout()->getChild('content')->getChild('Block_Page_Edit');

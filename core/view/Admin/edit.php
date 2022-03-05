@@ -1,3 +1,4 @@
+
 <?php $result = $this->getAdmin(); ?>
 	<form method="POST" action="<?php echo $this->getUrl('save','admin');?>">
 		<table border="1" width="100%" cellspacing="4">

@@ -8,6 +8,7 @@
 				<tr>
 					<th>Image Id</th>
 					<th>Product Id</th>
+					<th>Picture</th>
 					<th>Name</th>
 					<th>Base</th>
 					<th>Thumbnail</th>
@@ -18,7 +19,7 @@
 				</tr>
 					<?php if(!$media):?>
 				<tr>
-					<td colspan="11">No record Available</td>
+					<td colspan="10">No record Available</td>
 				</tr>	
 				<?php else:?>
 					
@@ -26,7 +27,15 @@
 						<tr>
 							<td><input type="number" readonly  name="image[imageId][]" value="<?php echo $row->imageId;?>"></td>
 							<td><?php echo $row->productId ?></td>
+							
+							<td><?php if($row->gallery != 1): echo "Gallery Not Selected.";?>
+										<?php else: ?>
+											<img src="<?php echo 'Media/Product/'.$row->name; ?>" width="80px" height="80px">
+											<?php endif; ?>
+							</td>
 							<td><?php echo $row->name  ?></td>
+
+
 							<td><input type="hidden" name="image[productId]" value="<?php echo $row->productId;?>">
 							<input type="radio" name="image[base]" <?php if($row->base == 1){echo('checked');} ?> value="<?php echo($row->imageId); ?>" ></td>
 
@@ -47,7 +56,7 @@
 			</table>
 	</form>
 	
-	<form method="POST" action="<?php echo $this->getUrl('save', 'product_media', ['id' =>  $id]);?>" enctype="multipart/form-data">
+	<form method="POST" action="<?php echo $this->getUrl('edit', 'product_media', ['id' =>  $id]);?>" enctype="multipart/form-data">
 		<table border="1" width="100%" cellspacing="4">
 			
 			<tr>

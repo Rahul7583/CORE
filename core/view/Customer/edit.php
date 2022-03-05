@@ -1,4 +1,4 @@
-<?php $result = $this->getCustomerData('customerEdit'); ?>
+<?php $result = $this->getCustomer(); ?>
 <!DOCTYPE html>
 <html>
 <head>

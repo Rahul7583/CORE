@@ -1,4 +1,4 @@
-<?php $result = $this->getData('productEdit');?>
+<?php $result = $this->getProduct(); ?>
 <form method="POST" action="<?php echo $this->getUrl('save','product');?>">
 		<table border="1" width="100%" cellspacing="4">			
 			<tr>
