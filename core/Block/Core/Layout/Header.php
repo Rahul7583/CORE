@@ -17,7 +17,23 @@ class Block_Core_Layout_Header extends Block_Core_Template
 				$child->toHtml();
 			}
 			return $child;
-		}	
+		}
+
+	
 }
 
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

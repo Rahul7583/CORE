@@ -1,4 +1,4 @@
-<?php $result = $this->getData('configEdit'); ?>
+<?php $result = $this->getConfig(); ?>
 	<form method="POST" action="<?php echo $this->getUrl('save','config');?>">
 		<table border="1" width="100%" cellspacing="4">
 			

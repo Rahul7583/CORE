@@ -32,7 +32,7 @@
 					<td><?php echo $vendor->lastName;  ?></td>
 					<td><?php echo $vendor->email;  ?></td>
 					<td><?php echo $vendor->mobile;  ?></td>
-					<td><?php echo $vendor->status;  ?></td>
+					<td><?php echo $vendor->getStatus($vendor->status);  ?></td>
 					<td><?php echo $vendor->address; ?></td>
 					<td><?php echo $vendor->postalCode; ?></td>
 					<td><?php echo $vendor->city;  ?></td>

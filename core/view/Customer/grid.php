@@ -34,7 +34,7 @@
 					<td><?php echo $customer->lastName;  ?></td>
 					<td><?php echo $customer->email;  ?></td>
 					<td><?php echo $customer->mobile;  ?></td>
-					<td><?php echo $customer->status;  ?></td>
+					<td><?php echo $customer->getStatus($customer->status);  ?></td>
 					<td><?php echo $customer->address; ?></td>
 					<td><?php echo $customer->postalCode; ?></td>
 					<td><?php echo $customer->city;  ?></td>

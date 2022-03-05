@@ -5,6 +5,19 @@ Ccc::loadClass('Block_Core_Layout');
 class Controller_Core_Action 
 {
 	public $layout = NULL;
+	protected $message = null;
+
+
+	public function setMessage($message)
+	{
+		$this->message = $message;
+		return $this;
+	}
+
+	public function getMessage()
+	{
+		return $this->message;
+	}
 	
 	public function setLayout($layout)
 	{

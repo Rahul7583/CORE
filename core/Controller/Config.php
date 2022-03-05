@@ -22,7 +22,7 @@ class Controller_Config extends Controller_Core_Action{
 		{
 			$configModel = Ccc::getModel('Config');
 		}
-		$configEdit= Ccc::getBlock('Config_Edit')->setData(['configEdit' => $configModel]);
+		$configEdit= Ccc::getBlock('Config_Edit')->setConfig($configModel);
 		$content = $this->getLayout()->getContent();
 		$content->addChild($configEdit);
 		$this->getLayout()->getChild('content')->getChild('Block_Config_Edit');
@@ -30,7 +30,7 @@ class Controller_Config extends Controller_Core_Action{
 	}
 
 	public function saveAction()
-	{	
+	{	$message = Ccc::getModel('Core_Message');
 		try {
 			 $configModel = Ccc::getModel('Config');
 			$request = $this->getRequest();
@@ -46,6 +46,8 @@ class Controller_Config extends Controller_Core_Action{
 			  		{
 			  			throw new Exception("System is unable to update. ", 1);
 			  		} 
+			  		$message->addMessage('Data Updated', Model_Core_Message::SUCCESS);
+			  		$this->redirect($this->getLayout()->getUrl('grid', 'config'));
 			  	}			
 				else{	
 						unset($config['configId']);
@@ -57,29 +59,33 @@ class Controller_Config extends Controller_Core_Action{
 				 			throw new Exception("System is unable to insert.", 1);	
 				 		}			
 					}
+					$message->addMessage('Data Saved', Model_Core_Message::SUCCESS);
 					$this->redirect($this->getLayout()->getUrl('grid','config'));
 			}
 		 catch (Exception $e) {
+		 	$message->addMessage('Somthing wrong with your data', Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid','config'));
 		}
 	}
 
 	public function deleteAction()
 	{
+		$message = Ccc::getModel('Core_Message');
 		try {
 			$configModel = Ccc::getModel('config');
 			$id = $this->getRequest()->getRequest('id');
 			$result = $configModel->delete($id);
-				if (!$result)
-				{
-					throw new Exception("system is unable to delete.", 1);
-				}
-
+			if (!$result)
+			{
+				throw new Exception("system is unable to delete.", 1);
+			}
+			$message->addMessage('Data Deleted', Model_Core_Message::SUCCESS);
 			$this->redirect($this->getLayout()->getUrl('grid','config'));
 	
 			} 
 		catch (Exception $e)
 		{
+			$message->addMessage('Somthing wrong with your data', Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid','config'));			
 		}	
 	}

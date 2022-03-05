@@ -1,4 +1,4 @@
-<?php $result = $this->getVendorData('vendorEdit'); ?>
+<?php $result = $this->getVendor(); ?>
 	<form method="post" action="<?php echo $this->getUrl('save','vendor')?>">
 		<table border="1" width="100%" cellspacing="4">
 			

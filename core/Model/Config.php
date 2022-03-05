@@ -2,16 +2,16 @@
 <?php
 class Model_Config extends Model_Core_Row{
 
+	public function __construct()
+	{
+		$this->setTableClassName('Config_Resource');		
+	}
+	
 	const STATUS_ENABLED = 1;
 	const STATUS_DISABLED = 2;
 	const STATUS_DISABLED_DEFALUT = 1;
 	const STATUS_ENABLED_LBL = 'Enabled';
 	const STATUS_DISABLED_LBL = 'Disabled';
-	
-	public function __construct()
-	{
-		$this->setTableClassName('Config_Resource');		
-	}
 
 	public function getStatus($key = null)
 	{

@@ -1,8 +1,5 @@
-
-
-<?php $media = $this->getCategoryMediaData(); 
-  $id = Ccc::getFront()->getRequest()->getRequest('id');
-  ?>
+<?php $media = $this->getCategoryMediaData(); ?> 
+<?php $id = Ccc::getFront()->getRequest()->getRequest('id'); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +14,7 @@
 				<tr>
 					<th>Image Id</th>
 					<th>Category Id</th>
+					<th>Picture</th>
 					<th>Name</th>
 					<th>Base</th>
 					<th>Thumbnail</th>
@@ -33,11 +31,15 @@
 					
 					<?php foreach ($media as $row): ?>
 						<tr>
-							
-								<td><input type="number" readonly  name="image[imageId][]" value="<?php echo $row->imageId;?>"></td>
-							<!-- <td><?php //echo $row->imageId  ?></td> -->
+							<td><input type="number" readonly  name="image[imageId][]" value="<?php echo $row->imageId;?>"></td>
 							<td><?php echo $row->categoryId ?></td>
-							<td><?php echo $row->name  ?></td>
+							<td>
+								<?php if($row->gallery != 1): ?>
+									<?php else: ?>
+										<img src="<?php echo 'Media/Category/'.$row->name;?>" width="80px" height="80px">		
+								<?php endif; ?>
+							</td>
+							<td><?php echo $row->name ?></td>
 							<td><input type="hidden" name="image[categoryId]" value="<?php echo $row->categoryId;?>">
 							<input type="radio" name="image[base]" <?php if($row->base == 1){echo('checked');} ?> value="<?php echo($row->imageId); ?>" ></td>
 
@@ -58,7 +60,7 @@
 			</table>
 	</form>
 	
-	<form method="POST" action="<?php echo $this->getUrl('save', 'category_media', ['id' =>  $id]);?>" enctype="multipart/form-data">
+	<form method="POST" action="<?php echo $this->getUrl('edit', 'category_media', ['id' =>  $id]);?>" enctype="multipart/form-data">
 		<table border="1" width="100%" cellspacing="4">
 			
 			<tr>

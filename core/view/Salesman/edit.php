@@ -1,4 +1,4 @@
-<?php $result = $this->getSalesmanData('salesmanEdit'); ?>
+<?php $result = $this->getSalesman(); ?>
 <form method="post" action="<?php echo $this->getUrl('save','salesman')?>">
 		<table border="1" width="100%" cellspacing="4">
 			<tr>

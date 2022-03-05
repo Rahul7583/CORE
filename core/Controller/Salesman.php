@@ -22,7 +22,7 @@ class Controller_Salesman extends Controller_Core_Action
 		{
 			$salesmanModel = Ccc::getModel('Salesman');	
 		}		
-		$salesmanEdit = Ccc::getBlock('Salesman_Edit')->setData(['salesmanEdit' => $salesmanModel]);
+		$salesmanEdit = Ccc::getBlock('Salesman_Edit')->setSalesman($salesmanModel);
 		$content = $this->getLayout()->getContent();
 		$content->addChild($salesmanEdit);
 		$this->getLayout()->getChild('content')->getChild('Block_Salesman_Edit');
@@ -31,53 +31,65 @@ class Controller_Salesman extends Controller_Core_Action
 
 	public function saveAction()
 	{	
-			$salesmanModel = Ccc::getModel('Salesman');
-			$request = $this->getRequest();
-			$salesman = $request->getPost('salesman');
+		$message = Ccc::getModel('Core_Message');
+		try {
+				$salesmanModel = Ccc::getModel('Salesman');
+				$request = $this->getRequest();
+				$salesman = $request->getPost('salesman');
 	
-			if(!isset($salesman))
-			{
-				throw new Exception("Missing salesman data in request.", 1);
-			}
+				if(!isset($salesman))
+				{
+					throw new Exception("Missing salesman data in request.", 1);
+				}
 
-			if($salesman['salesmanId'] != null)
-			{
-					$row = $salesmanModel->load($salesman['salesmanId']); 	
-					$row->setData($salesman);
-					$row->updatedDate = date('Y-m-d H:i:s');
-					$result = $row->save();
-			  		if(!$result)
-			  		{
-			  			throw new Exception("system is unable to update.", 1);
-			  		}
-				 	
-			}
-			else{	
-					unset($salesman['salesmanId']);
-					$setData = $salesmanModel->setData($salesman);
-					$setData->createdDate = date('Y-m-d H:i:s');
-					$salesmanId = $salesmanModel->save();
-			 		if (!$salesmanId) 
-			 		{
-			 			throw new Exception("system is unable to insert.", 1);
-			 		} 		
-			 	}
-			 	$this->redirect($this->getLayout()->getUrl('grid','salesman'));
+				if($salesman['salesmanId'] != null)
+				{
+						$row = $salesmanModel->load($salesman['salesmanId']); 	
+						$row->setData($salesman);
+						$row->updatedDate = date('Y-m-d H:i:s');
+						$result = $row->save();
+				  		if(!$result)
+				  		{
+				  			throw new Exception("system is unable to update.", 1);
+				  		}
+				  		$message->addMessage('Data Updated', Model_Core_Message::SUCCESS);
+				  		$this->redirect($this->getLayout()->getUrl('grid'));
+					 	
+				}
+				else{	
+						unset($salesman['salesmanId']);
+						$setData = $salesmanModel->setData($salesman);
+						$setData->createdDate = date('Y-m-d H:i:s');
+						$salesmanId = $salesmanModel->save();
+				 		if (!$salesmanId) 
+				 		{
+				 			throw new Exception("system is unable to insert.", 1);
+				 		} 		
+				 	}
+				 	$message->addMessage('Data Saved', Model_Core_Message::SUCCESS);
+				 	$this->redirect($this->getLayout()->getUrl('grid','salesman'));
+			} catch (Exception $e) {
+				$message->addMessage('Somthing wrong with your data', Model_Core_Message::ERROR);
+				$this->redirect($this->getLayout()->getUrl('grid'));
+			}	
 	}
 
 	public function deleteAction()
 	{
+		$message = Ccc::getModel('Core_Message');
 		try {
-			$salesmanModel = Ccc::getModel('salesman');
-			$id = (int)$this->getRequest()->getRequest('id');
-			$result = $salesmanModel->delete($id);
-			if(!$result)
-			{
-				throw new Exception("system is unable to delete", 1);
-			}
-			$this->redirect($this->getLayout()->getUrl('grid','salesman'));
+				$salesmanModel = Ccc::getModel('salesman');
+				$id = (int)$this->getRequest()->getRequest('id');
+				$result = $salesmanModel->delete($id);
+				if(!$result)
+				{
+					throw new Exception("system is unable to delete", 1);
+				}
+				$message->addMessage('Data Deleted', Model_Core_Message::SUCCESS);
+				$this->redirect($this->getLayout()->getUrl('grid'));
 		} catch (Exception $e) {
-			//$this->redirect($this->getLayout()->getUrl('grid','salesman'));
+			$message->addMessage('Somthing wrong with your data', Model_Core_Message::ERROR);
+			$this->redirect($this->getLayout()->getUrl('grid'));
 		}
 	}
 
