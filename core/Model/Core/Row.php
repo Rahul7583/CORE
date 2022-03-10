@@ -102,7 +102,7 @@ class Model_Core_Row
 	 }
 
 	 public function load($id, $column=null)
-	{
+	 {
 		if($column == null)
 		{
 			 $column = $this->getTable()->getPrimaryKey();
@@ -115,11 +115,11 @@ class Model_Core_Row
 		}
 		
 		return $rowData;
-	}
+	 }
 
-		public function getPath($path)
+		public function getPath()
 		{
-			return $this->getTable()->path($path);
+			return $this->getTable()->getPath();
 		}
 	
 }

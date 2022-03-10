@@ -78,7 +78,7 @@ class Controller_Customer extends Controller_Core_Action{
 
 	public function saveAddress($customerId)
 	{
-		$message = Ccc::getModel('Core_Message');
+		$adminMessage = Ccc::getModel('Admin_Message');
 		try {
 				$addressModel = Ccc::getModel('Customer_Address');
 				$request = $this->getRequest();
@@ -102,35 +102,35 @@ class Controller_Customer extends Controller_Core_Action{
 					
 				 $addressData=$addressModel->fetchAll("SELECT * FROM address WHERE customerId = {$customerId}");
 			
-					if($addressData)
-					{	
-						$row = $addressModel->load($customerId);
-						$addressModel->setData($address);
-						$addressModel->addressId = $resultAddress->addressId;
-						$result = $addressModel->save();	
-						if(!$result)
-						{
-							throw new Exception("system is unable to update.", 1);	
-						}
-						$message->addMessage('Data Updated', Model_Core_Message::SUCCESS);
-						$this->redirect($this->getLayout()->getUrl('grid', 'customer'));
-						
+				if($addressData)
+				{	
+					$row = $addressModel->load($customerId);
+					$addressModel->setData($address);
+					$addressModel->addressId = $resultAddress->addressId;
+					$result = $addressModel->save();	
+					if(!$result)
+					{
+						throw new Exception("system is unable to update.", 1);	
 					}
-					else
-					{	
-						$addressModel->setData($address);
-						$addressModel->customerId = $customerId;
-						$result = $addressModel->save();	
-				 		if(!$result)
-				 		{
-				 			throw new Exception("System is unable to insert.", 1);	
-				 		}
-					}
-					$message->addMessage('Data Saved', Model_Core_Message::SUCCESS);
-					$this->redirect($this->getLayout()->getUrl('grid','customer'));
+					$adminMessage->addMessage('Data Updated');
+					$this->redirect($this->getLayout()->getUrl('grid', 'customer'));
+					
+				}
+				else
+				{	
+					$addressModel->setData($address);
+					$addressModel->customerId = $customerId;
+					$result = $addressModel->save();	
+			 		if(!$result)
+			 		{
+			 			throw new Exception("System is unable to insert.", 1);	
+			 		}
+				}
+				$adminMessage->addMessage('Data Saved');
+				$this->redirect($this->getLayout()->getUrl('grid','customer'));
 			
 		} catch (Exception $e) {
-			$message->addMessage('Something Wrong with your data', Model_Core_Message::ERROR);
+			$adminMessage->addMessage('Something Wrong with your data', Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid', 'customer'));
 		}
 	}
@@ -143,14 +143,14 @@ class Controller_Customer extends Controller_Core_Action{
 			} 
 		catch (Exception $e) 
 		{
-			$message->addMessage('Something Wrong with your data', Model_Core_Message::ERROR);
+			$adminMessage->addMessage('Something Wrong with your data', Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid','customer'));
 		}	
 	}
 
 	public function deleteAction()
 	{
-		$message = Ccc::getModel('Core_Message');
+		$adminMessage = Ccc::getModel('Admin_Message');
 		try {
 				$customerModel = Ccc::getModel('customer');
 				$id = (int)$this->getRequest()->getRequest('id');
@@ -159,17 +159,11 @@ class Controller_Customer extends Controller_Core_Action{
 				{
 					throw new Exception("system is unable to delete", 1);
 				}
-				$message->addMessage('Data Deleted', Model_Core_Message::SUCCESS);
+				$adminMessage->addMessage('Data Deleted');
 				$this->redirect($this->getLayout()->getUrl('grid','customer'));
 		} catch (Exception $e) {
-			$message->addMessage('Something wrong with your Data', Model_Core_Message::SUCCESS);
+			$adminMessage->addMessage('Something wrong with your Data', Model_Core_Message::SUCCESS);
 			$this->redirect($this->getLayout()->getUrl('grid','customer'));
 		}
 	}
-
-	public function errorAction()
-	{
-			echo "Error.";
-	}
 }
-?>

@@ -16,6 +16,10 @@ class Controller_Core_Action
 
 	public function getMessage()
 	{
+		if(!$this->message)
+		{
+			$this->setMessage(Ccc::getModel('Core_Message'));
+		}
 		return $this->message;
 	}
 	

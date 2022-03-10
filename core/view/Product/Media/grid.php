@@ -1,6 +1,5 @@
-<?php $media = $this->getMediaData(); 
-  $id = Ccc::getFront()->getRequest()->getRequest('id');
- ?>
+<?php $media = $this->getMediaData(); ?> 
+<?php $id = Ccc::getFront()->getRequest()->getRequest('id'); ?>
 <form method="POST" action="<?php echo $this->getUrl('edit', 'product_media', ['id' => $id]);?>">
 	<button type="submit" name="update"> Update </a></button>
 	<button type="button" name="cancel"><a href="<?php echo $this->getUrl('grid','product')?>"> Cancel </a></button>
@@ -49,7 +48,6 @@
 								<?php if ($row->status == 1):?> checked <?php endif;?> ></td>
 
 							<td><input type="checkbox" name="image[remove][]" value="<?php echo ($row->imageId); ?>"<?php if ($row->remove == 1):?> checked <?php endif;?>></td>
-
 						</tr>
 					<?php endforeach; ?>
 				<?php endif; ?>			

@@ -25,6 +25,11 @@
 				<td><input type="text" name="salesman[mobile]" value="<?php echo $result->mobile ?>"></td>
 				<input type="hidden" name="salesman[salesmanId]" value="<?php echo $result->salesmanId  ?>">
 			</tr>
+
+			<tr>
+				<td width="10%">Discount</td>
+				<td><input type="number" name="salesman[discount]" value="<?php echo $result->discount ?>"></td>
+			</tr>
 			
 			<tr>
 				<td>Status</td>

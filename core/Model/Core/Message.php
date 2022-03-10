@@ -1,9 +1,16 @@
 <?php 
 class Model_Core_Message{
+
 	protected $session = null; 
+
 	const SUCCESS = "sucess";
 	const ERROR = "error";
 	const WARNING = "warning";
+
+	public function __construct()
+	{
+		
+	}
 
 	public function setSession($session)
 	{
