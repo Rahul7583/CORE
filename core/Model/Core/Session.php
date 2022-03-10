@@ -1,8 +1,11 @@
 <?php 
 class Model_Core_Session 
 {
+	protected $namespace = null;
+
 	public function __construct()
 	{
+		$this->setNamesapce('core');
 		$this->startSession();
 	}
 
@@ -13,6 +16,17 @@ class Model_Core_Session
 			return false;
 		}
 		return true;
+	}
+
+	public function setNamesapce($namespace)
+	{
+		$this->namespace = $namespace;
+		return $this;
+	}
+
+	public function getNamespace()
+	{
+		return $this->namespace;
 	}
 
 	public function startSession()
@@ -58,7 +72,7 @@ class Model_Core_Session
 		{
 			$this->startSession();
 		}
-		$_SESSION[$key] = $value;
+		$_SESSION[$this->getNamespace()][$key] = $value;
 		return $this;
 	}
 
@@ -69,11 +83,11 @@ class Model_Core_Session
 			return null;
 		}
 		
-		if(!array_key_exists($key, $_SESSION))
+		if(!array_key_exists($key, $_SESSION[$this->getNamespace()]))
 		{
 			return null;
 		}
-		return $_SESSION[$key];
+		return $_SESSION[$this->getNamespace()][$key];
 	}
 
 	public function __unset($key)
@@ -83,9 +97,9 @@ class Model_Core_Session
 			return $this;
 		}
 
-		if(array_key_exists($key, $_SESSION))
+		if(array_key_exists($key, $_SESSION[$this->getNamespace()]))
 		{
-			unset($_SESSION[$key]);
+			unset($_SESSION[$this->getNamespace()][$key]);
 		}
 		return $this;
 	}

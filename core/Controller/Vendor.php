@@ -78,7 +78,7 @@ class Controller_Vendor extends Controller_Core_Action
 
 	public function saveAddress($vendorId)
 	{
-		$message = Ccc::getModel('Core_Message');
+		$adminMessage = Ccc::getModel('Admin_Message');
 		try {
 				$addressModel = Ccc::getModel('Vendor_Address');
 				$request = $this->getRequest();
@@ -101,7 +101,7 @@ class Controller_Vendor extends Controller_Core_Action
 						{
 							throw new Exception("system is unable to update.", 1);	
 						}
-						$message->addMessage('Data Updated', Model_core_Message::SUCCESS);
+						$adminMessage->addMessage('Data Updated');
 						$this->redirect($this->getLayout()->getUrl('grid'));		
 					}
 					else{
@@ -114,10 +114,10 @@ class Controller_Vendor extends Controller_Core_Action
 				 			throw new Exception("System is unable to insert.", 1);	
 				 		}
 					}
-					$message->addMessage('Data Saved', Model_core_Message::SUCCESS);
+					$adminMessage->addMessage('Data Saved');
 					$this->redirect($this->getLayout()->getUrl('grid','vendor'));
 			} catch (Exception $e) {
-				$message->addMessage('Somthing wrong with your data', Model_core_Message::ERROR);
+				$adminMessage->addMessage('Somthing wrong with your data', Model_core_Message::ERROR);
 				$this->redirect($this->getLayout()->getUrl('grid'));
 			}	
 	}
@@ -130,7 +130,7 @@ class Controller_Vendor extends Controller_Core_Action
 		} 
 		catch (Exception $e) 
 		{	
-			$message->addMessage('Somthing wrong with your data.', Model_core_Message::ERROR);
+			$adminMessage->addMessage('Somthing wrong with your data.', Model_core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid'));
 		}
 			
@@ -138,7 +138,7 @@ class Controller_Vendor extends Controller_Core_Action
 
 	public function deleteAction()
 	{
-		$message = Ccc::getModel('Core_Message');
+		$adminMessage = Ccc::getModel('Admin_Message');
 		try {
 				$vendorModel = Ccc::getModel('vendor');
 				$id = (int)$this->getRequest()->getRequest('id');
@@ -147,18 +147,11 @@ class Controller_Vendor extends Controller_Core_Action
 				{
 					throw new Exception("system is unable to delete", 1);
 				}
-				$message->addMessage('Data Deleted', Model_core_Message::SUCCESS);
+				$adminMessage->addMessage('Data Deleted');
 				$this->redirect($this->getLayout()->getUrl('grid'));
 		} catch (Exception $e) {
-			$this->getMessage()->addMessage('Somthing wrong with your data.', Model_Core_Message::SUCCESS);
+			$adminMessage->addMessage('Somthing wrong with your data.', Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid'));
 		}
 	}
-
-	public function errorAction()
-	{
-			echo "Error.";
-	}
 }
-
-?>

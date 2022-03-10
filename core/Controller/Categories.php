@@ -2,6 +2,7 @@
 Ccc::loadClass('Controller_Core_Action');
 class Controller_Categories extends Controller_Core_Action{
 
+
 	public function gridAction()			
 	{
 		$categoryGrid = Ccc::getBlock('Category_Grid');
@@ -13,6 +14,7 @@ class Controller_Categories extends Controller_Core_Action{
 
 	public function editAction()
 	{
+		$categoryModel = null;
 		if((int)$this->getRequest()->getRequest('id'))
 		{
 			$id = (int)$this->getRequest()->getRequest('id');
@@ -23,6 +25,7 @@ class Controller_Categories extends Controller_Core_Action{
 			$categoryModel = Ccc::getModel('Category');	
 		}
 		$CategoryEdit = Ccc::getBlock('Category_Edit')->setCategory($categoryModel);
+
 		$content = $this->getLayout()->getContent();
 		$content->addChild($CategoryEdit);
 		$this->getLayout()->getChild('content')->getChild('Block_Category_Edit');
@@ -31,111 +34,59 @@ class Controller_Categories extends Controller_Core_Action{
 
 	public function saveAction()
 	{
-		$message = Ccc::getModel('Core_Message');
-		try {
-			 $categoryModel = Ccc::getModel('Category');
-			 $request = $this->getRequest();
-			 $category = $request->getPost('category');
-			 print_r($category);
-
-			if(!isset($category))
-			{
-				throw new Exception("Missing category data in request.", 1);
-			}
-
-			if($category['hiddenId'] != null)
-			{
-					$row = $categoryModel->load($category['categoryId']);
-					$row->setData($category);	
-					$row->updatedDate = date('Y-m-d H:i:s');
-					$result = $row->save();
-			  		if(!$result)
-			  		{
-			  			throw new Exception("system is unable to update.", 1);
-			  		}
-			  		$message->addMessage('Data Updated', Model_Core_Message::SUCCESS);
-			  		$this->redirect($this->getLayout()->getUrl('grid'));	
-			}
-			else{
-				$block = Ccc::getBlock('Category_Edit');
-					unset($category['hiddenId']);
-			 		$setData = $categoryModel->setData($category);
-			 		$setData->createdDate = date('Y-m-d H:i:s');
-					$parentPath = $block->getpath($setData->parentId);
-					print_r($parentPath);
-					exit();
-					$categoryId = $categoryModel->save();
-			 		if (!$categoryId) 
-			 		{
-			 			throw new Exception("system is unable to insert.", 1);
-			 		}
-			 		
-			 		$message->addMessage('Data Saved', Model_Core_Message::SUCCESS);
-			 		$this->redirect($this->getLayout()->getUrl('grid'));
-			 	}
-			 } catch (Exception $e) 
-			 {
-			 	$message->addMessage('Something wrong with your data', Model_Core_Message::ERROR);
-			 	$this->redirect($this->getLayout()->getUrl('grid'));
-			 }	 
-	}
-
-	/*public function saveAction()
-	{
-		global $adapter;
-		$row = $_POST['category'];
-		$parentName = $row['parentName'];
-		$name = $row['name'];
-		$status = $row['status'];
-		$date = date('y-m-d h:m:s');	
-		$parentPath = NULL;
+		$categoryModel = Ccc::getModel('Category');
+		$formData = $this->getRequest()->getPost('category');
 	
-						
-		if($parentName == '0')
+		if(!(int)$formData['hiddenId'])
 		{
-			$insert="INSERT INTO `categories` (`parentId`,`name`, `status`, `createdDate`) 
-					VALUES ('$parentName','$name' , '$status', '$date' )";
+			try {
+				unset($formData['hiddenId']);
+				$setData = $categoryModel->setData($formData); 
+				
+				$setData->createdDate = date("Y-m-d H:m:s");
+				$insertId = $categoryModel->save();
+	
+				$categoryPath = $categoryModel->load($formData['parentId']);
+				$newPath = NULL;
+				if($categoryPath)
+				{
+					$newPath = $categoryPath->path.'/'.$insertId;
+				}
+				else{
+					$newPath = $insertId;
+				}
+				
+				$updatePath = $categoryModel->load($insertId);
 			
-			$insertId = $adapter->insert($insert);
-				if(!$insertId){
-					throw new Exception("System is unable to insert.", 1);
-				}
-			$parentPath = $insertId;
+				$updatePath->parentId = $insertId;
 
-			$updateQuery = "UPDATE `categories` 
-							SET `path` = '$parentPath' 
-							WHERE `categories`.`categoryId` = '$insertId'";
-			$result = $adapter->update($updateQuery);
+				$updatePath->path = $newPath;
+				$updatePath->save();
+				$this->getMessage()->addMessage('Added SuccessFully.');
 
-				if(!$result){
-					throw new Exception("System is unable to update.", 1);
-				}
-			$this->redirect("index.php?a=grid&c=categories");
+			} catch (Exception $e) {
+				$this->getMessage()->addMessage('System is not able to add.',Model_Core_Message::ERROR);
+
+			}
 		}
-		else
-		{
-			$insert = "INSERT INTO `categories` (`name`, `status`,`createdDate`,`path`)
-					  VALUES ('$name' , $status, '$date','$parentName' )";
+		else{
+			try{
+				$row = $categoryModel->load($formData['parentId']);
+				unset($formData['hiddenId']);
+				$row->setData($formData);
+				$row->categoryId = $formData['parentId'];// 114
+				$row->updatedDate = date('Y-m-d H:m:s');
+				print_r($row);
+				$result = $row->save();
+				$this->getMessage()->addMessage('Updated SuccessFully.');
 
-			$insertId = $adapter->insert($insert);
-			
-			$path = $adapter->fetchRow("SELECT * FROM `categories` 
-										WHERE `name` = '$parentName' ");
-			$parentPath = $path['path']."/".$insertId;//45/20			
-			$path1 = explode("/", $path['path']);
-			$parentId = array_pop($path1);
+			}catch(Exception $e){
+				$this->getMessage()->addMessage('System is not able to Update.',Model_Core_Message::ERROR);
 
-			$updateQuery = "UPDATE `categories` 
-							SET `path` = '$parentPath', `parentId` = '$parentId' 
-							WHERE `categories`.`categoryId` = '$insertId'";			
-			$newPath = $adapter->update($updateQuery);
-
-				if(!$newPath){
-					throw new Exception("System is unable to Update.", 1);
-				}
-				$this->redirect("index.php?a=grid&c=categories");	
-		}	
-	}*/
+			}		
+		}
+		$this->redirect($this->getLayout()->getUrl('grid'));
+	}
 
 	public function deleteAction()
 	{
@@ -152,17 +103,10 @@ class Controller_Categories extends Controller_Core_Action{
 				throw new Exception("system is unable to delete", 1);
 			}
 
-			$this->redirect('index.php?a=grid&c=categories');
+			$this->redirect($this->getLayout()->getUrl('grid'));
 			
 		} catch (Exception $e) {
-			$this->redirect('index.php?a=grid&c=categories');
+			$this->redirect($this->getLayout()->getUrl('grid'));
 		}
 	}	
-
-	public function errorAction()
-	{
-		echo "error";		
-	}
 }
-
-?>

@@ -7,7 +7,7 @@ class Model_Core_Row_Resource{
 
 	public function getRow()
 	{
-		$rowObj = Ccc::getModel($this->getRowClassName()); //Model_address
+		$rowObj = Ccc::getModel($this->getRowClassName()); 
 		return $rowObj;
 	}
 
@@ -59,6 +59,8 @@ class Model_Core_Row_Resource{
 		 $columnValue = "'".$columnValue."'";
 		 $tableName = $this->getTableName();
 		 $query = "INSERT INTO `$tableName` ($columnName) VALUES ($columnValue)";
+		 print_r($query);
+		 //exit();
 		 $insertId = $this->getAdapter()->insert($query);
 		 return $insertId;
 
@@ -101,6 +103,28 @@ class Model_Core_Row_Resource{
 		$result = $this->getAdapter()->fetchAll($query);
 		return $result;	
 	}
+
+	public function getPath()
+ 	{
+	  $category = [];
+	  $idName = $this->getAdapter()->fetchPairs("SELECT categoryId, name FROM categories");
+	  $idPath = $this->getAdapter()->fetchPairs("SELECT categoryId, path FROM categories");
+ 
+	  foreach ($idPath as $categoryId => $path) {
+	   $id_array = explode("/", $path);
+	   $temp = [];
+	   foreach ($id_array as $key => $pathId)
+	    {
+		    if(array_key_exists($pathId, $idName))
+		    {
+		     array_push($temp, $idName[$pathId]);
+		    }
+	   }
+	   $path_array = implode(" / ", $temp);
+	   $category[$categoryId] = $path_array;
+	  }
+	  return $category;
+ }
 
 	public function getAdapter()
 	{

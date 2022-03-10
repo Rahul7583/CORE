@@ -9,7 +9,7 @@ class Block_Core_Layout_Header_Message extends Block_Core_Template
 
 	public function getMessage()
 		{
-			$message = Ccc::getModel('Core_Message');
+			$message = Ccc::getModel('Admin_Message');
 			return $message;
 		}	
 

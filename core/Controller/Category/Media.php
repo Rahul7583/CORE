@@ -14,10 +14,10 @@ class Controller_Category_Media extends Controller_Core_Action
 
 	public function saveAction()
 	{
+		$adminMessage = Ccc::getModel('Admin_Message');
 		try {
 				if($_FILES['image'])
 				{
-					$message = Ccc::getModel('Core_Message');
 					$id = (int)$this->getRequest()->getRequest('id');
 					$file = $_FILES['image'];
 					$extention =$file['type']; 
@@ -39,7 +39,7 @@ class Controller_Category_Media extends Controller_Core_Action
 					$categoryImageModel->name = $imageName;
 					$categoryImageModel->save();
 
-					$message->addMessage('Data Saved.');
+					$adminMessage->addMessage('Data Saved.');
 					$this->redirect($this->getLayout()->getUrl('grid','category_media',['id'=> $id]));	
 				}
 				else
@@ -116,13 +116,11 @@ class Controller_Category_Media extends Controller_Core_Action
 							$categoryImageModel->delete($row);
 						}
 					}	
-
-					$message = Ccc::getModel('Core_Message');
-					$message->addMessage('Data Updated.');
+					$adminMessage->addMessage('Data Updated.');
 					$this->redirect($this->getLayout()->getUrl('grid','category_media',['id'=> $id]));	
 				}
 		} catch (Exception $e) {
-			$message->addMessage('Somthing wrong with your data.', Model_Core_Message::ERROR);
+			$adminMessage->addMessage('Somthing wrong with your data.', Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid','category_media',['id'=> $id]));
 		}
 		

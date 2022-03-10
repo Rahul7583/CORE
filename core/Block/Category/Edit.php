@@ -20,41 +20,20 @@ class Block_Category_Edit extends Block_Core_Template
 		return $this->category;
 	}
 
-	public function getCategoriesEdit()
-   	{
-   		$categoryModel = Ccc::getModel('category');
-        $categories = $categoryModel->fetchAll("SELECT * FROM `categories` ORDER BY `path`");
-        return $categories;
-   	}
-
-	public function getSubPath($categoryId)
-    {
-	    $categoryModel = Ccc::getModel('Category');
-	    $category = $categoryModel->fetchAll("SELECT * FROM categories WHERE path NOT LIKE '%$categoryId%' order by `path`");
-	    return $category;
-    }
-
-	public function path($path)
-	{
-		global $adapter;
-		$value = explode('/',$path); 
-		foreach ($value as $path1) {
-			$query = $adapter->fetchRow("SELECT  `name` FROM `categories` WHERE categoryId = {$path1}");
-			$parentName[] = $query['name'];
-
-			$temp = [];
-			$temp = implode("=>", $parentName);
-		}
-		return $temp;
-	}
-
-	public function getpath($path)
+	public function getPath()
 	{
 		$categoryModel = Ccc::getModel('Category');
-		$value = explode('=>',$path); 
-		foreach ($value as $pa) {
-			$query = $categoryModel->fetchAll("SELECT  * FROM `categories` WHERE name = `$pa`");
+		$category = $categoryModel->fetchAll("SELECT * FROM categories ORDER BY path");
+		$path = $categoryModel->getPath();
+		if($category){
+			foreach ($category as $key => $value) 
+			{
+				if(array_key_exists($value->categoryId, $path)) // 1/3/4 //laptop/mobile
+				{
+					 $category[$key]->path = $path[$value->categoryId];  
+				}	
+			}
 		}
-		return $temp;
+		return $category;
 	}
 } 

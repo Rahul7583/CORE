@@ -22,21 +22,14 @@ class Block_Category_Grid extends Block_Core_Template
 												LEFT JOIN category_image small
 												ON c.categoryId = small.categoryId AND (small.small = 1)");
 
-		return $category;
-	}
-
-	public function path($path)
-	{
-		global $adapter;
-		$value = explode('/',$path); 
-		foreach ($value as $path1) {
-			$query = $adapter->fetchRow("SELECT  `name` FROM `categories` WHERE categoryId='$path1';");
-			$parentName[] = $query['name'];
-
-			$temp = [];
-			$temp = implode("=>", $parentName);
+		$path = $categoryModel->getPath();
+		foreach ($category as $key => $value) 
+		{
+			if(array_key_exists($value->categoryId, $path)) // 1/3/4 //laptop/mobile
+			{
+				 $category[$key]->path = $path[$value->categoryId];  
+			}	
 		}
-		echo $temp;
-		return $temp;
+		return $category;
 	}
 }

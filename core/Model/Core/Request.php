@@ -16,8 +16,7 @@ class Model_Core_Request{
 
 	public function getRequest($key = null, $value = null)
 	{
-			echo($key);
-
+			
 		if ($key == null) {
 			return $_REQUEST;
 		}

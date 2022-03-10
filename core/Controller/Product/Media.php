@@ -13,10 +13,11 @@ class Controller_Product_Media extends Controller_Core_Action
 
 	public function editAction()
 	{
+		$adminMessage = Ccc::getModel('Admin_Message');
 		try {
 				if($_FILES['image'])
 				{
-					$message = Ccc::getModel('Core_Message');
+					
 					$id = (int)$this->getRequest()->getRequest('id');
 					$file = $_FILES['image'];
 					$extention =$file['type']; 
@@ -24,7 +25,7 @@ class Controller_Product_Media extends Controller_Core_Action
 					$extention = array_pop($extention); 
 					if($extention != "jpg" && $extention != "png" && $extention != "jpeg") 
 					{
-						$message->addMessage('only JPG, JPEG & PNG  files are allowed.', Model_Core_Message::ERROR);
+						$adminMessage->addMessage('only JPG, JPEG & PNG  files are allowed.', Model_Core_Message::ERROR);
 						$this->redirect($this->getLayout()->getUrl('grid','product_media',['id'=> $id]));
 					}
 
@@ -42,10 +43,8 @@ class Controller_Product_Media extends Controller_Core_Action
 				}
 				else
 				{
-
 					$id = (int)$this->getRequest()->getRequest('id');
-					$imageData = $this->getRequest()->getPost('image');
-					
+					$imageData = $this->getRequest()->getPost('image');				
 
 					$imageModel = Ccc::getModel('Product_Media');
 					$imageModel->setData($imageData);
@@ -62,7 +61,6 @@ class Controller_Product_Media extends Controller_Core_Action
 						$imageModel->remove = 2;
 						$imageModel->save();
 					}
-
 
 					if(array_key_exists('base', $imageData))
 					{
@@ -116,16 +114,14 @@ class Controller_Product_Media extends Controller_Core_Action
 							$imageModel->delete($row);
 						}	
 					}
-					$message = Ccc::getModel('Core_Message'); 
-					$message->addMessage('Data Updated.');
+					$adminMessage->addMessage('Data Updated.');
 					$this->redirect($this->getLayout()->getUrl('grid','product_media',['id'=> $id]));
 				}	
 						
 		} catch (Exception $e) {
-			$message->addMessage('Somthing wrong with your data.', Model_Core_Message::ERROR);
+			$adminMessage->addMessage('Somthing wrong with your data.', Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid','product_media',['id'=> $id]));
 		}
 	}
-			
 }
 

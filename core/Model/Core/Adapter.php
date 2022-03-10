@@ -6,7 +6,7 @@ class Model_Core_Adapter{
 		'host'=>'localhost',
 		'username'=>'root',
 		'password'=>'',
-		'db_name'=>'test'
+		'db_name'=>'project_rahul'
 	];
 
 	private $connect=NULL;
@@ -93,12 +93,14 @@ class Model_Core_Adapter{
 		public function fetchPairs($query)
 		{
 			$result = $this->fetchAll($query,MYSQLI_NUM);
-			if(!$result){
+			if(!$result)
+			{
 				return false;
 			}
 			$keys = array_column($result, "0");
 			$values = array_column($result, "1");
-			if (!$values) {
+			if (!$values)
+			{
 				$values = array_fill(0, count(keys), null);
 			}
 			$result = array_combine($keys, $values);

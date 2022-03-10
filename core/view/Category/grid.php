@@ -23,7 +23,7 @@
 			<?php foreach ($categories as $category): ?>
 				<tr>
 					<td><?php echo $category->categoryId ; ?></td>
-					<td><?php $this->path($category->path) ?></td>
+					<td><?php echo $category->path; ?></td>
 					<td>
 						<?php if(!$category->base): echo "Image Not Available"; ?>
 							<?php else: ?>

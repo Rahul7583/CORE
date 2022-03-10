@@ -1,4 +1,4 @@
-f<?php Ccc::loadClass('Model_Core_Row'); ?>
+<?php Ccc::loadClass('Model_Core_Row'); ?>
 <?php
 class Model_Customer_Address extends Model_Core_Row{
 

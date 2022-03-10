@@ -4,6 +4,9 @@
 		<tr>
 			<th>Product_Id</th>
 			<th>Name</th>
+			<th>Sku</th>
+			<th>Map</th>
+			<th>Cost_Price</th>
 			<th>Base</th>
 			<th>Thumbnail</th>
 			<th>Small</th>
@@ -18,7 +21,7 @@
 		</tr>
 			<?php if(!$products):?>
 		<tr>
-			<td colspan="11">No record Available</td>
+			<td colspan="16">No record Available</td>
 		</tr>	
 		<?php else:?>
 			
@@ -26,6 +29,9 @@
 				<tr>
 					<td><?php echo $product->productId; ?></td>
 					<td><?php echo $product->name; ?></td>
+					<td><?php echo $product->sku; ?></td>
+					<td><?php echo $product->map; ?></td>
+					<td><?php echo $product->cost_price; ?></td>
 					<td>
 						<?php if(!$product->base): echo "Image Not Available"; ?>
 								<?php else:?>
