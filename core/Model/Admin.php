@@ -2,6 +2,8 @@
 <?php
 class Model_Admin extends Model_Core_Row{
 
+	protected $login = [];
+
 	public function __construct()
 	{
 		$this->setTableClassName('Admin_Resource');
@@ -27,6 +29,36 @@ class Model_Admin extends Model_Core_Row{
 			return $status[$key];
 		}
 		return self::STATUS_DISABLED_DEFAULT;
+	}
+
+
+	public function setLogin($login)
+	{
+		$this->login = $login;
+		return $this;
+	}
+
+	public function getLogin()
+	{
+		return $this->login;
+	}
+
+	public function login($email, $password)
+	{
+		$adminModel = Ccc::getModel('admin');
+		$query = $adminModel->fetchRow("SELECT * FROM admin 
+										WHERE email = '{$email}' AND password = '{$password}'");
+		if (!$query) {
+			return false;
+		}
+		$admin = Ccc::getModel('Admin_Message')->login = $query;
+		return $admin;
+	}
+
+	
+	public function logout()
+	{
+		unset(Ccc::getModel('Admin_Message')->login);
 	}
 }
 

@@ -1,11 +1,5 @@
 <?php $result = $this->getCustomer(); ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Customer Edit Page</title>
-</head>
-<body>
-	<form method="post" action="<?php echo $this->getUrl('save','customer')?>">
+	<form method="post" action="<?php echo $this->getUrl('save','customer', ['id' => $result->customerId])?>">
 		<table border="1" width="100%" cellspacing="4">
 			
 			<tr>
@@ -30,7 +24,6 @@
 			<tr>
 				<td width="10%">Mobile</td>
 				<td><input type="text" name="customer[mobile]" value="<?php echo $result->mobile ?>"></td>
-				<input type="hidden" name="customer[customerId]" value="<?php echo $result->customerId  ?>">
 			</tr>
 			
 			<tr>
@@ -101,6 +94,3 @@
 				</td>
 			</tr>
 		</table>
-	</form>
-</body>
-</html>

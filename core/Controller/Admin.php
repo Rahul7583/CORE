@@ -1,5 +1,5 @@
+<?php Ccc::loadClass('Controller_Core_Action'); ?>
 <?php 
-Ccc::loadClass('Controller_Core_Action');
 class Controller_Admin extends Controller_Core_Action{
 
 	public function gridAction()			
@@ -7,7 +7,6 @@ class Controller_Admin extends Controller_Core_Action{
 		$content = $this->getLayout()->getContent();
 		$adimnGrid = Ccc::getBlock('Admin_Grid');
 		$content->addChild($adimnGrid);
-		$this->getLayout()->getChild('content')->getChild('Block_Admin_Grid');
 		$this->renderLayout();
 	}	
 
@@ -31,52 +30,46 @@ class Controller_Admin extends Controller_Core_Action{
 
 	public function saveAction()
 	{	
-		$adminMessage = Ccc::getModel('Admin_Message');
-		try {
-			 $adminModel = Ccc::getModel('Admin');
-			 $request = $this->getRequest();
-			 $admin = $request->getPost('admin');
+		try 
+		{
+			$request = $this->getRequest();
+			$admin = $request->getPost('admin');
+			$id = $request->getRequest('id');
 
 			if(!$admin)
 			{
 				throw new Exception("Missing admin data in request.", 1);
 			}
 
-			if($admin['adminId'] != null)
-			{
-					$row = $adminModel->load($admin['adminId']);
-					$row->setData($admin);	
-					$row->updatedDate = date('Y-m-d H:m:s');
-					$result = $row->save();
-			  		if(!$result)
-			  		{
-			  			throw new Exception("system is unable to update.", 1);
-			  		}
-			  		$adminMessage->addMessage('Data Updated');
-			  		$this->redirect($this->getLayout()->getUrl('grid'));	
+			$adminModel = Ccc::getModel('Admin');
+			$adminModel->setData($admin);
+			if($id)
+			{	
+				$adminModel->adminId = $id;
+				$adminModel->updatedDate = date('Y-m-d H:m:s');
 			}
-			else{
-					unset($admin['adminId']);
-			 		$setData = $adminModel->setData($admin);
-			 		$setData->createdDate = date('Y-m-d H:i:s');
-					$adminId = $adminModel->save();
-			 		if (!$adminId) 
-			 		{
-			 			throw new Exception("system is unable to insert.", 1);
-			 		}
-			 		
-			 		$adminMessage->addMessage('Data Saved');
-			 		$this->redirect($this->getLayout()->getUrl('grid'));
-			 	}
-			 } catch (Exception $e) 
-			 {
-			 	$adminMessage->addMessage('Something wrong with your data', Model_Core_Message::ERROR);
-			 	$this->redirect($this->getLayout()->getUrl('grid'));
-			 }	 
+			else
+			{
+		 		$adminModel->createdDate = date('Y-m-d H:m:s');
+			}
+					
+			$adminId = $adminModel->save();
+	 		if (!$adminId) 
+	 		{
+	 			throw new Exception("system is unable to insert.", 1);
+	 		}
+	 		$this->getMessage()->addMessage('Data Saved');
+	 		$this->redirect($this->getLayout()->getUrl('grid'));
+		} 
+		catch (Exception $e) 
+		{
+		 	$this->getMessage()->addMessage('Something wrong with your data', Model_Core_Message::ERROR);
+		 	$this->redirect($this->getLayout()->getUrl('grid'));
+		}	 
 	}
 
 	public function deleteAction()
-	{	$adminMessage = Ccc::getModel('Admin_Message');
+	{
 		try {
 				$adminModel = Ccc::getModel('admin');
 	 			$id = $this->getRequest()->getRequest('id');
@@ -85,10 +78,10 @@ class Controller_Admin extends Controller_Core_Action{
 				{
 					throw new Exception("system is unable to delete.", 1);
 				}
-				$adminMessage->addMessage('Data Deleted');
+				$this->getMessage()->addMessage('Data Deleted');
 				$this->redirect($this->getLayout()->getUrl('grid'));
 		} catch (Exception $e) {
-				$adminMessage->addMessage('Something wrong with your data', Model_Core_Message::ERROR);
+				$this->getMessage()->addMessage('Something wrong with your data', Model_Core_Message::ERROR);
 				$this->redirect($this->getLayout()->getUrl('grid'));
 		}
 	}

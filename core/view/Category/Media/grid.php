@@ -1,8 +1,8 @@
 <?php $media = $this->getCategoryMediaData(); ?> 
 <?php $id = Ccc::getFront()->getRequest()->getRequest('id'); ?>
-	<form method="POST" action="<?php echo $this->getUrl('edit', 'category_media', ['id' => $id]);?>">
+	<form method="POST" action="<?php echo $this->getUrl('save', 'category_media', ['id' => $id]);?>">
 		<button type="submit" name="update"> Update </a></button>
-		<button type="button" name="cancel"><a href="<?php echo $this->getUrl('grid','category')?>"> Cancel </a></button>
+		<button type="button" name="cancel"><a href="<?php echo $this->getUrl('grid','categories')?>"> Cancel </a></button>
 			<table border="1" width="100%" cellspacing="4">
 				<tr>
 					<th>Image Id</th>
@@ -53,7 +53,7 @@
 			</table>
 	</form>
 	
-	<form method="POST" action="<?php echo $this->getUrl('edit', 'category_media', ['id' =>  $id]);?>" enctype="multipart/form-data">
+	<form method="POST" action="<?php echo $this->getUrl('save', 'category_media', ['id' =>  $id]);?>" enctype="multipart/form-data">
 		<table border="1" width="100%" cellspacing="4">
 			
 			<tr>

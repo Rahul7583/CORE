@@ -1,5 +1,5 @@
 <?php $result = $this->getSalesman(); ?>
-<form method="post" action="<?php echo $this->getUrl('save','salesman')?>">
+<form method="post" action="<?php echo $this->getUrl('save','salesman',['id' => $result->salesmanId])?>">
 		<table border="1" width="100%" cellspacing="4">
 			<tr>
 				<td colspan="2"><b>Salesman Information</b></td>
@@ -23,7 +23,6 @@
 			<tr>
 				<td width="10%">Mobile</td>
 				<td><input type="text" name="salesman[mobile]" value="<?php echo $result->mobile ?>"></td>
-				<input type="hidden" name="salesman[salesmanId]" value="<?php echo $result->salesmanId  ?>">
 			</tr>
 
 			<tr>

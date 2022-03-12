@@ -1,7 +1,7 @@
 <?php Ccc::loadClass('Controller_Core_Action'); ?>
 <?php 
-class Controller_Page extends Controller_Core_Action{
-
+class Controller_Page extends Controller_Core_Action
+{
 	public function gridAction()			
 	{
 		$pageGrid = Ccc::getBlock('Page_Grid');
@@ -31,51 +31,42 @@ class Controller_Page extends Controller_Core_Action{
 
 	public function saveAction()
 	{	
-		$adminMessage = Ccc::getModel('Admin_Message');
 		try {
-				$pageModel = Ccc::getModel('Page');
 				$request = $this->getRequest();
 				$page = $request->getPost('page');
-
-				if(!isset($page))
+				$id = $request->getRequest('id');
+				if(!$page)
 				{
 					throw new Exception("Missing page data in request.", 1);
 				}
-				if($page['pageId'] != null)
+				$pageModel = Ccc::getModel('Page');
+				$pageModel->setData($page);
+				if($id)
 				{
-						$row = $pageModel->load($page['pageId']); 	
-						$row->setData($page);
-						$row->updatedDate = date('Y-m-d H:i:s');
-						$result = $row->save();
-				  		if(!$result)
-				  		{
-				  			throw new Exception("system is unable to update.", 1);
-				  		}
-				  		$adminMessage->addMessage('Data Updated');
-				  		$this->redirect($this->getLayout()->getUrl('grid'));
+					$pageModel->pageId = $id; 	
+					$pageModel->updatedDate = date('Y-m-d H:m:s');
 				}
 			else{	
-					unset($page['pageId']);
-					$setData = $pageModel->setData($page);
-					$setData->createdDate = date('Y-m-d H:i:s');
-					$pageId = $pageModel->save();
-			
-			 		if (!$pageId) 
-			 		{
-			 			throw new Exception("system is unable to insert.", 1);
-			 		} 		
+
+					$pageModel->createdDate = date('Y-m-d H:m:s');
 			 	}
-			 	$adminMessage->addMessage('Data Saved');
+				$pageId = $pageModel->save();
+		 		if (!$pageId) 
+		 		{
+		 			throw new Exception("system is unable to insert.", 1);
+		 		}
+			 	$this->getMessage()->addMessage('Data Saved'); 		
 			 	$this->redirect($this->getLayout()->getUrl('grid'));
-			} catch (Exception $e) {
-				$adminMessage->addMessage('Somthing wrong with your data', Model_Core_Message::ERROR);
+			} 
+			catch (Exception $e) 
+			{
+				$this->getMessage()->addMessage('Somthing wrong with your data', Model_Core_Message::ERROR);
 				$this->redirect($this->getLayout()->getUrl('grid'));
 			}	
 	}
 
 	public function deleteAction()
 	{
-		$adminMessage = Ccc::getModel('Admin_Message');
 		try 
 		{
 			$pageModel = Ccc::getModel('Page');
@@ -85,10 +76,12 @@ class Controller_Page extends Controller_Core_Action{
 			{
 				throw new Exception("system is unable to delete", 1);
 			}
-			$adminMessage->addMessage('Data Deleted');
+			$this->getMessage()->addMessage('Data Deleted');
 			$this->redirect($this->getLayout()->getUrl('grid'));
-		} catch (Exception $e) {
-			$adminMessage->addMessage('Something wrong with your data', Model_Core_Message::ERROR);
+		} 
+		catch (Exception $e) 
+		{
+			$this->getMessage()->addMessage('Something wrong with your data', Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid'));
 		}
 	}

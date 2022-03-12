@@ -2,7 +2,6 @@
 Ccc::loadClass('Controller_Core_Action');
 class Controller_Category_Media extends Controller_Core_Action
 {
-
 	public function gridAction()
 	{
 		$categoryMediaGrid = Ccc::getBlock('Category_Media_Grid');
@@ -14,7 +13,6 @@ class Controller_Category_Media extends Controller_Core_Action
 
 	public function saveAction()
 	{
-		$adminMessage = Ccc::getModel('Admin_Message');
 		try {
 				if($_FILES['image'])
 				{
@@ -25,7 +23,7 @@ class Controller_Category_Media extends Controller_Core_Action
 					$extention = array_pop($extention);
 					if($extention != "jpg" && $extention != "png" && $extention != "jpeg") 
 					{
-						$message->addMessage('only JPG, JPEG & PNG  files are allowed.', Model_Core_Message::ERROR);
+						$this->getMessage()->addMessage('only JPG, JPEG & PNG  files are allowed.', Model_Core_Message::ERROR);
 						$this->redirect($this->getLayout()->getUrl('grid','category_media',['id'=>$id]));
 					}
 
@@ -39,7 +37,7 @@ class Controller_Category_Media extends Controller_Core_Action
 					$categoryImageModel->name = $imageName;
 					$categoryImageModel->save();
 
-					$adminMessage->addMessage('Data Saved.');
+					$this->getMessage()->addMessage('Data Saved.');
 					$this->redirect($this->getLayout()->getUrl('grid','category_media',['id'=> $id]));	
 				}
 				else
@@ -116,11 +114,11 @@ class Controller_Category_Media extends Controller_Core_Action
 							$categoryImageModel->delete($row);
 						}
 					}	
-					$adminMessage->addMessage('Data Updated.');
+					$this->getMessage()->addMessage('Data Deleted.');
 					$this->redirect($this->getLayout()->getUrl('grid','category_media',['id'=> $id]));	
 				}
 		} catch (Exception $e) {
-			$adminMessage->addMessage('Somthing wrong with your data.', Model_Core_Message::ERROR);
+			$this->getMessage()->addMessage('Somthing wrong with your data.', Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid','category_media',['id'=> $id]));
 		}
 		
