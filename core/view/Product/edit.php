@@ -24,6 +24,11 @@
 			</tr>
 
 			<tr>
+				<td width="10%">Msp</td>
+				<td><input type="number" name="product[msp]" value="<?php echo $result->msp ?>"></td>
+			</tr>
+
+			<tr>
 				<td width="10%">Cost_Price</td>
 				<td><input type="number" name="product[cost_price]" value="<?php echo $result->cost_price ?>"></td>
 			</tr>
@@ -59,26 +64,39 @@
 				<td width="10%">Select</td>
 			</tr>
 			<?php foreach ($categoryResult as $key => $value): ?>
-			<tr>
-				<td><input type="text" name="category[categoryId]" value="<?php echo $value->categoryId ?>" disabled="true"></td>
-				<td><input type="text" name="category[name]" value="<?php echo $this->path($value->path); ?>" disabled="true"></td>
+				<tr>
+					<td>
+						<input type="text" name="category[categoryId]" value="<?php echo $value->categoryId ?>" disabled="true">
+					</td>
+					<td>
+						<input type="text" name="category[name]" value="<?php echo $this->path($value->path); ?>" disabled="true">
+					</td>
 
-			<?php if($row): ?>
-				<?php if ($result->productId) : ?>
-					<td><input type="checkbox" name="category[categoryId][]" value="<?php echo $value->categoryId ?>"
-					<?php foreach ($row as $key1 => $value1): ?>
-					<?php if ($value->categoryId == $value1->categoryId) :?> checked <?php else: echo "not"; endif; ?>
-					<?php endforeach; ?>></td> 
-				<?php else : ?>
-					<td><input type="checkbox" name="category[categoryId][]" value="<?php echo $value->categoryId ?>"
-					<?php foreach ($row as $key1 => $value1): ?>
-					<?php if ($value->categoryId == $value1->categoryId) :?> <?php else: echo "not"; endif; ?>
-					<?php endforeach; ?>></td>
-				<?php endif; ?>
-			<?php endif; ?>
-			</tr>
-				<?php endforeach; ?>
-			</table>
+				<?php if($row): ?> 
+          			<?php if ($result->productId) : ?>
+            			<td>
+            				<input type="checkbox" name="category[categoryId][]" value="<?php echo $value->categoryId ?>"
+            				<?php foreach ($row as $key1 => $value1): ?>
+            				<?php if ($value->categoryId == $value1->categoryId && $value1->productId == $result->productId) :?> checked <?php else: echo "not"; endif; ?>
+            				<?php endforeach; ?>>
+            			</td> 
+            		<?php else : ?>
+              			<td>
+              				<input type="checkbox" name="category[categoryId][]" value="<?php echo $value->categoryId ?>"
+            				<?php foreach ($row as $key1 => $value1): ?>
+              					<?php if ($value->categoryId == $value1->categoryId) :?>
+              					<?php else: echo "not"; endif; ?>
+            				<?php endforeach; ?>>
+            			</td>
+          			<?php endif; ?>
+        		<?php else: ?>
+          				<td>
+          					<input type="checkbox" name="category[categoryId][]" value="<?php echo $value->categoryId ?>">
+          				</td>
+        		<?php endif; ?>	
+				</tr>
+			<?php endforeach; ?>
+				</table>
 				</td>
 			</tr>
 			

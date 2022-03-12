@@ -11,9 +11,8 @@ class Controller_Product_Media extends Controller_Core_Action
 		$this->renderLayout();
 	}
 
-	public function editAction()
+	public function saveAction()
 	{
-		$adminMessage = Ccc::getModel('Admin_Message');
 		try {
 				if($_FILES['image'])
 				{
@@ -25,7 +24,7 @@ class Controller_Product_Media extends Controller_Core_Action
 					$extention = array_pop($extention); 
 					if($extention != "jpg" && $extention != "png" && $extention != "jpeg") 
 					{
-						$adminMessage->addMessage('only JPG, JPEG & PNG  files are allowed.', Model_Core_Message::ERROR);
+						$this->getMessage()->addMessage('only JPG, JPEG & PNG  files are allowed.', Model_Core_Message::ERROR);
 						$this->redirect($this->getLayout()->getUrl('grid','product_media',['id'=> $id]));
 					}
 
@@ -38,7 +37,7 @@ class Controller_Product_Media extends Controller_Core_Action
 					$imageModel->productId = $id;
 					$imageModel->name = $imageName;
 					$imageModel->save();
-					$message->addMessage('Data Saved.');
+					$this->getMessage()->addMessage('Data Saved.');
 					$this->redirect($this->getLayout()->getUrl('grid','product_media',['id'=> $id]));
 				}
 				else
@@ -114,12 +113,12 @@ class Controller_Product_Media extends Controller_Core_Action
 							$imageModel->delete($row);
 						}	
 					}
-					$adminMessage->addMessage('Data Updated.');
+					$this->getMessage()->addMessage('Data Updated.');
 					$this->redirect($this->getLayout()->getUrl('grid','product_media',['id'=> $id]));
 				}	
 						
 		} catch (Exception $e) {
-			$adminMessage->addMessage('Somthing wrong with your data.', Model_Core_Message::ERROR);
+			$this->getMessage()->addMessage('Somthing wrong with your data.', Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid','product_media',['id'=> $id]));
 		}
 	}

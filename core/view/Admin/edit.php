@@ -1,6 +1,5 @@
-
 <?php $result = $this->getAdmin(); ?>
-	<form method="POST" action="<?php echo $this->getUrl('save','admin');?>">
+	<form method="POST" action="<?php echo $this->getUrl('save','admin', ['id' =>$result->adminId]);?>">
 		<table border="1" width="100%" cellspacing="4">
 			
 			<tr>
@@ -20,7 +19,6 @@
 			<tr>
 				<td width="10%">Email</td>
 				<td><input type="email" name="admin[email]" value="<?php echo $result->email ?>"></td>
-				<input type="hidden" name="admin[adminId]" value="<?php echo $result->adminId ?>">
 			</tr>
 
 			<tr>

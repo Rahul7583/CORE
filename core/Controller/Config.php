@@ -30,48 +30,47 @@ class Controller_Config extends Controller_Core_Action{
 	}
 
 	public function saveAction()
-	{	$adminMessage = Ccc::getModel('Admin_Message');
+	{
 		try 
 		{
-			$configModel = Ccc::getModel('Config');
 			$request = $this->getRequest();
 			$config = $request->getPost('config');
-	
-		 	if($config['configId'] != null)
-		 	{
-				$row = $configModel->load($config['configId']);
-				$row->setData($config);  	
-				$row->updatedDate = date('Y-m-d H:i:s');
-				$result = $row->save();
-		  		if(!$result)
-		  		{
-		  			throw new Exception("System is unable to update. ", 1);
-		  		} 
-		  		$adminMessage->addMessage('Data Updated', Model_Core_Message::SUCCESS);
-		  		$this->redirect($this->getLayout()->getUrl('grid', 'config'));
-		  	}			
-			else{	
-					unset($config['configId']);
-					$setData = $configModel->setData($config);
-					$setData->createdDate = date('Y-m-d H:i:s');
-					$insertId = $configModel->save();
-			 		if(!$insertId)
-			 		{
-			 			throw new Exception("System is unable to insert.", 1);	
-			 		}			
-				}
-				$adminMessage->addMessage('Data Saved', Model_Core_Message::SUCCESS);
-				$this->redirect($this->getLayout()->getUrl('grid','config'));
+			$id = (int)$request->getRequest('id');
+
+			if(!$config)
+			{
+				throw new Exception("Missing admin data in request.", 1);
 			}
-		 catch (Exception $e) {
-		 	$adminMessage->addMessage('Somthing wrong with your data', Model_Core_Message::ERROR);
+
+			$configModel = Ccc::getModel('Config');
+			$configModel->setData($config);
+
+		 	if($id)
+		 	{
+				$configModel->configId = $id;  	  	
+				$configModel->updatedDate = date('Y-m-d H:m:s');
+		  	}			
+			else
+			{	
+					$configModel->createdDate = date('Y-m-d H:m:s');
+			}
+			$insertId = $configModel->save();
+	 		if(!$insertId)
+	 		{
+	 			throw new Exception("System is unable to insert.", 1);	
+	 		}
+		 	$this->getMessage()->addMessage('Data Saved');			
+			$this->redirect($this->getLayout()->getUrl('grid','config'));
+		}
+		catch (Exception $e)
+		{
+		 	$this->getMessage()->addMessage('Somthing wrong with your data', Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid','config'));
 		}
 	}
 
 	public function deleteAction()
 	{
-		$adminMessage = Ccc::getModel('Admin_Message');
 		try 
 		{
 			$configModel = Ccc::getModel('config');
@@ -81,13 +80,13 @@ class Controller_Config extends Controller_Core_Action{
 			{
 				throw new Exception("system is unable to delete.", 1);
 			}
-			$adminMessage->addMessage('Data Deleted', Model_Core_Message::SUCCESS);
+			$this->getMessage()->addMessage('Data Deleted');
 			$this->redirect($this->getLayout()->getUrl('grid','config'));
 	
 		} 
 		catch (Exception $e)
 		{
-			$adminMessage->addMessage('Somthing wrong with your data', Model_Core_Message::ERROR);
+			$this->getMessage()->addMessage('Somthing wrong with your data', Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid','config'));			
 		}	
 	}

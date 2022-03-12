@@ -1,5 +1,4 @@
 <?php $customers = $this->getCustomers(); ?>
-
 <table border='1' width='100%' cellspacing="4">
 <form action="<?php echo $this->getUrl('save','Salesman_Customer',['id'=> $this->getSalesmanId()],true) ?>" method="post">
 <input type="submit" value="save">
@@ -20,7 +19,7 @@
 		<td><?php echo $customer->firstName; ?></td> 
 		<td><?php echo $customer->lastName; ?></td> 
 		<td> 
-		<a href="<?php echo $this->getUrl('grid','Customer_Price',['id' => $customer->customerId]) ?>"> Price List </a> </td>
+		<a href="<?php echo $this->getUrl('grid','Customer_Price',['id' => $customer->customerId, 'salesmanId' => $this->getSalesmanId()]) ?>"> Price List </a> </td>
 	</tr>
 	<?php endforeach; ?>
 <?php endif; ?>

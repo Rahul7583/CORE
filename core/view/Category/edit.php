@@ -2,7 +2,7 @@
 <?php $path = $this->getPath(); ?>
 <?php $categoryId = (isset($_GET['id'])) ? $_GET['id'] : null; ?>
 
-	<form method="post" action="<?php echo $this->getUrl('save','categories')?>">
+<form method="post" action="<?php echo $this->getUrl('save','categories', ['id' => $result->categoryId])?>">
 		<table border="1" width="100%" cellspacing="4">
 			
 			<tr>
@@ -23,7 +23,6 @@
 			<tr>
 				<td width="10%">Name</td>
 				<td><input type="text" name="category[name]" value="<?php echo $result->name; ?>"></td>
-				<input type="hidden" name="category[hiddenId]" value="<?php echo $result->categoryId; ?>">
 			</tr>
 
 			<tr>
@@ -43,7 +42,6 @@
 				<td>
 					<input type="submit" name="Save">
 					<button type="button">Cancel</button> 
-
 				</td>
 			</tr>
 		</table>

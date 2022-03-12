@@ -1,6 +1,6 @@
 <?php $media = $this->getMediaData(); ?> 
 <?php $id = Ccc::getFront()->getRequest()->getRequest('id'); ?>
-<form method="POST" action="<?php echo $this->getUrl('edit', 'product_media', ['id' => $id]);?>">
+<form method="POST" action="<?php echo $this->getUrl('save', 'product_media', ['id' => $id]);?>">
 	<button type="submit" name="update"> Update </a></button>
 	<button type="button" name="cancel"><a href="<?php echo $this->getUrl('grid','product')?>"> Cancel </a></button>
 			<table border="1" width="100%" cellspacing="4">
@@ -54,7 +54,7 @@
 			</table>
 	</form>
 	
-	<form method="POST" action="<?php echo $this->getUrl('edit', 'product_media', ['id' =>  $id]);?>" enctype="multipart/form-data">
+	<form method="POST" action="<?php echo $this->getUrl('save', 'product_media', ['id' =>  $id]);?>" enctype="multipart/form-data">
 		<table border="1" width="100%" cellspacing="4">
 			
 			<tr>
