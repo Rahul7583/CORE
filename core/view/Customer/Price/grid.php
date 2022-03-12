@@ -24,11 +24,13 @@
             <td><?php echo $product->name ?></td>
             <td><?php echo $product->sku ?></td>
             <td><?php echo $product->productPrice ?></td>
+            <td><?php echo $discount = $this->getSalesmanPrice($product->productPrice, $salesmanDiscount); ?></td>
             <td><?php echo $salesmanDiscount = $this->getSalesmanPrice($product->productPrice, $salesmanDiscount); ?></td>
             <td>
                 <input type="number" name="product[<?php if($product->entityId){echo 'exist';} 
                     else{echo 'new';}?>]
                     [<?php if($product->entityId){echo $product->entityId;} 
+                            else{echo $product->productId;} ?>]" min="<?php echo $discount; ?>" max="<?php echo $product->productPrice; ?>"  value="<?php echo $product->customerPrice ?>">
                             else{echo $product->productId;} ?>]" min="<?php echo $salesmanDiscount; ?>" max="<?php echo $product->productPrice; ?>"  value="<?php echo $product->customerPrice ?>">
             </td>
         </tr>
