@@ -95,7 +95,7 @@ class Model_Core_Row
 	 		$this->getTable()->update($this->data, $id);
 	 	}
 	 	else
-	 	{
+	 	{	
 	 		$id = $this->getTable()->insert($this->data);
 	 	}
 	 	return $id;

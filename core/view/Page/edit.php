@@ -1,5 +1,5 @@
 <?php $result = $this->getPage(); ?>
-	<form method="post" action="<?php echo $this->getUrl('save','page')?>">
+	<form method="post" action="<?php echo $this->getUrl('save','page',['id' => $result->pageId])?>">
 		<table border="1" width="100%" cellspacing="4">
 			
 			<tr>
@@ -19,7 +19,6 @@
 			<tr>
 				<td width="10%">Content</td>
 				<td><input type="text" name="page[content]" value="<?php echo $result->content ?>"></td>
-				<input type="hidden" name="page[pageId]" value="<?php echo $result->pageId  ?>">
 			</tr>
 			
 			

@@ -1,8 +1,7 @@
+<?php Ccc::loadClass('Controller_Core_Action'); ?>
 <?php 
-Ccc::loadClass('Controller_Core_Action');
-class Controller_Categories extends Controller_Core_Action{
-
-
+class Controller_Categories extends Controller_Core_Action
+{
 	public function gridAction()			
 	{
 		$categoryGrid = Ccc::getBlock('Category_Grid');
@@ -34,15 +33,15 @@ class Controller_Categories extends Controller_Core_Action{
 
 	public function saveAction()
 	{
-		$categoryModel = Ccc::getModel('Category');
 		$formData = $this->getRequest()->getPost('category');
+		$id = (int)$this->getRequest()->getRequest('id');
 	
-		if(!(int)$formData['hiddenId'])
+		$categoryModel = Ccc::getModel('Category');
+		$setData = $categoryModel->setData($formData); 
+		if(!$id)
 		{
-			try {
-				unset($formData['hiddenId']);
-				$setData = $categoryModel->setData($formData); 
-				
+			try 
+			{
 				$setData->createdDate = date("Y-m-d H:m:s");
 				$insertId = $categoryModel->save();
 	
@@ -52,7 +51,8 @@ class Controller_Categories extends Controller_Core_Action{
 				{
 					$newPath = $categoryPath->path.'/'.$insertId;
 				}
-				else{
+				else
+				{
 					$newPath = $insertId;
 				}
 				
@@ -62,7 +62,6 @@ class Controller_Categories extends Controller_Core_Action{
 
 				$updatePath->path = $newPath;
 				$updatePath->save();
-				$this->getMessage()->addMessage('Added SuccessFully.');
 
 			} catch (Exception $e) {
 				$this->getMessage()->addMessage('System is not able to add.',Model_Core_Message::ERROR);
@@ -71,20 +70,16 @@ class Controller_Categories extends Controller_Core_Action{
 		}
 		else{
 			try{
-				$row = $categoryModel->load($formData['parentId']);
-				unset($formData['hiddenId']);
-				$row->setData($formData);
-				$row->categoryId = $formData['parentId'];// 114
-				$row->updatedDate = date('Y-m-d H:m:s');
-				print_r($row);
-				$result = $row->save();
-				$this->getMessage()->addMessage('Updated SuccessFully.');
+				$categoryModel->load($formData['parentId']);
+				$categoryModel->categoryId = $formData['parentId'];
+				$categoryModel->updatedDate = date('Y-m-d H:m:s');
+				$result = $categoryModel->save();
 
 			}catch(Exception $e){
 				$this->getMessage()->addMessage('System is not able to Update.',Model_Core_Message::ERROR);
-
 			}		
 		}
+		$this->getMessage()->addMessage('Data Saved.');
 		$this->redirect($this->getLayout()->getUrl('grid'));
 	}
 
@@ -102,7 +97,7 @@ class Controller_Categories extends Controller_Core_Action{
 			{
 				throw new Exception("system is unable to delete", 1);
 			}
-
+			$this->getMessage()->addMessage('Deleted SuccessFully.');
 			$this->redirect($this->getLayout()->getUrl('grid'));
 			
 		} catch (Exception $e) {

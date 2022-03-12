@@ -30,7 +30,7 @@ class Block_Product_Edit extends Block_Core_Template
 	public function getCategoryProduct()
 	{
 		$categoryProductModel = Ccc::getModel('Category_Product');
-		$categoryProduct = $categoryProductModel->fetchAll("SELECT categoryId FROM category_product");
+		$categoryProduct = $categoryProductModel->fetchAll("SELECT categoryId,productId FROM category_product");
 		return $categoryProduct;	
 	}
 

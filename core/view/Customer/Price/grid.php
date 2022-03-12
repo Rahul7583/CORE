@@ -1,34 +1,37 @@
+<?php $id = Ccc::getFront()->getRequest()->getRequest('salesmanId');?>
+<?php $salesmanDiscount = $this->getSalesmanDiscount($id) ?>
 <?php $products = $this->getProducts(); ?>
-<form action="<?php echo $this->getUrl('save','customer_price') ?>" method="post">
+<?php $prices = $this->getPrices(); ?>
+<form action="<?php echo $this->getUrl('save','Customer_Price',['salesmanId' => $id]) ?>" method="post">
     <input type="submit" value="save">
     <table border="1" width="100%">
         <tr>
             <th>Product Id</th>
-            <th>Name</th>
+            <th>Product Name</th>
+            <th>SKU</th>
             <th>MRP</th>
-            <th>MSP</th>
-            <th>Cost</th>
-            <th>Discount</th>
+            <th>Salesman Price</th>
+            <th>Customer Price</th>
         </tr>
         <?php if(!$products): ?>
             <tr>
-                <td colspacing = "6">No Product Found</td>
+                <td colspacing = "6">No Records Available</td>
             </tr>
         <?php else: ?>
-        <?php $i = 0; ?>
         <?php foreach($products as $product): ?>
         <tr>
-            <input type="hidden" name="product[<?php echo $i ?>][productId]" value="<?php echo $product->productId; ?>">
-            <input type="hidden" name="product[<?php echo $i ?>][msp]" value="<?php echo $product->msp; ?>">
-            <input type="hidden" name="product[<?php echo $i ?>][mrp]" value="<?php echo $product->price; ?>">
-            <td><?php echo $product->productId ?></td>
+            <td><?php echo $product->productId ?> <input type="number" name="price[<?php echo $product->productId ?>]" hidden> </td>
             <td><?php echo $product->name ?></td>
-            <td><?php echo $product->price ?></td>
-            <td><?php echo $product->msp ?></td>
-            <td><?php echo $product->cost_price ?></td>
-            <td><input type="text" name="product[<?php echo $i ?>][discount]" value="<?php echo $this->getDiscount($product->productId) ?>"></td>
+            <td><?php echo $product->sku ?></td>
+            <td><?php echo $product->productPrice ?></td>
+            <td><?php echo $discount = $this->getSalesmanPrice($product->productPrice, $salesmanDiscount); ?></td>
+            <td>
+                <input type="number" name="product[<?php if($product->entityId){echo 'exist';} 
+                    else{echo 'new';}?>]
+                    [<?php if($product->entityId){echo $product->entityId;} 
+                            else{echo $product->productId;} ?>]" min="<?php echo $discount; ?>" max="<?php echo $product->productPrice; ?>"  value="<?php echo $product->customerPrice ?>">
+            </td>
         </tr>
-        <?php $i++; ?>
         <?php endforeach; ?>
         <?php endif; ?>
     </table>

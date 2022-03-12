@@ -1,5 +1,6 @@
 <?php $admin = $this->getAdminData(); ?>
 <button type="button" name="addNew"><a href="<?php echo $this->getUrl('edit','admin');?>"> Add New </a></button>
+<button type="button" name="logout"><a href="<?php echo $this->getUrl('logout','admin_login');?>"> Logout </a></button>
 	<table border="1" width="100%" cellspacing="4">
 		<tr>
 			<th>Admin_Id</th>

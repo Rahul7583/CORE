@@ -58,9 +58,7 @@ class Model_Core_Row_Resource{
 		 $columnValue = implode("','", $columnValue);
 		 $columnValue = "'".$columnValue."'";
 		 $tableName = $this->getTableName();
-		 $query = "INSERT INTO `$tableName` ($columnName) VALUES ($columnValue)";
-		 print_r($query);
-		 //exit();
+		 $query = "INSERT INTO `$tableName` ($columnName) VALUES ($columnValue)";	
 		 $insertId = $this->getAdapter()->insert($query);
 		 return $insertId;
 
@@ -87,7 +85,7 @@ class Model_Core_Row_Resource{
 	{
 		$tableName = $this->getTableName();
 		$key = $this->getPrimaryKey();
-		$query = "DELETE FROM `$tableName` WHERE $key = $id";
+		$query = "DELETE FROM {$tableName} WHERE {$key} = {$id}";
 		$result = $this->getAdapter()->delete($query);
 		return $result;
 	}
@@ -131,9 +129,6 @@ class Model_Core_Row_Resource{
 		global $adapter;
 		return $adapter;
 	}
-
-		
-	
 }
 
 
