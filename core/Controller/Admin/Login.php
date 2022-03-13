@@ -7,7 +7,6 @@ class Controller_Admin_Login extends Controller_Core_Action{
 		$content = $this->getLayout()->getContent();
 		$adminGrid = Ccc::getBlock('Admin_Login');
 		$content->addChild($adminGrid);
-		// $customer = $this->getLayout()->getChild('content')->getChild('Block_Admin_Login');
 		$this->renderLayout();
 	}
 

@@ -73,23 +73,31 @@ class Model_Core_Adapter{
 
 		public function fetchRow($query)
 		{
-				$result=$this->query($query);
+			$result=$this->query($query);
 
-				if($result->num_rows){
-					return $result->fetch_assoc();
-				}
-				return false;
+			if($result->num_rows){
+				return $result->fetch_assoc();
+			}
+			return false;
 		}
 
 		public function fetchAll($query,$mode=MYSQLI_ASSOC)
 		{
-				$result=$this->query($query);
-				if($result->num_rows > 0){
-					return $result->fetch_all($mode);
-				}
-				return false;
+			$result=$this->query($query);
+			if($result->num_rows > 0){
+				return $result->fetch_all($mode);
+			}
+			return false;
 		}
 
+		public function fetchOne($query)
+		{
+			$result = $this->fetchRow($query, MYSQLI_NUM);
+			if(!$result){
+				return false;
+			}
+			return $result;
+		}
 		public function fetchPairs($query)
 		{
 			$result = $this->fetchAll($query,MYSQLI_NUM);

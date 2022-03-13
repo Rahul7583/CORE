@@ -1,4 +1,15 @@
 <?php $categories = $this->getCategoryData(); ?>
+<table border="1">
+	<tr>
+		<button type="button" name="addNew"><a href="<?php echo $this->getUrl('grid','categories',['page' => $this->getPager()->getNext()])?>"> Next </a></button>
+		<button type="button" name="addNew"><a href="<?php echo $this->getUrl('grid','categories',['page' => $this->getPager()->getEnd()])?>"> End </a></button>
+		<button type="button" name="addNew"><a href="<?php echo $this->getUrl('grid','categories',['page' => $this->getPager()->getCurrent()])?>"> Current </a></button>
+		<button type="button" name="addNew"><a href="<?php echo $this->getUrl('grid','categories',['page' => $this->getPager()->getStart()])?>"> Start </a></button>
+		<button type="button" name="addNew"><a href="<?php echo $this->getUrl('grid','categories',['page' => $this->getPager()->getPrev()])?>"> Prev </a></button>
+
+	</tr>	
+</table>
+
 <button type="button" name="addNew"><a href="<?php echo $this->getUrl('edit','categories');?>"> Add New </a></button>
 	<table border="1" width="100%" cellspacing="4">
 		<tr>

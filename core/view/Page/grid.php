@@ -1,5 +1,14 @@
-<?php $pages = $this->getpageData(); ?>
+<?php $pages = $this->getpageData();
+//print_r($this->getPager()->next);
+
+ ?>
 <button type="button" name="addNew"><a href="<?php echo $this->getUrl('edit','page')?>"> Add New </a></button>
+<button type="button" name="addNew"><a href="<?php echo $this->getUrl('grid','page',['page' => $this->getPager()->getNext()])?>"> Next </a></button>
+<button type="button" name="addNew"><a href="<?php echo $this->getUrl('grid','page',['page' => $this->getPager()->getEnd()])?>"> End </a></button>
+<button type="button" name="addNew"><a href="<?php echo $this->getUrl('grid','page',['page' => $this->getPager()->getCurrent()])?>"> Current </a></button>
+<button type="button" name="addNew"><a href="<?php echo $this->getUrl('grid','page',['page' => $this->getPager()->getStart()])?>"> Start </a></button>
+<button type="button" name="addNew"><a href="<?php echo $this->getUrl('grid','page',['page' => $this->getPager()->getPrev()])?>"> Prev </a></button>
+
 	<table border="1" width="100%" cellspacing="4">
 		<tr>
 			<th>Page_Id</th>
