@@ -2,15 +2,38 @@
 <?php
 class Block_Page_Grid extends Block_Core_Template
 {
+	public $pager = null;
+
 	public function __construct()
 	{
 		$this->setTemplate('view/Page/grid.php');
 	}
 
+	public function setPager($pager)
+	{
+		$this->pager = $pager;
+		return $this;
+	}
+
+	public function getPager()
+	{
+		if(!$this->pager)
+		{
+			$this->setPager(Ccc::getModel('Core_Pager'));
+		}
+		return $this->pager;
+	}
+
 	public function getPageData()
 	{
+		$request = Ccc::getModel('Core_Request');
+		$current = $request->getRequest('page',1);
+
+		$totalRecord = $this->getPager()->getAdapter()->fetchOne("SELECT count('pageId') as totalCount FROM page;");
+		$this->getPager()->excute($totalRecord['totalCount'], $current);
+		
 		$pageModel = Ccc::getModel('page');
-		$page = $pageModel->fetchAll("SELECT * FROM page");
+		$page = $pageModel->fetchAll("SELECT * FROM page Limit {$this->getPager()->getStartLimit()}, {$this->getPager()->getEndLimit()}");
 		return $page;
 	}
 }

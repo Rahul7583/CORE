@@ -25,7 +25,7 @@ class Block_Category_Grid extends Block_Core_Template
 		$path = $categoryModel->getPath();
 		foreach ($category as $key => $value) 
 		{
-			if(array_key_exists($value->categoryId, $path)) // 1/3/4 //laptop/mobile
+			if(array_key_exists($value->categoryId, $path))
 			{
 				 $category[$key]->path = $path[$value->categoryId];  
 			}	

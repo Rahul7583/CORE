@@ -1,9 +1,7 @@
+<?php Ccc::loadClass('Controller_Core_Action'); ?>
 <?php 
-Ccc::loadClass('Controller_Core_Action');
-Ccc::loadClass('Model_Core_Request');
-
-class Controller_Salesman_Customer extends Controller_Core_Action{
-
+class Controller_Salesman_Customer extends Controller_Core_Action
+{
 	public function gridAction()
 	{
 
@@ -16,7 +14,6 @@ class Controller_Salesman_Customer extends Controller_Core_Action{
 
 	public function saveAction()
     {
-    	$adminMessage = Ccc::getModel('Admin_Message');
         $customerModel = Ccc::getModel('Customer');
         $customerBlock = Ccc::getBlock('Salesman_Customer_Grid');
         $request = $this->getRequest();
@@ -32,10 +29,10 @@ class Controller_Salesman_Customer extends Controller_Core_Action{
 
                 if(!$result)
                 {
-                    $adminMessage->addMessage("Salesman NOT added");
+                    $this->getMessage()->addMessage("Something wrong with your data.", Model_Core_Message::ERROR);
                     throw new Exception("Error Processing Request", 1);
                 }
-                $adminMessage->addMessage("Salesman added");
+                $this->getMessage()->addMessage("Data Saved.");
             }
 			$this->redirect($this->getLayout()->getUrl('grid','Salesman_Customer',['id' => $customerBlock->getSalesmanId()]));
         }
