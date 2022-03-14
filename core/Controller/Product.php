@@ -1,13 +1,20 @@
-<?php Ccc::loadClass('Controller_Core_Action'); ?>
+<?php Ccc::loadClass('Controller_Admin_Login'); ?>
 <?php
-class Controller_Product extends Controller_Core_Action
+class Controller_Product extends Controller_Admin_Login
 {
+	public function __construct()
+    {
+        if(!$this->authentication())
+        {
+			$this->redirect($this->getLayout()->getUrl('login','admin_login'));
+		}
+    }
+
 	public function gridAction()			
 	{
+		$this->setTitle('Product Grid');
 		$productGrid = Ccc::getBlock('Product_Grid');
-		$content = $this->getLayout()->getContent();
-		$content->addChild($productGrid);
-		$this->getLayout()->getChild('content')->getChild('Block_Product_Grid');
+		$content = $this->getLayout()->getContent()->addChild($productGrid);
 		$this->renderLayout();
 	}
 
@@ -15,17 +22,18 @@ class Controller_Product extends Controller_Core_Action
 	{
 		if((int)$this->getRequest()->getRequest('id'))
 		{
+			$this->setTitle('Product Edit');
 			$id = (int)$this->getRequest()->getRequest('id');
 			$productModel = Ccc::getModel('Product')->load($id);
 		}
 		else
 		{
+			$this->setTitle('Product Add');
 			$productModel = Ccc::getModel('Product');	
 		}
 		$productEdit = Ccc::getBlock('Product_Edit')->setProduct($productModel);
 		$content = $this->getLayout()->getContent();
 		$content->addChild($productEdit);
-		$this->getLayout()->getChild('content')->getChild('Block_Product_Edit');
 		$this->renderLayout();
 	}
 

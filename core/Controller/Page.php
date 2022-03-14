@@ -1,13 +1,20 @@
-<?php Ccc::loadClass('Controller_Core_Action'); ?>
+<?php Ccc::loadClass('Controller_Admin_Login'); ?>
 <?php 
-class Controller_Page extends Controller_Core_Action
+class Controller_Page extends Controller_Admin_Login
 {
+	public function __construct()
+    {
+        if(!$this->authentication())
+        {
+			$this->redirect($this->getLayout()->getUrl('login','admin_login'));
+		}
+    }
+
 	public function gridAction()			
 	{
+		$this->setTitle('Page Grid');
 		$pageGrid = Ccc::getBlock('Page_Grid');
-		$content = $this->getLayout()->getContent();
-		$content->addChild($pageGrid);
-		$this->getLayout()->getChild('content')->getChild('Block_Page_Grid');
+		$content = $this->getLayout()->getContent()->addChild($pageGrid);
 		$this->renderLayout();
 	}
 
@@ -15,17 +22,17 @@ class Controller_Page extends Controller_Core_Action
 	{
 		if((int)$this->getRequest()->getRequest('id'))
 		{
+			$this->setTitle('Page Edit');
 			$id = (int)$this->getRequest()->getRequest('id');
 			$pageModel = Ccc::getModel('Page')->load($id);
 		}
 		else
 		{
+			$this->setTitle('Page Add');
 			$pageModel = Ccc::getModel('Page');	
 		}
 		$pageEdit = Ccc::getBlock('Page_Edit')->setPage($pageModel);
-		$content = $this->getLayout()->getContent();
-		$content->addChild($pageEdit);
-		$this->getLayout()->getChild('content')->getChild('Block_Page_Edit');
+		$content = $this->getLayout()->getContent()->addChild($pageEdit);
 		$this->renderLayout();
 	}
 

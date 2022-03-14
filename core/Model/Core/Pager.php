@@ -1,16 +1,17 @@
 <?php 
 class Model_Core_Pager
 {
-	public $perPageCount = 20;
-	public $pageCount;
-	public $totalCount;
+	protected $perPageCountOption = [10,20,30,50,100];
+	public $perPageCount = null;
+	public $pageCount = null;
+	public $totalCount = 0;
 	public $start = 1;
-	public $end;
-	public $prev;
-	public $current;
-	public $startLimit;
-	public $endLimit;
-	public $next;
+	public $end = null;
+	public $prev = null;
+	public $current = null;
+	public $startLimit = null;
+	public $endLimit = null;
+	public $next = null;
 
 	public function setPerPageCount($perPageCount)
 	{
@@ -21,6 +22,17 @@ class Model_Core_Pager
 	public function getPerPageCount()
 	{
 		return $this->perPageCount;
+	}
+
+	public function perPageCountOption($perPageCountOption)
+	{
+		$this->perPageCountOption = $perPageCountOption;
+		return $this;	
+	}
+
+	public function getPerPageCountOption()
+	{
+		return $this->perPageCountOption;
 	}
 
 	public function setPageCount($pageCount)
@@ -122,10 +134,21 @@ class Model_Core_Pager
 		return $this->next;
 	}
 
-	public function excute($totalCount, $current)
+	public function execute($totalCount, $current,$perPageCountOption)
 	{
+		$this->setPerPageCount($perPageCountOption);
+        $this->setPageCount($perPageCountOption);
+        $this->setEnd($perPageCountOption);
+        $this->setPrev($perPageCountOption);
+        $this->setNext($perPageCountOption);
+        $this->setCurrent($perPageCountOption);
+        $this->setStartLimit($perPageCountOption);
+        $this->setEndLimit($perPageCountOption);
+        foreach ($totalCount as $key => $value) {
+        	$totalCount = $value;
+        	$this->setTotalCount($totalCount);
+        }
 
-		$this->setTotalCount($totalCount);
 		$this->setPageCount(ceil($this->getTotalCount() / $this->getPerPageCount()));
 		$this->setCurrent(($current > $this->getPageCount()) ? $this->getPageCount() : $current);
         $this->setCurrent(($this->getCurrent() < $this->getStart()) ? $this->getStart() : $this->getCurrent());
@@ -135,19 +158,6 @@ class Model_Core_Pager
         $this->setEnd(($this->getCurrent() == $this->getPageCount()) ? null : $this->getPageCount());
         $this->setStartLimit($this->getPerPageCount() * ($this->getCurrent() - 1));
         $this->setEndLimit($this->getCurrent() * $this->getPerPageCount());
-		/*$this->setTotalCount($totalCount);
-		$this->setStart($this->getCurrent() == 1) ? Null : 1;
-
-		$this->setPageCount(ceil($this->getTotalCount() / $this->getPerPageCount()));
-		$this->setEnd($this->getCurrent() == $this->getPageCount()) ? Null : $this->getPageCount();
-
-		$this->setCurrent(($current > $this->getPageCount()) ? $this->getPageCount() : $current);
-		$this->setCurrent(($current < $this->getStart()) ? $this->getStart() : $current);
-
-		$this->setPrev(($this->getCurrent() == $this->getStart()) ? Null : $this->getCurrent() - 1);
-		$this->setNext(($this->getCurrent() == $this->getEnd()) ? Null : $this->getCurrent() + 1);
-		$this->setStartLimit($this->getPerPageCount() * ($this->getCurrent() - 1) + 1);
-		$this->setEndLimit($this->getPerPageCount() * $this->getCurrent());*/
 	}
 
 	public function getAdapter()

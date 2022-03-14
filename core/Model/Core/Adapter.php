@@ -1,15 +1,8 @@
 <?php
-
-class Model_Core_Adapter{
-	
-	public $config=[
-		'host'=>'localhost',
-		'username'=>'root',
-		'password'=>'',
-		'db_name'=>'project_rahul'
-	];
-
-	private $connect=NULL;
+class Model_Core_Adapter
+{	
+	public $config = [];
+	private $connect = NULL;
 	
 	public function setConfig($config)
 		{
@@ -24,6 +17,8 @@ class Model_Core_Adapter{
 		
 		public function connect()
 		{
+			$this->config = Ccc::getConfig();
+			$this->config = $this->config['connection'];
 			$connect=mysqli_connect($this->config['host'],$this->config['username'],$this->config['password'],
 				$this->config['db_name']);
 			$this->setConnect($connect);

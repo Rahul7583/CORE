@@ -1,13 +1,20 @@
-<?php Ccc::loadClass('Controller_Core_Action'); ?>
+<?php Ccc::loadClass('Controller_Admin_Login'); ?>
 <?php
-class Controller_Config extends Controller_Core_Action{
+class Controller_Config extends Controller_Admin_Login
+{	
+	public function __construct()
+    {
+        if(!$this->authentication())
+        {
+			$this->redirect($this->getLayout()->getUrl('login','admin_login'));
+		}
+    }
 
 	public function gridAction()			
 	{
-		$content = $this->getLayout()->getContent();
+		$this->setTitle('Config Grid');
 		$configGrid = Ccc::getBlock('Config_Grid');
-		$content->addChild($configGrid);
-		$this->getLayout()->getChild('content')->getChild('Block_Config_Grid');
+		$content = $this->getLayout()->getContent()->addChild($configGrid);
 		$this->renderLayout();
 	}
 
@@ -15,17 +22,17 @@ class Controller_Config extends Controller_Core_Action{
 	{
 		if($this->getRequest()->getRequest('id'))
 		{
+			$this->setTitle('Config Edit');	
 			$id = $this->getRequest()->getRequest('id');
 			$configModel = Ccc::getModel('Config')->load($id);
 		}
 		else
 		{
+			$this->setTitle('Config Add');	
 			$configModel = Ccc::getModel('Config');
 		}
 		$configEdit= Ccc::getBlock('Config_Edit')->setConfig($configModel);
-		$content = $this->getLayout()->getContent();
-		$content->addChild($configEdit);
-		$this->getLayout()->getChild('content')->getChild('Block_Config_Edit');
+		$content = $this->getLayout()->getContent()->addChild($configEdit);
 		$this->renderLayout();
 	}
 

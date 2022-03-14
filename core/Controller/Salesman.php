@@ -1,13 +1,21 @@
-<?php Ccc::loadClass('Controller_Core_Action'); ?>
+<?php Ccc::loadClass('Controller_Admin_Login'); ?>
 <?php 
-class Controller_Salesman extends Controller_Core_Action
+class Controller_Salesman extends Controller_Admin_Login
 {
+	public function __construct()
+    {
+        if(!$this->authentication())
+        {
+			$this->redirect($this->getLayout()->getUrl('login','admin_login'));
+		}
+    }
+
 	public function gridAction()			
 	{
+		$this->setTitle('Salesman Grid');
 		$salesmanGrid= Ccc::getBlock('Salesman_Grid');
 		$content = $this->getLayout()->getContent();
 		$content->addChild($salesmanGrid);
-		$this->getLayout()->getChild('content')->getChild('Block_Salesman_Grid');
 		$this->renderLayout();
 	}
 
@@ -15,17 +23,17 @@ class Controller_Salesman extends Controller_Core_Action
 	{
 		if((int)$this->getRequest()->getRequest('id'))
 		{
+			$this->setTitle('Salesman Edit');
 			$id = (int)$this->getRequest()->getRequest('id');
 			$salesmanModel = Ccc::getModel('Salesman')->load($id);
 		}
 		else
 		{
+			$this->setTitle('Salesman Add');
 			$salesmanModel = Ccc::getModel('Salesman');	
 		}		
 		$salesmanEdit = Ccc::getBlock('Salesman_Edit')->setSalesman($salesmanModel);
-		$content = $this->getLayout()->getContent();
-		$content->addChild($salesmanEdit);
-		$this->getLayout()->getChild('content')->getChild('Block_Salesman_Edit');
+		$content = $this->getLayout()->getContent()->addChild($salesmanEdit);
 		$this->renderLayout();
 	}
 
