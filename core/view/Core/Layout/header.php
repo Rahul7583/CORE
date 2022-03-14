@@ -1,1 +1,1 @@
-<?php $this->getMenu(); ?>
+<?php echo $this->getMenu()->toHtml(); ?>

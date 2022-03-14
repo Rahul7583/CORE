@@ -1,13 +1,20 @@
-<?php Ccc::loadClass('Controller_Core_Action'); ?>
+<?php Ccc::loadClass('Controller_Admin_Login'); ?>
 <?php 
-class Controller_Customer extends Controller_Core_Action
+class Controller_Customer extends Controller_Admin_Login
 {
+	public function __construct()
+    {
+        if(!$this->authentication())
+        {
+			$this->redirect($this->getLayout()->getUrl('login','admin_login'));
+		}
+    }
+    
 	public function gridAction()			
 	{
+		$this->setTitle('Customer Grid');
 		$customerGrid = Ccc::getBlock('Customer_Grid');
-		$content = $this->getLayout()->getContent();
-		$content->addChild($customerGrid);
-		$this->getLayout()->getChild('content')->getChild('Block_Customer_Grid');
+		$content = $this->getLayout()->getContent()->addChild($customerGrid);
 		$this->renderLayout();
 	}
 
@@ -15,6 +22,7 @@ class Controller_Customer extends Controller_Core_Action
 	{
 		if((int)$this->getRequest()->getRequest('id'))
 		{
+			$this->setTitle('Customer Edit');
 			$id = (int)$this->getRequest()->getRequest('id');
 			$customerModel = Ccc::getModel('Customer');
 			$customerModel=$customerModel->fetchRow("SELECT c.*,a.*
@@ -25,12 +33,11 @@ class Controller_Customer extends Controller_Core_Action
 		}
 		else
 		{
+			$this->setTitle('Customer Add');
 			$customerModel = Ccc::getModel('Customer');	
 		}
 		$customerEdit = Ccc::getBlock('Customer_Edit')->setCustomer($customerModel);
-		$content = $this->getLayout()->getContent();
-		$content->addChild($customerEdit);
-		$this->getLayout()->getChild('content')->getChild('Block_Customer_Edit');
+		$content = $this->getLayout()->getContent()->addChild($customerEdit);
 		$this->renderLayout();
 	}
 

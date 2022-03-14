@@ -1,13 +1,20 @@
-<?php Ccc::loadClass('Controller_Core_Action'); ?>
+<?php Ccc::loadClass('Controller_Admin_Login'); ?>
 <?php 
-class Controller_Vendor extends Controller_Core_Action
+class Controller_Vendor extends Controller_Admin_Login
 {
+	public function __construct()
+    {
+        if(!$this->authentication())
+        {
+			$this->redirect($this->getLayout()->getUrl('login','admin_login'));
+		}
+    }
+
 	public function gridAction()			
 	{
+		$this->setTitle('Vendor Grid');
 		$vendorGrid = Ccc::getBlock('Vendor_Grid');
-		$content = $this->getLayout()->getContent();
-		$content->addChild($vendorGrid);
-		$this->getLayout()->getChild('content')->getChild('Block_Vendor_Grid');
+		$content = $this->getLayout()->getContent()->addChild($vendorGrid);
 		$this->renderLayout();
 	}
 
@@ -15,6 +22,7 @@ class Controller_Vendor extends Controller_Core_Action
 	{
 		if((int)$this->getRequest()->getRequest('id'))
 		{
+			$this->setTitle('Vendor Edit');
 			$id = (int)$this->getRequest()->getRequest('id');
 			$vendorModel = Ccc::getModel('vendor');
 			$vendorModel=$vendorModel->fetchRow("SELECT v.*,v_a.*
@@ -25,12 +33,11 @@ class Controller_Vendor extends Controller_Core_Action
 		}
 		else
 		{
+			$this->setTitle('Vendor Add');
 			$vendorModel = Ccc::getModel('Vendor');
 		}
 		$vendorEdit = Ccc::getBlock('Vendor_Edit')->setVendor($vendorModel);
-		$content = $this->getLayout()->getContent();
-		$content->addChild($vendorEdit);
-		$this->getLayout()->getChild('content')->getChild('Block_Vendor_Edit');
+		$content = $this->getLayout()->getContent()->addChild($vendorEdit);
 		$this->renderLayout();
 	}
 
@@ -118,16 +125,17 @@ class Controller_Vendor extends Controller_Core_Action
 
 	public function deleteAction()
 	{
-		try {
-				$vendorModel = Ccc::getModel('vendor');
-				$id = (int)$this->getRequest()->getRequest('id');
-				$result = $vendorModel->delete($id);
-				if(!$result)
-				{
-					throw new Exception("system is unable to delete", 1);
-				}
-				$this->getMessage()->addMessage('Data Deleted');
-				$this->redirect($this->getLayout()->getUrl('grid'));
+		try 
+		{
+			$vendorModel = Ccc::getModel('vendor');
+			$id = (int)$this->getRequest()->getRequest('id');
+			$result = $vendorModel->delete($id);
+			if(!$result)
+			{
+				throw new Exception("system is unable to delete", 1);
+			}
+			$this->getMessage()->addMessage('Data Deleted');
+			$this->redirect($this->getLayout()->getUrl('grid'));
 		} catch (Exception $e) {
 			$this->getMessage()->addMessage('Somthing wrong with your data.', Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid'));

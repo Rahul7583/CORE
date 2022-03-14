@@ -42,24 +42,6 @@ class Model_Admin extends Model_Core_Row{
 	{
 		return $this->login;
 	}
-
-	public function login($email, $password)
-	{
-		$adminModel = Ccc::getModel('admin');
-		$query = $adminModel->fetchRow("SELECT * FROM admin 
-										WHERE email = '{$email}' AND password = '{$password}'");
-		if (!$query) {
-			return false;
-		}
-		$admin = Ccc::getModel('Admin_Message')->login = $query;
-		return $admin;
-	}
-
-	
-	public function logout()
-	{
-		unset(Ccc::getModel('Admin_Message')->login);
-	}
 }
 
 

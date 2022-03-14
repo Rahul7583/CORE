@@ -7,7 +7,6 @@ class Controller_Core_Action
 	public $layout = NULL;
 	protected $message = null;
 
-
 	public function setMessage($message)
 	{
 		$this->message = $message;
@@ -39,8 +38,7 @@ class Controller_Core_Action
 
 	public function renderLayout()
 	{
-		$this->getLayout()->toHtml();
-		return $this;
+		echo $this->getResponse()->setHeader('Content-type','text/html')->render($this->getLayout()->toHtml());
 	}
 
 	public function redirect($url)				
@@ -52,6 +50,16 @@ class Controller_Core_Action
 	public function getRequest()
 	{
 		return Ccc::getFront()->getRequest();
+	}
+
+	public function getResponse()
+	{
+		return Ccc::getFront()->getResponse();
+	}
+
+	public function setTitle($title)
+	{
+		$this->getLayout()->getHead()->setTitle($title);
 	}
 }
 

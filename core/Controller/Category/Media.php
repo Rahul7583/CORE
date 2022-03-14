@@ -1,13 +1,12 @@
+<?php Ccc::loadClass('Controller_Core_Action'); ?>
 <?php 
-Ccc::loadClass('Controller_Core_Action');
 class Controller_Category_Media extends Controller_Core_Action
 {
 	public function gridAction()
 	{
+		$this->setTitle('Category_Media_Grid');
 		$categoryMediaGrid = Ccc::getBlock('Category_Media_Grid');
-		$content = $this->getLayout()->getContent();
-		$content->addChild($categoryMediaGrid);
-		$this->getLayout()->getChild('content')->getChild('Block_Category_Media_Grid');
+		$content = $this->getLayout()->getContent()->addChild($categoryMediaGrid);
 		$this->renderLayout();
 	}
 

@@ -1,14 +1,58 @@
-<?php $pages = $this->getpageData();
-//print_r($this->getPager()->next);
+<?php $pages = $this->getpageData(); ?>
+<table>
+  <tr>
+    <script type="text/javascript"> 
+    	function ppr() 
+      	{
+	        const value = document.getElementById('ppr').selectedOptions[0].value;
+	        var url = window.location.href;
 
- ?>
+	        if(!url.includes('ppr'))
+	        {
+	            url+='&ppr=20';
+	        }
+	        const myArray = url.split("&");
+	        for (i = 0; i < myArray.length; i++)
+	        {
+	          if(myArray[i].includes('page='))
+	          {
+	              myArray[i]='page=1';
+	          }
+	          if(myArray[i].includes('ppr='))
+	          {
+	              myArray[i]='ppr='+value;
+	          }
+	        }
+	         const str = myArray.join("&");  
+	         location.replace(str);
+      	}
+    </script>
+    <select onchange="ppr()" id="ppr">
+      <option selected>select</option>
+      <?php foreach($this->getPager()->getPerPageCountOption() as $perPageCount) :?>  
+      <option value="<?php echo $perPageCount ?>" ><?php echo $perPageCount ?></a></option>
+      <?php endforeach;?>
+    </select>
+     <button type="button" name="Next">
+     	<a href="<?php echo $this->getUrl('grid','page',['page' => $this->getPager()->getNext()])?>"> Next </a>
+     </button>
+	<button type="button" name="End">
+		<a href="<?php echo $this->getUrl('grid','page',['page' => $this->getPager()->getEnd()])?>"> End </a>
+	</button>
+	<button type="button" name="Current">
+		<a href="<?php echo $this->getUrl('grid','page',['page' => $this->getPager()->getCurrent()])?>"> Current </a>
+	</button>
+	<button type="button" name="Start">
+		<a href="<?php echo $this->getUrl('grid','page',['page' => $this->getPager()->getStart()])?>"> Start </a>
+	</button>
+	<button type="button" name="Prev">
+		<a href="<?php echo $this->getUrl('grid','page',['page' => $this->getPager()->getPrev()])?>"> Prev </a>
+	</button>
+  </tr>
+</table>
+
+<br>
 <button type="button" name="addNew"><a href="<?php echo $this->getUrl('edit','page')?>"> Add New </a></button>
-<button type="button" name="addNew"><a href="<?php echo $this->getUrl('grid','page',['page' => $this->getPager()->getNext()])?>"> Next </a></button>
-<button type="button" name="addNew"><a href="<?php echo $this->getUrl('grid','page',['page' => $this->getPager()->getEnd()])?>"> End </a></button>
-<button type="button" name="addNew"><a href="<?php echo $this->getUrl('grid','page',['page' => $this->getPager()->getCurrent()])?>"> Current </a></button>
-<button type="button" name="addNew"><a href="<?php echo $this->getUrl('grid','page',['page' => $this->getPager()->getStart()])?>"> Start </a></button>
-<button type="button" name="addNew"><a href="<?php echo $this->getUrl('grid','page',['page' => $this->getPager()->getPrev()])?>"> Prev </a></button>
-
 	<table border="1" width="100%" cellspacing="4">
 		<tr>
 			<th>Page_Id</th>

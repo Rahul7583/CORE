@@ -1,12 +1,20 @@
-<?php Ccc::loadClass('Controller_Core_Action'); ?>
+<?php Ccc::loadClass('Controller_Admin_Login'); ?>
 <?php 
-class Controller_Admin extends Controller_Core_Action{
+class Controller_Admin extends Controller_Admin_Login
+{
+	public function __construct()
+    {
+        if(!$this->authentication())
+        {
+			$this->redirect($this->getLayout()->getUrl('login','admin_login'));
+		}
+    }
 
 	public function gridAction()			
 	{
-		$content = $this->getLayout()->getContent();
+		$this->setTitle('Admin Grid');
 		$adimnGrid = Ccc::getBlock('Admin_Grid');
-		$content->addChild($adimnGrid);
+		$content = $this->getLayout()->getContent()->addChild($adimnGrid);
 		$this->renderLayout();
 	}	
 
@@ -14,17 +22,17 @@ class Controller_Admin extends Controller_Core_Action{
 	{
 		if((int)$this->getRequest()->getRequest('id'))
 		{
+			$this->setTitle('Admin Edit');
 			$id = (int)$this->getRequest()->getRequest('id');
 			$adminModel = Ccc::getModel('admin')->load($id);
 		}
 		else
 		{
+			$this->setTitle('Admin Add');
 			$adminModel = Ccc::getModel('admin');				
 		}
 		$adminEdit = Ccc::getBlock('Admin_Edit')->setAdmin($adminModel);
-		$content = $this->getLayout()->getContent();
-		$content->addChild($adminEdit);
-		$this->getLayout()->getChild('content')->getChild('Block_Admin_Edit');
+		$content = $this->getLayout()->getContent()->addChild($adminEdit);
 		$this->renderLayout();
 	}
 

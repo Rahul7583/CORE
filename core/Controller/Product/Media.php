@@ -4,10 +4,9 @@ class Controller_Product_Media extends Controller_Core_Action
 {
 	public function gridAction()
 	{
+		$this->setTitle('Product_Media_Grid');
 		$productMediaGrid = Ccc::getBlock('Product_Media_Grid');
-		$content = $this->getLayout()->getContent();
-		$content->addChild($productMediaGrid);
-		$this->getLayout()->getChild('content')->getChild('Block_Product_Media_Grid');
+		$content = $this->getLayout()->getContent()->addChild($productMediaGrid);
 		$this->renderLayout();
 	}
 
@@ -16,7 +15,6 @@ class Controller_Product_Media extends Controller_Core_Action
 		try {
 				if($_FILES['image'])
 				{
-					
 					$id = (int)$this->getRequest()->getRequest('id');
 					$file = $_FILES['image'];
 					$extention =$file['type']; 
