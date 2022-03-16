@@ -2,6 +2,7 @@
 <?php $salesmanDiscount = $this->getSalesmanDiscount($id) ?>
 <?php $products = $this->getProducts(); ?>
 <?php $prices = $this->getPrices(); ?>
+<?php  ?>
 <form action="<?php echo $this->getUrl('save','Customer_Price',['salesmanId' => $id]) ?>" method="post">
     <input type="submit" value="save">
     <table border="1" width="100%">

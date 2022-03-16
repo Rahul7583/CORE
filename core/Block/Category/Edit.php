@@ -28,7 +28,7 @@ class Block_Category_Edit extends Block_Core_Template
 		if($category){
 			foreach ($category as $key => $value) 
 			{
-				if(array_key_exists($value->categoryId, $path)) // 1/3/4 //laptop/mobile
+				if(array_key_exists($value->categoryId, $path))
 				{
 					 $category[$key]->path = $path[$value->categoryId];  
 				}	

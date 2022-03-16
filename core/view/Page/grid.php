@@ -26,7 +26,25 @@
 	         const str = myArray.join("&");  
 	         location.replace(str);
       	}
+
+      	function checkAll(ele) {
+	     var checkboxes = document.getElementsByTagName('input');
+	     if (ele.checked) {
+	         for (var i = 0; i < checkboxes.length; i++) {
+	             if (checkboxes[i].type == 'checkbox') {
+	                 checkboxes[i].checked = true;
+	             }
+	         }
+	     } else {
+	         for (var i = 0; i < checkboxes.length; i++) {
+	             if (checkboxes[i].type == 'checkbox') {
+	                 checkboxes[i].checked = false;
+	             }
+	         }
+	     }
+ 		}
     </script>
+ 
     <select onchange="ppr()" id="ppr">
       <option selected>select</option>
       <?php foreach($this->getPager()->getPerPageCountOption() as $perPageCount) :?>  
@@ -53,8 +71,12 @@
 
 <br>
 <button type="button" name="addNew"><a href="<?php echo $this->getUrl('edit','page')?>"> Add New </a></button>
+<form action="<?php echo $this->getUrl('deleteAll','page')?>" method="POST">
+	<input type="submit" name="submit">
 	<table border="1" width="100%" cellspacing="4">
 		<tr>
+
+			<th><input type="checkbox" name="checkboxAll" id="checkboxAll" onchange="checkAll(this)"> Select All</th>
 			<th>Page_Id</th>
 			<th>Name</th>
 			<th>Code</th>
@@ -74,6 +96,7 @@
 			
 			<?php foreach ($pages as $page): ?>
 				<tr>
+					<td><input type="checkbox" id="<?php echo $page->pageId;  ?>" name="checkbox[]" value="<?php echo $page->pageId;  ?>"></td>
 					<td><?php echo $page->pageId;  ?></td>
 					<td><?php echo $page->name;  ?></td>
 					<td><?php echo $page->code;  ?></td>
@@ -87,3 +110,4 @@
 			<?php endforeach; ?>
 		<?php endif; ?>	
 	</table>
+	</form>

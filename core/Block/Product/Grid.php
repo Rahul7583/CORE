@@ -34,18 +34,8 @@ class Block_Product_Grid extends Block_Core_Template
 		$totalRecord = $this->getPager()->getAdapter()->fetchOne("SELECT count('productId') as totalCount FROM product;");
 		$this->getPager()->execute($totalRecord, $current,$ppr);
 		$productModel = Ccc::getModel('Product');
-		$product = $productModel->fetchAll("SELECT p.*,
-														 base.name as base,
-														 thumbnail.name as thumbnail,
-														 small.name as small
-												FROM product p 
-												LEFT JOIN image base
-												ON p.productId = base.productId AND (base.base = 1)
-												LEFT JOIN image thumbnail 
-												ON p.productId = thumbnail.productId AND (thumbnail.thumbnail = 1)
-												LEFT JOIN image small
-												ON p.productId = small.productId AND (small.small = 1)
-												Limit {$this->getPager()->getStartLimit()}, {$this->getPager()->getEndLimit()}");
+		$product = $productModel->fetchAll("SELECT * FROM product 
+											Limit {$this->getPager()->getStartLimit()}, {$this->getPager()->getEndLimit()}");
 	
 		return $product;
 	}
