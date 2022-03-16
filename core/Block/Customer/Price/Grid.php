@@ -9,12 +9,13 @@ class Block_Customer_Price_Grid extends Block_Core_Template
 
     public function getProducts()
     {
-        $product = Ccc::getModel('product');
-        $products = $product->fetchAll("SELECT p.productId, p.name, p.sku, p.price as productPrice, 
+        $productModel = Ccc::getModel('product');
+        $products = $productModel->fetchAll("SELECT p.productId, p.name, p.sku, p.price as productPrice, 
                                                 p.map, c.entityId, c.customerId, c.price as customerPrice 
                                                 FROM product AS p 
                                                 LEFT JOIN customer_price AS c 
                                                 ON p.productId = c.productId");
+        //$product = $product->fetchAll("SELECT * FROM product");
         return $products;
     }
 

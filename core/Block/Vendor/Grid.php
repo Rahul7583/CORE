@@ -34,11 +34,9 @@ class Block_Vendor_Grid extends Block_Core_Template
 		$this->getPager()->execute($totalRecord, $current,$ppr);
 		
 		$vendorModel = Ccc::getModel('Vendor');
-		$vendor = $vendorModel->fetchAll("SELECT v.*,v_a.*
-							FROM vendor v
-							JOIN vendor_address v_a
-							ON v_a.vendorId = v.vendorId
-							Limit {$this->getPager()->getStartLimit()}, {$this->getPager()->getEndLimit()}");
+		$vendor = $vendorModel->fetchAll("SELECT *
+										FROM vendor 
+										Limit {$this->getPager()->getStartLimit()}, {$this->getPager()->getEndLimit()}");
 		return $vendor;
 	}
 }

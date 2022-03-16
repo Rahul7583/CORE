@@ -33,10 +33,7 @@ class Block_Customer_Grid extends Block_Core_Template
 		$this->getPager()->execute($totalRecord, $current,$ppr);
 		
 		$customerModel = Ccc::getModel('Customer');
-		$customer = $customerModel->fetchAll("SELECT c.*,a.*
-							FROM customer c
-							JOIN address a
-							ON a.customerId = c.customerId
+		$customer = $customerModel->fetchAll("SELECT * FROM customer 
 							Limit {$this->getPager()->getStartLimit()}, {$this->getPager()->getEndLimit()}");
 		return $customer;
 	}

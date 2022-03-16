@@ -87,21 +87,21 @@
 					<td><?php echo $product->msp; ?></td>
 					<td><?php echo $product->cost_price; ?></td>
 					<td>
-						<?php if(!$product->base): echo "Image Not Available"; ?>
+						<?php if(!$product->getBase()): echo "Image Not Available"; ?>
 								<?php else:?>
-						<img src="<?php echo 'Media/Product/'. $product->base; ?>" width="80px" height="80px"> 
+						<img src="<?php echo 'Media/Product/'. $product->getBase()->name; ?>" width="80px" height="80px"> 
 						<?php endif; ?>
 					</td>
 					<td>
-						<?php if(!$product->thumbnail): echo "Image Not Available"; ?>
+						<?php if(!$product->getThumbnail()): echo "Image Not Available"; ?>
 								<?php else:?>
-						<img src="<?php echo 'Media/Product/'. $product->thumbnail; ?>" width="80px" height="80px"> 
+						<img src="<?php echo 'Media/Product/'. $product->getThumbnail()->name; ?>" width="80px" height="80px"> 
 						<?php endif; ?>
 					</td>
 					<td>
-						<?php if(!$product->small): echo "Image Not Available"; ?>
+						<?php if(!$product->getSmall()): echo "Image Not Available"; ?>
 								<?php else:?>
-						<img src="<?php echo 'Media/Product/'. $product->small; ?>" width="80px" height="80px"> 
+						<img src="<?php echo 'Media/Product/'. $product->getSmall()->name; ?>" width="80px" height="80px"> 
 						<?php endif; ?>
 					</td>
 					<td><?php echo $product->price; ?></td>

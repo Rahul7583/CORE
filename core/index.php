@@ -56,12 +56,12 @@ class Ccc
 	
 	public static function loadFile($path)
 	{
-		return require_once($path);
+		return require_once(getcwd().DIRECTORY_SEPARATOR.$path);
 	}
 
 	public static function loadClass($className)
 	{
-		$path=str_replace('_', '/', $className).".php"; //Controller/Customer.php
+		$path=str_replace('_', '/', $className).".php"; 
 		self::loadFile($path);
 	}
 

@@ -34,17 +34,7 @@ class Block_Category_Grid extends Block_Core_Template
 		$this->getPager()->execute($totalRecord, $current,$ppr);
 
 		$categoryModel = Ccc::getModel('Category');
-		$category = $categoryModel->fetchAll("SELECT c.*,
-														 base.name as base,
-														 thumbnail.name as thumbnail,
-														 small.name as small
-												FROM categories c 
-												LEFT JOIN category_image base
-												ON c.categoryId = base.categoryId AND (base.base = 1)
-												LEFT JOIN category_image thumbnail 
-												ON c.categoryId = thumbnail.categoryId AND (thumbnail.thumbnail = 1)
-												LEFT JOIN category_image small
-												ON c.categoryId = small.categoryId AND (small.small = 1) 
+		$category = $categoryModel->fetchAll("SELECT * FROM categories
 												Limit {$this->getPager()->getStartLimit()}, {$this->getPager()->getEndLimit()}");
 
 		$path = $categoryModel->getPath();

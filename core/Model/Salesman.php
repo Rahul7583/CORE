@@ -1,6 +1,8 @@
 <?php Ccc::loadClass('Model_Core_Row'); ?>
 <?php
-class Model_Salesman extends Model_Core_Row{
+class Model_Salesman extends Model_Core_Row
+{
+	protected $customer = null;
 
 	public function __construct()
 	{
@@ -29,6 +31,33 @@ class Model_Salesman extends Model_Core_Row{
 			return $status[$key];
 		}
 		return self::STATUS_DISABLED_DEFALUT;
+	}
+
+	public function setCustomers($customer)
+	{
+		$this->customer = $customer;
+		return $this;
+	}
+
+	public function getCustomers($reload = false)
+	{
+		$customerModel = Ccc::getModel('Customer');
+		if (!$this->customerId) 
+		{
+			return $customerModel;
+		}
+		if ($this->customer && !$reload) 
+		{
+			return $this->customer;
+		}
+		$customer = $customerModel->fetchRow("SELECT * FROM `customer` 
+											WHERE `customerId` = {$this->customerId}");
+		if (!$customer) 
+		{
+			return $customerModel;
+		}
+		$this->setCustomers($customer);
+		return $customer;
 	}
 }
 

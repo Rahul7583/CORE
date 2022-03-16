@@ -25,11 +25,7 @@ class Controller_Vendor extends Controller_Admin_Login
 			$this->setTitle('Vendor Edit');
 			$id = (int)$this->getRequest()->getRequest('id');
 			$vendorModel = Ccc::getModel('vendor');
-			$vendorModel=$vendorModel->fetchRow("SELECT v.*,v_a.*
-								FROM vendor v
-								JOIN vendor_address v_a
-								ON v_a.vendorId = v.vendorId
-								WHERE v.vendorId = {$id}");
+			$vendorModel = $vendorModel->load($id);
 		}
 		else
 		{

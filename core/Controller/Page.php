@@ -92,4 +92,13 @@ class Controller_Page extends Controller_Admin_Login
 			$this->redirect($this->getLayout()->getUrl('grid'));
 		}
 	}
+
+	public function deleteAllAction()
+	{
+		$pti = $this->getRequest()->getPost('checkbox');
+		foreach ($pti as $key => $value) {
+			$pageModel = Ccc::getModel('Page');
+			$pageModel->delete($value);
+		}
+	}
 }

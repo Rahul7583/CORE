@@ -1,6 +1,10 @@
 <?php Ccc::loadClass('Model_Core_Row'); ?>
 <?php
-class Model_Customer extends Model_Core_Row{
+class Model_Customer extends Model_Core_Row
+{
+	protected $billingAddress = null;
+	protected $shippingAddress = null;
+	protected $salesman	= null;
 
 	public function __construct()
 	{
@@ -29,6 +33,87 @@ class Model_Customer extends Model_Core_Row{
 			return $status[$key];
 		}
 		return self::STATUS_DISABLED_DEFALUT;
+	}
+
+	public function setBillingAddresses($billingAddress)
+	{
+		$this->billingAddress = $billingAddress;
+		return $this;
+	}
+
+	public function getBillingAddresses($reload = false)
+	{
+		$addressModel = Ccc::getModel('Customer_Address');
+		if (!$this->customerId) 
+		{
+			return $addressModel;
+		}
+		if ($this->billingAddress && !$reload) 
+		{
+			return $this->billingAddress;
+		}
+		$address = $addressModel->fetchRow("SELECT * FROM `address` 
+											WHERE `customerId` = {$this->customerId} AND `billing` = 1");
+		if (!$address) 
+		{
+			return $addressModel;
+		}
+		$this->setBillingAddresses($address);
+		return $address;
+	}
+
+	public function setShippingAddresses($shippingAddress)
+	{
+		$this->shippingAddress = $shippingAddress;
+		return $this;
+	}
+	
+	public function getShippingAddresses($reload = false)
+	{
+		$addressModel = Ccc::getModel('Customer_Address');
+		if (!$this->customerId) 
+		{
+			return $addressModel;
+		}
+		if ($this->shippingAddress && !$reload) 
+		{
+			return $this->shippingAddress;
+		}
+		$address = $addressModel->fetchRow("SELECT * FROM `address` 
+											WHERE `customerId` = {$this->customerId} AND `shipping` = 1");
+		if (!$address) 
+		{
+			return $addressModel;
+		}
+		$this->setShippingAddresses($address);
+		return $address;
+	}
+
+	public function setSalesman($salesman)
+	{
+		$this->salesman = $salesman;
+		return $this;
+	}
+
+	public function getSalesman($reload = false)
+	{
+		$salesmanModel = Ccc::getModel('Salesman');
+		if (!$this->salesmanId) 
+		{
+			return $salesmanModel;
+		}
+		if ($this->salesman && !$reload) 
+		{
+			return $this->salesman;
+		}
+		$salesman = $salesmanModel->fetchRow("SELECT * FROM `salesman` 
+											WHERE `salesmanId` = {$this->salesmanId}");
+		if (!$salesman) 
+		{
+			return $salesmanModel;
+		}
+		$this->setSalesman($salesman);
+		return $salesman;
 	}
 }
 

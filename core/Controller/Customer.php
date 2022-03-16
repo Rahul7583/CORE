@@ -25,11 +25,7 @@ class Controller_Customer extends Controller_Admin_Login
 			$this->setTitle('Customer Edit');
 			$id = (int)$this->getRequest()->getRequest('id');
 			$customerModel = Ccc::getModel('Customer');
-			$customerModel=$customerModel->fetchRow("SELECT c.*,a.*
-								FROM customer c
-								JOIN address a
-								ON a.customerId = c.customerId
-								WHERE c.customerId = {$id}");
+			$customerModel=$customerModel->load($id);
 		}
 		else
 		{
@@ -76,30 +72,23 @@ class Controller_Customer extends Controller_Admin_Login
 			
 	}
 
-	public function saveAddress($customerId)
+	public function saveBillingAddress($customerId)
 	{
 		try {
 				$request = $this->getRequest();
-				$address = $request->getPost('address');
+				$address = $request->getPost('billingAddress');
 				if(!$address)
 				{
 					throw new Exception("Missing Address data in Request ", 1);	
 				}
 				
-				$billing = 0;
-				if(array_key_exists('billing',$address) && $address["billing"] == 1){
-					$billing = 1;
-				}
-				$shipping = 0;
-				if(array_key_exists('shipping',$address) && $address["shipping"] == 1){
-						$shipping = 1;
-				}
-				 $address["billing"] = $billing;
-				 $address["shipping"] = $shipping;
+				$address['billing'] = 1;
+				$address['shipping'] = 0;
 					
 				 $addressModel = Ccc::getModel('Customer_Address');
 				 $addressModel->setData($address);
-				 $resultAddress = $addressModel->load($customerId, 'customerId');
+
+				$resultAddress = $addressModel->load($customerId, 'customerId');
 				
 				if($resultAddress)
 				{	
@@ -114,8 +103,45 @@ class Controller_Customer extends Controller_Admin_Login
 		 		{
 		 			throw new Exception("System is unable to insert.", 1);	
 		 		}
+				$this->getMessage()->addMessage('Data Saved');			
+		} catch (Exception $e) {
+			$this->getMessage()->addMessage('Something Wrong with your data', Model_Core_Message::ERROR);
+			$this->redirect($this->getLayout()->getUrl('grid'));
+		}
+	}
+
+	public function saveShippingAddress($customerId)
+	{
+		try {
+				$request = $this->getRequest();
+				$address = $request->getPost('shippingAddress');
+				if(!$address)
+				{
+					throw new Exception("Missing Address data in Request ", 1);	
+				}
+				
+				$address["shipping"] = 1;
+				$address['billing'] = 0;
+					
+				 $addressModel = Ccc::getModel('Customer_Address');
+				 $addressModel->setData($address);
+				 $resultAddress = $addressModel->fetchRow("SELECT * FROM `address` 
+											WHERE `customerId` = {$customerId} AND `shipping` = 1");
+
+				if($resultAddress)
+				{	
+					$addressModel->addressId = $resultAddress->addressId;
+				}
+				else
+				{	
+					$addressModel->customerId = $customerId;
+				}
+				$result = $addressModel->save();	
+		 		if(!$result)
+		 		{
+		 			throw new Exception("System is unable to insert.", 1);	
+		 		}
 				$this->getMessage()->addMessage('Data Saved');
-				$this->redirect($this->getLayout()->getUrl('grid'));
 			
 		} catch (Exception $e) {
 			$this->getMessage()->addMessage('Something Wrong with your data', Model_Core_Message::ERROR);
@@ -127,7 +153,10 @@ class Controller_Customer extends Controller_Admin_Login
 	{
 		try {
 			 $customerId = $this->saveCustomer();
-			 $this->saveAddress($customerId);	
+			 $this->saveBillingAddress($customerId);	
+			 $this->saveShippingAddress($customerId);
+			$this->redirect($this->getLayout()->getUrl('grid'));
+
 			} 
 		catch (Exception $e) 
 		{
