@@ -6,7 +6,7 @@ class Model_Salesman extends Model_Core_Row
 
 	public function __construct()
 	{
-		$this->setTableClassName('Salesman_Resource');		
+		$this->setResourceClassName('Salesman_Resource');		
 	}
 
 	const STATUS_ENABLED = 1;

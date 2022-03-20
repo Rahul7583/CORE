@@ -65,8 +65,6 @@ class Model_Core_View
 		return null;
 	}
 
-	
-	
 	public function getUrl($action = null, $controller = null,  array $id = null, bool $reset = TRUE)
 	{
 		$parameter = $_GET;

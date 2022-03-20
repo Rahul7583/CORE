@@ -2,29 +2,11 @@
 <?php
 class Block_Product_Grid extends Block_Core_Template
 {
-	public $pager = null;
-
 	public function __construct()
 	{
 		$this->setTemplate('view/Product/grid.php');
 	}
-
-	public function setPager($pager)
-	{
-		$this->pager = $pager;
-		return $this;
-	}
-
-	public function getPager()
-	{
-		if(!$this->pager)
-		{
-			$this->setPager(Ccc::getModel('Core_Pager'));
-		}
-		return $this->pager;
-	}
-
-
+	
 	public function getProductData()
 	{
 		$request = Ccc::getModel('Core_Request');

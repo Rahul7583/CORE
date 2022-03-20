@@ -2,11 +2,11 @@
 <?php
 class Model_Product_Resource extends Model_Core_Row_Resource
 {
-	protected $tableName = null;
+	protected $resourceName = null;
 	protected $primaryKey = null;
 	public function __construct()
 	{
-		$this->setTableName('product');
+		$this->setResourceName('product');
 		$this->setPrimaryKey('productId');
 
 	}

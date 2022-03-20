@@ -11,7 +11,7 @@ class Model_Product extends Model_Core_Row
 
 	public function __construct()
 	{
-		$this->setTableClassName('Product_Resource');		
+		$this->setResourceClassName('Product_Resource');		
 	}
 
 	const STATUS_ENABLED = 1;
@@ -20,7 +20,7 @@ class Model_Product extends Model_Core_Row
 	const STATUS_ENABLED_LBL = 'Enabled';
 	const STATUS_DISABLED_LBL = 'Disabled';
 	
-	public function setMedia($media)
+	public function setMedia(Model_Product_Media $media)
 	{
 		$this->media =$media;
 		return $this;
@@ -47,7 +47,7 @@ class Model_Product extends Model_Core_Row
 		return $this->media;
 	}
 
-	public function setGallery($gallery)		
+	public function setGallery(Model_Product_Media $gallery)		
 	{
 		$this->gallery = $gallery;
 		return $this;
@@ -58,7 +58,7 @@ class Model_Product extends Model_Core_Row
 		$mediaModel = Ccc::getModel('Product_Media'); 
 		if(!$this->gallery)
 		{
-			return null;
+			return $mediaModel;
 		}
 		if($this->gallery && !$reload)
 		{
@@ -67,14 +67,14 @@ class Model_Product extends Model_Core_Row
 		$gallery = $mediaModel->fetchRow("SELECT * FROM `image` WHERE `productId` = {$this->productId} AND `gallery` = 1");
 		if(!$gallery)
 		{
-			return null;
+			return $mediaModel;
 		}
 		$this->setGallery($gallery);
 
 		return $this->gallery;
 	}
 
-	public function setBase($base)		
+	public function setBase(Model_Product_Media $base)		
 	{
 		$this->base = $base;
 		return $this;
@@ -101,7 +101,7 @@ class Model_Product extends Model_Core_Row
 		return $this->base;
 	}
 
-	public function setSmall($small)		
+	public function setSmall(Model_Product_Media $small)		
 	{
 		$this->small = $small;
 		return $this;
@@ -128,7 +128,7 @@ class Model_Product extends Model_Core_Row
 		return $this->small;
 	}
 
-	public function setThumbnail($thumbnail)		
+	public function setThumbnail(Model_Product_Media $thumbnail)		
 	{
 		$this->thumbnail = $thumbnail;
 		return $this;
@@ -154,7 +154,7 @@ class Model_Product extends Model_Core_Row
 		return $thumbnail;
 	}
 
-	public function setCategories($category)
+	public function setCategories(Model_Category $category)
 	{
 		$this->category = $category;
 		return $this;

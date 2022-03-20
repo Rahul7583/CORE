@@ -12,27 +12,34 @@ class Controller_Salesman_Customer extends Controller_Core_Action
 
 	public function saveAction()
     {
-        $customerModel = Ccc::getModel('Customer');
-        $customerBlock = Ccc::getBlock('Salesman_Customer_Grid');
-        $request = $this->getRequest();
-        $salesmanId = $request->getRequest('id');
-        $customerData = $request->getPost('customer');
-        if($salesmanId)
+        try 
         {
-            $customerModel->salesmanId = $salesmanId;
-            foreach($customerData as $customer)
+            $customerModel = Ccc::getModel('Customer');
+            $customerBlock = Ccc::getBlock('Salesman_Customer_Grid');
+            $request = $this->getRequest();
+            $salesmanId = (int)$request->getRequest('id');
+            $customerData = $request->getPost('customer');
+            if($salesmanId)
             {
-                $customerModel->customerId = $customer;
-                $result = $customerModel->save(); 
-
-                if(!$result)
+                $customerModel->salesmanId = $salesmanId;
+                foreach($customerData as $customer)
                 {
-                    $this->getMessage()->addMessage("Something wrong with your data.", Model_Core_Message::ERROR);
-                    throw new Exception("Error Processing Request", 1);
+                    $customerModel->customerId = $customer;
+                    $result = $customerModel->save(); 
+
+                    if(!$result)
+                    {
+                        throw new Exception("Something wrong with your data.", 1);
+                    }
+                    $this->getMessage()->addMessage("Data Saved.");
                 }
-                $this->getMessage()->addMessage("Data Saved.");
+                $this->redirect($this->getLayout()->getUrl('grid','Salesman_Customer',['id' => $customerBlock->getSalesmanId()]));
             }
-			$this->redirect($this->getLayout()->getUrl('grid','Salesman_Customer',['id' => $customerBlock->getSalesmanId()]));
+            
+        } 
+        catch (Exception $e) {
+            $this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+            $this->redirect($this->getLayout()->getUrl('grid'));
         }
     }
 }

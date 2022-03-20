@@ -1,9 +1,9 @@
 <?php
-class Model_Core_Row_Resource{
-	protected $tableName = null;
+class Model_Core_Row_Resource
+{
+	protected $resourceName = null;
 	protected $primaryKey = null;
 	protected $rowClassName = null;
-	
 
 	public function getRow()
 	{
@@ -11,15 +11,15 @@ class Model_Core_Row_Resource{
 		return $rowObj;
 	}
 
-	public function setTableName($tableName)
+	public function setResourceName($resourceName)
 	{
-		$this->tableName = $tableName;
+		$this->resourceName = $resourceName;
 		return $this;
 	}
 
-	public function getTableName()
+	public function getResourceName()
 	{
-		return $this->tableName;
+		return $this->resourceName;
 	}
 
 	public function setRowClassName($rowClassName)
@@ -57,8 +57,8 @@ class Model_Core_Row_Resource{
 		 $columnName = implode(",", $columnName);
 		 $columnValue = implode("','", $columnValue);
 		 $columnValue = "'".$columnValue."'";
-		 $tableName = $this->getTableName();
-		 $query = "INSERT INTO `$tableName` ($columnName) VALUES ($columnValue)";	
+		 $resourceName = $this->getResourceName();
+		 $query = "INSERT INTO `$resourceName` ($columnName) VALUES ($columnValue)";
 		 $insertId = $this->getAdapter()->insert($query);
 		 return $insertId;
 
@@ -75,17 +75,17 @@ class Model_Core_Row_Resource{
 
 		$values = substr($values, 0,-1); 
 		$Id = (is_array($hiddenId)) ? implode(",", $hiddenId) : $hiddenId;
-		$tableName = $this->getTableName();
-		$query = "UPDATE `$tableName` SET $values WHERE $primaryKey = {$Id}";
+		$resourceName = $this->getResourceName();
+		$query = "UPDATE `$resourceName` SET $values WHERE $primaryKey = {$Id}";
 		$result = $this->getAdapter()->update($query);
 		return $result;
 	}
 
 	public function delete($id)
 	{
-		$tableName = $this->getTableName();
+		$resourceName = $this->getResourceName();
 		$key = $this->getPrimaryKey();
-		$query = "DELETE FROM {$tableName} WHERE {$key} = {$id}";
+		$query = "DELETE FROM {$resourceName} WHERE {$key} = {$id}";
 		$result = $this->getAdapter()->delete($query);
 		return $result;
 	}

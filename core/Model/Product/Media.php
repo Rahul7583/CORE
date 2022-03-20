@@ -6,11 +6,10 @@ class Model_Product_Media extends Model_Core_Row
 
 	public function __construct()
 	{
-		$this->setTableClassName('Product_Media_Resource');
-			
+		$this->setResourceClassName('Product_Media_Resource');			
 	}
 
-	public function setProduct($product)
+	public function setProduct(Model_Product $product)
 	{
 		$this->product = $product;
 		return $this;
@@ -19,15 +18,16 @@ class Model_Product_Media extends Model_Core_Row
 	public function getProduct($reload = false)
 	{
 		$productModel = Ccc::getModel('Product'); 
-		if(!$this->product)
+		
+		if(!$this->productId)
 		{
-			return null;
+			return $productModel;
 		}
 		if($this->product && !$reload)
 		{
 			return $this->product;
 		}
-		$product = $mediaModel->fetchRow("SELECT * FROM `image` WHERE `productId` = {$this->product}");
+		$product = $productModel->fetchRow("SELECT * FROM `product` WHERE `productId` = {$this->productId}");
 		if(!$product)
 		{
 			return null;

@@ -40,9 +40,8 @@ class Controller_Admin extends Controller_Admin_Login
 	{	
 		try 
 		{
-			$request = $this->getRequest();
-			$admin = $request->getPost('admin');
-			$id = $request->getRequest('id');
+			$admin = $this->getRequest()->getPost('admin');
+			$id = (int)$this->getRequest()->getRequest('id');
 
 			if(!$admin)
 			{
@@ -66,12 +65,12 @@ class Controller_Admin extends Controller_Admin_Login
 	 		{
 	 			throw new Exception("system is unable to insert.", 1);
 	 		}
-	 		$this->getMessage()->addMessage('Data Saved');
+	 		$this->getMessage()->addMessage('Data Saved.');
 	 		$this->redirect($this->getLayout()->getUrl('grid'));
 		} 
 		catch (Exception $e) 
 		{
-		 	$this->getMessage()->addMessage('Something wrong with your data', Model_Core_Message::ERROR);
+		 	$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
 		 	$this->redirect($this->getLayout()->getUrl('grid'));
 		}	 
 	}
@@ -80,16 +79,16 @@ class Controller_Admin extends Controller_Admin_Login
 	{
 		try {
 				$adminModel = Ccc::getModel('admin');
-	 			$id = $this->getRequest()->getRequest('id');
+	 			$id = (int)$this->getRequest()->getRequest('id');
 				$result = $adminModel->delete($id);
 				if(!$result)
 				{
 					throw new Exception("system is unable to delete.", 1);
 				}
-				$this->getMessage()->addMessage('Data Deleted');
+				$this->getMessage()->addMessage('Data Deleted.');
 				$this->redirect($this->getLayout()->getUrl('grid'));
 		} catch (Exception $e) {
-				$this->getMessage()->addMessage('Something wrong with your data', Model_Core_Message::ERROR);
+				$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
 				$this->redirect($this->getLayout()->getUrl('grid'));
 		}
 	}

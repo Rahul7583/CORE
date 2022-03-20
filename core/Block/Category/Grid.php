@@ -1,27 +1,10 @@
 <?php Ccc::loadClass('Block_Core_Template');?>
 <?php
 class Block_Category_Grid extends Block_Core_Template
-{
-	public $pager = null;
-	
+{	
 	public function __construct()
 	{
 		$this->setTemplate('view/Category/grid.php');
-	}
-
-	public function setPager($pager)
-	{
-		$this->pager = $pager;
-		return $this;
-	}
-
-	public function getPager()
-	{
-		if(!$this->pager)
-		{
-			$this->setPager(Ccc::getModel('Core_Pager'));
-		}
-		return $this->pager;
 	}
 
 	public function getCategoryData()

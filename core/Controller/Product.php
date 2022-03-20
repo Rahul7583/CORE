@@ -46,7 +46,7 @@ class Controller_Product extends Controller_Admin_Login
 			$request = $this->getRequest();
 			$product = $request->getPost('product');
 			$category = $request->getPost('category');
-			$id = $request->getRequest('id');
+			$id = (int)$request->getRequest('id');
 
 			if(!$product)
 			{
@@ -76,15 +76,13 @@ class Controller_Product extends Controller_Admin_Login
 					$row->productId = $id;
 					$row->save();	
 				}	
-	  		
 		  		$this->redirect($this->getLayout()->getUrl('grid'));	
 			}
 			else{	
-					
 					$setData = $productModel->setData($product);
 					$setData->createdDate = date('Y-m-d H:m:s');
 					$insertId = $productModel->save();
-					
+			
 					foreach ($category['categoryId'] as $key => $value) 
 					{
 						$row = $categoryModel;
@@ -98,11 +96,11 @@ class Controller_Product extends Controller_Admin_Login
 			 			throw new Exception("System is unable to insert.", 1);	
 			 		}			
 				}
-				$this->getMessage()->addMessage('Data Saved');
+				$this->getMessage()->addMessage('Data Saved.');
 				$this->redirect($this->getLayout()->getUrl('grid'));
 			
 		} catch (Exception $e) {
-			$this->getMessage()->addMessage('Somthing wrong with your data', Model_Core_Message::ERROR);
+			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid'));
 		}
 	}
@@ -117,12 +115,12 @@ class Controller_Product extends Controller_Admin_Login
 					{
 						throw new Exception("system is unable to delete.", 1);
 					}
-					$this->getMessage()->addMessage('Data Deleted');
+					$this->getMessage()->addMessage('Data Deleted.');
 					$this->redirect($this->getLayout()->getUrl('grid'));	
 		} 
 		catch (Exception $e)
 		{
-			$this->getMessage()->addMessage('Somthing wrong with your data', Model_Core_Message::ERROR);
+			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid'));			
 		}	
 	}

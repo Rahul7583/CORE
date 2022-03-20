@@ -23,7 +23,7 @@
 
 			<tr>
 				<td width="10%">Password</td>
-				<td><input type="passowrd" name="admin[password]" value="<?php echo $result->password ?>"></td>
+				<td><input type="password" name="admin[password]" value="<?php echo $result->password ?>"></td>
 			</tr>
 					
 			<tr>

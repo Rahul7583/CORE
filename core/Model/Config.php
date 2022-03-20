@@ -4,7 +4,7 @@ class Model_Config extends Model_Core_Row{
 
 	public function __construct()
 	{
-		$this->setTableClassName('Config_Resource');		
+		$this->setResourceClassName('Config_Resource');		
 	}
 	
 	const STATUS_ENABLED = 1;

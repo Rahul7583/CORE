@@ -20,7 +20,7 @@ class Controller_Config extends Controller_Admin_Login
 
 	public function editAction()
 	{
-		if($this->getRequest()->getRequest('id'))
+		if((int)$this->getRequest()->getRequest('id'))
 		{
 			$this->setTitle('Config Edit');	
 			$id = $this->getRequest()->getRequest('id');
@@ -40,18 +40,15 @@ class Controller_Config extends Controller_Admin_Login
 	{
 		try 
 		{
-			$request = $this->getRequest();
 			$config = $request->getPost('config');
-			$id = (int)$request->getRequest('id');
-
+			$id = (int)$this->getRequest()->getRequest('id');
 			if(!$config)
 			{
-				throw new Exception("Missing admin data in request.", 1);
+				throw new Exception("Missing config data in request.", 1);
 			}
 
 			$configModel = Ccc::getModel('Config');
 			$configModel->setData($config);
-
 		 	if($id)
 		 	{
 				$configModel->configId = $id;  	  	
@@ -67,12 +64,12 @@ class Controller_Config extends Controller_Admin_Login
 	 			throw new Exception("System is unable to insert.", 1);	
 	 		}
 		 	$this->getMessage()->addMessage('Data Saved');			
-			$this->redirect($this->getLayout()->getUrl('grid','config'));
+			$this->redirect($this->getLayout()->getUrl('grid'));
 		}
 		catch (Exception $e)
 		{
-		 	$this->getMessage()->addMessage('Somthing wrong with your data', Model_Core_Message::ERROR);
-			$this->redirect($this->getLayout()->getUrl('grid','config'));
+		 	$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+			$this->redirect($this->getLayout()->getUrl('grid'));
 		}
 	}
 
@@ -81,20 +78,19 @@ class Controller_Config extends Controller_Admin_Login
 		try 
 		{
 			$configModel = Ccc::getModel('config');
-			$id = $this->getRequest()->getRequest('id');
+			$id = (int)$this->getRequest()->getRequest('id');
 			$result = $configModel->delete($id);
 			if (!$result)
 			{
 				throw new Exception("system is unable to delete.", 1);
 			}
-			$this->getMessage()->addMessage('Data Deleted');
-			$this->redirect($this->getLayout()->getUrl('grid','config'));
-	
+			$this->getMessage()->addMessage('Data Deleted.');
+			$this->redirect($this->getLayout()->getUrl('grid'));
 		} 
 		catch (Exception $e)
 		{
-			$this->getMessage()->addMessage('Somthing wrong with your data', Model_Core_Message::ERROR);
-			$this->redirect($this->getLayout()->getUrl('grid','config'));			
+			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+			$this->redirect($this->getLayout()->getUrl('grid'));			
 		}	
 	}
 }

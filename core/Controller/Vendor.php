@@ -42,8 +42,7 @@ class Controller_Vendor extends Controller_Admin_Login
 		try {
 				$request = $this->getRequest();
 				$vendor = $request->getPost('vendor');
-				$id = $request->getRequest('id');
-		
+				$id = (int)$request->getRequest('id');
 				if(!$vendor)
 				{
 					throw new Exception("Missing Vendor data in request.", 1);
@@ -60,22 +59,24 @@ class Controller_Vendor extends Controller_Admin_Login
 				{	
 					$vendorModel->createdDate = date('Y-m-d H:m:s');				 		
 				}
-				$vendorId = $vendorModel->save();
-		 		if (!$vendorId) 
+				$vendorRow = $vendorModel->save();
+		 		if (!$vendorRow) 
 		 		{
 		 			throw new Exception("system is unable to insert.", 1);
 		 		}
-			 	return $vendorId;
+			 	return $vendorRow;
 			} catch (Exception $e) {
-				
+				$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+				$this->redirect($this->getLayout()->getUrl('grid'));
 			}	
 	}
 
-	public function saveAddress($vendorId)
+	public function saveAddress($vendorRow)
 	{
 		try{
 				$request = $this->getRequest();
 				$address = $request->getPost('vendor_address');
+				$vendorId = $vendorRow->vendorId;
 				if(!$address)
 				{
 					throw new Exception("Missing Address data in Request ", 1);	
@@ -83,8 +84,9 @@ class Controller_Vendor extends Controller_Admin_Login
 
 				$addressModel = Ccc::getModel('Vendor_Address');
 				$addressModel->setData($address);
-				$resultAddress = $addressModel->load($vendorId, 'vendorId');
-				if($resultAddress)
+				$resultAddress = $vendorRow->getAddress();
+				
+				if($resultAddress->addressId)
 				{	
 					$addressModel->addressId = $resultAddress->addressId;
 				}
@@ -92,15 +94,15 @@ class Controller_Vendor extends Controller_Admin_Login
 				{
 					$addressModel->vendorId = $vendorId;
 				}
-				$result = $addressModel->save();	
+				$result = $addressModel->save();
 		 		if(!$result)
 		 		{
 		 			throw new Exception("System is unable to insert.", 1);	
 		 		}
-		 		$this->getMessage()->addMessage('Data Saved');
+		 		$this->getMessage()->addMessage('Data Saved.');
 				$this->redirect($this->getLayout()->getUrl('grid'));
 			} catch (Exception $e) {
-				$this->getMessage()->addMessage('Somthing wrong with your data', Model_core_Message::ERROR);
+				$this->getMessage()->addMessage($e->getMessage(), Model_core_Message::ERROR);
 				$this->redirect($this->getLayout()->getUrl('grid'));
 			}	
 	}
@@ -109,12 +111,12 @@ class Controller_Vendor extends Controller_Admin_Login
 	{
 		try 
 		{
-			 $vendorId = $this->saveVendor();
-			 $this->saveAddress($vendorId);
+			 $vendorRow = $this->saveVendor();
+			 $this->saveAddress($vendorRow);
 		} 
 		catch (Exception $e) 
 		{	
-			$this->getMessage()->addMessage('Somthing wrong with your data.', Model_core_Message::ERROR);
+			$this->getMessage()->addMessage($e->getMessage(), Model_core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid'));
 		}	
 	}
@@ -128,12 +130,12 @@ class Controller_Vendor extends Controller_Admin_Login
 			$result = $vendorModel->delete($id);
 			if(!$result)
 			{
-				throw new Exception("system is unable to delete", 1);
+				throw new Exception("system is unable to delete.", 1);
 			}
-			$this->getMessage()->addMessage('Data Deleted');
+			$this->getMessage()->addMessage('Data Deleted.');
 			$this->redirect($this->getLayout()->getUrl('grid'));
 		} catch (Exception $e) {
-			$this->getMessage()->addMessage('Somthing wrong with your data.', Model_Core_Message::ERROR);
+			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid'));
 		}
 	}

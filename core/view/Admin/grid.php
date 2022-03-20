@@ -30,7 +30,7 @@
     <select onchange="ppr()" id="ppr">
       <option selected>select</option>
       <?php foreach($this->getPager()->getPerPageCountOption() as $perPageCount) :?>  
-      <option value="<?php echo $perPageCount ?>" ><?php echo $perPageCount ?></a></option>
+      <option value="<?php echo $perPageCount ?>" ><?php echo $perPageCount ?></option>
       <?php endforeach;?>
     </select>
 	<button type="button" name="Next">
