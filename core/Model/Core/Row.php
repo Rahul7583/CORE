@@ -2,13 +2,13 @@
 class Model_Core_Row
 {
 	protected $data = [];
-	protected $tableClassName = null;
+	protected $resourceClassName = null;
 
 	public function setData(array $data)
-	 {
-	 	$this->data = $data;
+	{
+	 	$this->data = array_merge($this->data,$data);
 	 	return $this;
-	 } 
+	} 
 
 	 public function getData()
 	 {
@@ -21,15 +21,15 @@ class Model_Core_Row
 	 	return $this;
 	 }
 
-	 public function setTableClassName($tableClassName)
+	 public function setResourceClassName($resourceClassName)
 	 {
-	 	$this->tableClassName = $tableClassName;
+	 	$this->resourceClassName = $resourceClassName;
 	 	return $this;
 	 }
 
-	 public function getTableClassName()
+	 public function getResourceClassName()
 	 {
-	 	return $this->tableClassName;
+	 	return $this->resourceClassName;
 	 }
 
 	 public function __set($key, $value)
@@ -53,14 +53,14 @@ class Model_Core_Row
 	 	unset($this->data[$key]);
 	 }
 
-	 public function getTable()
+	 public function getResource()
 	 {
-	 	return Ccc::getModel($this->getTableClassName());
+	 	return Ccc::getModel($this->getResourceClassName());
 	 }
 
 	public function fetchAll($query)
 	{
-		$data = $this->getTable()->fetchAll($query);
+		$data = $this->getResource()->fetchAll($query);
 		if (!$data) {
 			return false;
 		}
@@ -73,7 +73,7 @@ class Model_Core_Row
 
 	public function fetchRow($query)
 	{
-		$data = $this->getTable()->fetchRow($query);
+		$data = $this->getResource()->fetchRow($query);
 		if (!$data) {
 			return false;
 		}
@@ -83,43 +83,42 @@ class Model_Core_Row
 
 	public function delete($id)
 	{
-		return $this->getTable()->delete($id);	
+		return $this->getResource()->delete($id);	
 	}
 
 
 	 public function save()
 	 {
-	 	if(array_key_exists($this->getTable()->getPrimaryKey(), $this->data))
+	 	if(array_key_exists($this->getResource()->getPrimaryKey(), $this->data))
 	 	{
-	 		$id = $this->data[$this->getTable()->getPrimaryKey()];
-	 		$this->getTable()->update($this->data, $id);
+	 		$id = $this->data[$this->getResource()->getPrimaryKey()];
+	 		$this->getResource()->update($this->data, $id);
 	 	}
 	 	else
 	 	{	
-	 		$id = $this->getTable()->insert($this->data);
+	 		$id = $this->getResource()->insert($this->data);
 	 	}
-	 	return $id;
+	 	return $this->load($id);
 	 }
 
 	 public function load($id, $column=null)
 	 {
 		if($column == null)
 		{
-			 $column = $this->getTable()->getPrimaryKey();
+			 $column = $this->getResource()->getPrimaryKey();
 		}
-		$rowData = $this->fetchRow("SELECT * FROM {$this->getTable()->getTableName()}
+		$rowData = $this->fetchRow("SELECT * FROM {$this->getResource()->getResourceName()}
 									WHERE {$column} = {$id}");
 		if(!$rowData)
 		{
 			return false;
-		}
-		
+		}		
 		return $rowData;
 	 }
 
 		public function getPath()
 		{
-			return $this->getTable()->getPath();
+			return $this->getResource()->getPath();
 		}
 	
 }

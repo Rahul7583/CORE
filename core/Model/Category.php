@@ -17,7 +17,7 @@ class Model_Category extends Model_Core_Row
 
 	public function __construct()
 	{
-		$this->setTableClassName('Category_Resource');
+		$this->setResourceClassName('Category_Resource');
 	}
 
 	public function getStatus($key = null)
@@ -38,7 +38,7 @@ class Model_Category extends Model_Core_Row
 		return self::STATUS_DISABLED_DEFAULT;
 	}
 
-	public function setMedia($media)
+	public function setMedia(Model_Category_Media  $media)
 	{
 		$this->media =$media;
 		return $this;
@@ -65,7 +65,7 @@ class Model_Category extends Model_Core_Row
 		return $this->media;
 	}
 
-	public function setGallery($gallery)		
+	public function setGallery(Model_Category_Media $gallery)		
 	{
 		$this->gallery = $gallery;
 		return $this;
@@ -92,7 +92,7 @@ class Model_Category extends Model_Core_Row
 		return $this->gallery;
 	}
 
-	public function setBase($base)		
+	public function setBase(Model_Category_Media $base)		
 	{
 		$this->base = $base;
 		return $this;
@@ -119,7 +119,7 @@ class Model_Category extends Model_Core_Row
 		return $this->base;
 	}
 
-	public function setSmall($small)		
+	public function setSmall(Model_Category_Media $small)		
 	{
 		$this->small = $small;
 		return $this;
@@ -146,7 +146,7 @@ class Model_Category extends Model_Core_Row
 		return $this->small;
 	}
 
-	public function setThumbnail($thumbnail)		
+	public function setThumbnail(Model_Category_Media $thumbnail)		
 	{
 		$this->thumbnail = $thumbnail;
 		return $this;

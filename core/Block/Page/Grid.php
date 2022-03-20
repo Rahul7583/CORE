@@ -2,28 +2,11 @@
 <?php
 class Block_Page_Grid extends Block_Core_Template
 {
-	public $pager = null;
-
 	public function __construct()
 	{
 		$this->setTemplate('view/Page/grid.php');
 	}
-
-	public function setPager($pager)
-	{
-		$this->pager = $pager;
-		return $this;
-	}
-
-	public function getPager()
-	{
-		if(!$this->pager)
-		{
-			$this->setPager(Ccc::getModel('Core_Pager'));
-		}
-		return $this->pager;
-	}
-
+	
 	public function getPageData()
 	{
 		$request = Ccc::getModel('Core_Request');

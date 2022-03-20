@@ -14,13 +14,12 @@ class Controller_Admin_Login extends Controller_Admin_Action
 	{
 		try
 		{
-	  		$message = Ccc::getModel('Admin_Message');
 			$adminModel = Ccc::getModel("Admin");
 			$loginModel = Ccc::getModel("Admin_Login");
 			$request = $this->getRequest();
 			if(!$request->isPost())
 			{
-				throw new Exception("invalid request", 1);
+				throw new Exception("invalid request.", 1);
 			}
 			$loginData = $request->getPost('login');
 			$password = $loginData['password'];
@@ -28,15 +27,16 @@ class Controller_Admin_Login extends Controller_Admin_Action
 
 			if(!$admin)
 			{
-				throw new Exception("invalid request", 1);
+				throw new Exception("invalid request.", 1);
 			}
 			$loginModel->login($admin[0]->email);
-			$message->addMessage('You are Logedin');
+			$this->getMessage()->addMessage('You are Logedin.');
 			$this->redirect($this->getLayout()->getUrl('grid','Product'));
 		}
 		catch (Exception $e) 
 		{
-			$this->redirect($this->getLayout()->getUrl('login','admin_login',[],true));
+        	$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+			$this->redirect($this->getLayout()->getUrl('login','admin_login'));
 		}
 	}
 

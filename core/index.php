@@ -83,8 +83,27 @@ class Ccc
 		self::loadClass($className);
 		return new $className();
 	}
-}
 
+	public static function getPath($subPth = null)
+	{
+		$path = getcwd().DIRECTORY_SEPARATOR;
+		if($subPth)
+		{
+			return $path.$subPth;
+		}
+		return $path;
+	}
+
+	public static function getBaseUrl($subUrl = null)
+	{
+		$url = self::getConfig('baseUrl');
+		if($subUrl)
+		{
+			return $url.$subUrl;
+		}
+		return $url;
+	}
+}
 
 Ccc::init();
 

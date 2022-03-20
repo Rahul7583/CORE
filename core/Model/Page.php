@@ -4,7 +4,7 @@ class Model_Page extends Model_Core_Row{
 
 	public function __construct()
 	{
-		$this->setTableClassName('Page_Resource');		
+		$this->setResourceClassName('Page_Resource');		
 	}
 	
 	const STATUS_ENABLED = 1;

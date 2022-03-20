@@ -70,7 +70,7 @@ class Controller_Categories extends Controller_Admin_Login
 				$updatePath->save();
 
 			} catch (Exception $e) {
-				$this->getMessage()->addMessage('System is not able to add.',Model_Core_Message::ERROR);
+				$this->getMessage()->addMessage($e->getMessage(),Model_Core_Message::ERROR);
 
 			}
 		}
@@ -82,7 +82,7 @@ class Controller_Categories extends Controller_Admin_Login
 				$result = $categoryModel->save();
 
 			}catch(Exception $e){
-				$this->getMessage()->addMessage('System is not able to Update.', Model_Core_Message::ERROR);
+				$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
 			}		
 		}
 		$this->getMessage()->addMessage('Data Saved.');
@@ -93,7 +93,7 @@ class Controller_Categories extends Controller_Admin_Login
 	{
 		try 
 		{
-			$id = $this->getRequest()->getRequest('id'); 
+			$id = (int)$this->getRequest()->getRequest('id'); 
 			$categoryModel = Ccc::getModel('Category');
 			$result = $categoryModel->delete($id);
 			if (!$result)
@@ -104,6 +104,7 @@ class Controller_Categories extends Controller_Admin_Login
 			$this->redirect($this->getLayout()->getUrl('grid'));
 			
 		} catch (Exception $e) {
+			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid'));
 		}
 	}	

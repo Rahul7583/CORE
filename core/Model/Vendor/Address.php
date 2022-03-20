@@ -6,11 +6,10 @@ class Model_Vendor_Address extends Model_Core_Row
 
 	public function __construct()
 	{
-		$this->setTableClassName('Vendor_Address_Resource');
-			
+		$this->setResourceClassName('Vendor_Address_Resource');			
 	}
 
-	public function setVendor($vendor)
+	public function setVendor(Model_Vendor $vendor)
 	{
 		$this->vendor = $vendor;
 		return $this;

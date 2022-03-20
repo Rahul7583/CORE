@@ -116,7 +116,7 @@ class Controller_Product_Media extends Controller_Core_Action
 				}	
 						
 		} catch (Exception $e) {
-			$this->getMessage()->addMessage('Somthing wrong with your data.', Model_Core_Message::ERROR);
+			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid','product_media',['id'=> $id]));
 		}
 	}

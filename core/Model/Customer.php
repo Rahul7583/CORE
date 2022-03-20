@@ -1,4 +1,5 @@
 <?php Ccc::loadClass('Model_Core_Row'); ?>
+<?php Ccc::loadClass('Model_Customer_Address'); ?>
 <?php
 class Model_Customer extends Model_Core_Row
 {
@@ -8,7 +9,7 @@ class Model_Customer extends Model_Core_Row
 
 	public function __construct()
 	{
-		$this->setTableClassName('Customer_Resource');		
+		$this->setResourceClassName('Customer_Resource');		
 	}
 
 	const STATUS_ENABLED = 1;
@@ -35,7 +36,7 @@ class Model_Customer extends Model_Core_Row
 		return self::STATUS_DISABLED_DEFALUT;
 	}
 
-	public function setBillingAddresses($billingAddress)
+	public function setBillingAddresses(Model_Customer_Address $billingAddress)
 	{
 		$this->billingAddress = $billingAddress;
 		return $this;
@@ -44,6 +45,7 @@ class Model_Customer extends Model_Core_Row
 	public function getBillingAddresses($reload = false)
 	{
 		$addressModel = Ccc::getModel('Customer_Address');
+		$BILLING = Model_Customer_Address::BILLING; 
 		if (!$this->customerId) 
 		{
 			return $addressModel;
@@ -53,7 +55,7 @@ class Model_Customer extends Model_Core_Row
 			return $this->billingAddress;
 		}
 		$address = $addressModel->fetchRow("SELECT * FROM `address` 
-											WHERE `customerId` = {$this->customerId} AND `billing` = 1");
+											WHERE `customerId` = {$this->customerId} AND BILLING");
 		if (!$address) 
 		{
 			return $addressModel;
@@ -62,7 +64,7 @@ class Model_Customer extends Model_Core_Row
 		return $address;
 	}
 
-	public function setShippingAddresses($shippingAddress)
+	public function setShippingAddresses(Model_Customer_Address $shippingAddress)
 	{
 		$this->shippingAddress = $shippingAddress;
 		return $this;
@@ -71,6 +73,8 @@ class Model_Customer extends Model_Core_Row
 	public function getShippingAddresses($reload = false)
 	{
 		$addressModel = Ccc::getModel('Customer_Address');
+		$BILLING = Model_Customer_Address::SHIPPING; 
+
 		if (!$this->customerId) 
 		{
 			return $addressModel;
@@ -80,7 +84,7 @@ class Model_Customer extends Model_Core_Row
 			return $this->shippingAddress;
 		}
 		$address = $addressModel->fetchRow("SELECT * FROM `address` 
-											WHERE `customerId` = {$this->customerId} AND `shipping` = 1");
+											WHERE `customerId` = {$this->customerId} AND SHIPPING");
 		if (!$address) 
 		{
 			return $addressModel;

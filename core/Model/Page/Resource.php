@@ -2,12 +2,12 @@
 <?php
 class Model_Page_Resource extends Model_Core_Row_Resource
 {
-	protected $tableName = null;
+	protected $resourceName = null;
 	protected $primaryKey = null;
 	
 	public function __construct()
 	{
-		$this->setTableName('page');
+		$this->setResourceName('page');
 		$this->setPrimaryKey('pageId');
 	}
 }

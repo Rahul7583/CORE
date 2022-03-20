@@ -15,7 +15,6 @@ class Block_Customer_Price_Grid extends Block_Core_Template
                                                 FROM product AS p 
                                                 LEFT JOIN customer_price AS c 
                                                 ON p.productId = c.productId");
-        //$product = $product->fetchAll("SELECT * FROM product");
         return $products;
     }
 

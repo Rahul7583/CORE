@@ -117,11 +117,9 @@ class Controller_Category_Media extends Controller_Core_Action
 					$this->redirect($this->getLayout()->getUrl('grid','category_media',['id'=> $id]));	
 				}
 		} catch (Exception $e) {
-			$this->getMessage()->addMessage('Somthing wrong with your data.', Model_Core_Message::ERROR);
+			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
 			$this->redirect($this->getLayout()->getUrl('grid','category_media',['id'=> $id]));
-		}
-		
+		}	
 	}
-			
 }
 

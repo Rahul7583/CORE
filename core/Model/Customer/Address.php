@@ -3,14 +3,16 @@
 class Model_Customer_Address extends Model_Core_Row
 {
 	protected $customer = null;
+	const BILLING = 1;
+	const SHIPPING = 1;
 
 	public function __construct()
 	{
-		$this->setTableClassName('Customer_Address_Resource');			
+		$this->setResourceClassName('Customer_Address_Resource');			
 	}
 
 
-	public function setCustomer($customer)
+	public function setCustomer(Model_Customer $customer)
 	{
 		$this->customer = $customer;
 		return $this;

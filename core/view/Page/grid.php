@@ -1,4 +1,4 @@
-<?php $pages = $this->getpageData(); ?>
+<?php $pages = $this->getPageData(); ?>
 <table>
   <tr>
     <script type="text/javascript"> 

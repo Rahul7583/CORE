@@ -6,7 +6,7 @@ class Model_Vendor extends Model_Core_Row
 
 	public function __construct()
 	{
-		$this->setTableClassName('Vendor_Resource');		
+		$this->setResourceClassName('Vendor_Resource');		
 	}
 
 	const STATUS_ENABLED = 1;
@@ -33,7 +33,7 @@ class Model_Vendor extends Model_Core_Row
 		return self::STATUS_DISABLED_DEFALUT;
 	}
 
-	public function setAddress($address)
+	public function setAddress(Model_Vendor_Address $address)
 	{
 		$this->address = $address;
 		return $this;

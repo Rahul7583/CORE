@@ -16,7 +16,7 @@ class Controller_Customer_Price extends Controller_Core_Action
     {   
         $result = null;
         $product = $this->getRequest()->getPost('product');        
-        $customerId = $this->getRequest()->getRequest('id');
+        $customerId = (int)$this->getRequest()->getRequest('id');
         $salesmanId = $this->getRequest()->getRequest('salesmanId');
 
         foreach ($product as $key => $value) { 
@@ -43,7 +43,6 @@ class Controller_Customer_Price extends Controller_Core_Action
         }
             if (!$result) 
             {
-                $this->getMessage()->addMessage("System can't save.", Model_Core_Message::ERROR);   
                 throw new Exception("System can't save.", 1);
             }
             $this->getMessage()->addMessage('Data Saved.');
@@ -51,7 +50,8 @@ class Controller_Customer_Price extends Controller_Core_Action
         }
     catch (Exception $e) 
     {
-      
+        $this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+        $this->redirect($this->getLayout()->getUrl(null,null,['id'=> $id]));
     }
   }
 }
