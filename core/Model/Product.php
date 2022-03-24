@@ -150,8 +150,8 @@ class Model_Product extends Model_Core_Row
 		{
 			return $mediaModel;
 		}
-
-		return $thumbnail;
+		$this->setThumbnail($thumbnail);
+		return $this->thumbnail;
 	}
 
 	public function setCategories(Model_Category $category)

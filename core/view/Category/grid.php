@@ -77,21 +77,21 @@
 					<td><?php echo $category->categoryId ; ?></td>
 					<td><?php echo $category->path; ?></td>
 					<td>
-						<?php if(!$category->getBase()): echo "Image Not Available"; ?>
+						<?php if(!$category->getBase()->getImageUrl()): echo "Image Not Available"; ?>
 							<?php else: ?>
-							<img src="<?php echo 'Media/Category/'.$category->getBase()->name; ?>" width="80px" height="80px">
+							<img src="<?php echo $category->getBase()->getImageUrl() ?>" width="80px" height="80px">
 						<?php endif; ?>
 					</td>
 					<td>
-						<?php if(!$category->getThumbnail()): echo "Image Not Available"; ?>
+						<?php if(!$category->getThumbnail()->getImageUrl()): echo "Image Not Available"; ?>
 								<?php else: ?>
-								<img src="<?php echo 'Media/Category/'.$category->getThumbnail()->name; ?>" width="80px" height="80px">
+								<img src="<?php echo $category->getThumbnail()->getImageUrl(); ?>" width="80px" height="80px">
 						<?php endif; ?>
 					</td>
 					<td>
-						<?php if(!$category->getSmall()): echo "Image Not Available"; ?>
+						<?php if(!$category->getSmall()->getImageUrl()): echo "Image Not Available"; ?>
 							<?php else: ?>
-								<img src="<?php echo 'Media/Category/' .$category->getSmall()->name; ?>" width="80px" height="80px"> 
+								<img src="<?php echo $category->getSmall()->getImageUrl() ?>" width="80px" height="80px"> 
 						<?php endif; ?>
 					</td>
 

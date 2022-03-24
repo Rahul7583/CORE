@@ -7,3 +7,4 @@
 	<a href="index.php?c=salesman&a=grid">Salesman</a>
 	<a href="index.php?c=page&a=grid&page=1">Page</a>
 	<a href="index.php?c=vendor&a=grid">Vendor</a>
+	<a href="index.php?c=cart&a=grid">Cart</a>
