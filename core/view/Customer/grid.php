@@ -27,7 +27,6 @@
 
 
 <button type="button" name="addNew"><a href="<?php echo $this->getUrl('edit','customer')?>"> Add New </a></button>
-<button type="button" name="addCart"><a href="<?php echo $this->getUrl('','customer')?>"> Add Cart </a></button>
 	<table border="1" width="100%" cellspacing="4">
 		<tr>
 			<th>Customer_Id</th>

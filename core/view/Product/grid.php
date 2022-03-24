@@ -87,21 +87,21 @@
 					<td><?php echo $product->msp; ?></td>
 					<td><?php echo $product->cost_price; ?></td>
 					<td>
-						<?php if(!$product->getBase()): echo "Image Not Available"; ?>
+						<?php if(!$product->getBase()->getImageUrl()): echo "Image Not Available"; ?>
 								<?php else:?>
-						<img src="<?php echo 'Media/Product/'. $product->getBase()->name; ?>" width="80px" height="80px"> 
+						<img src="<?php echo $product->getBase()->getImageUrl(); ?>" width="80px" height="80px"> 
 						<?php endif; ?>
 					</td>
 					<td>
-						<?php if(!$product->getThumbnail()): echo "Image Not Available"; ?>
+						<?php if(!$product->getThumbnail()->getImageUrl()): echo "Image Not Available"; ?>
 								<?php else:?>
-						<img src="<?php echo 'Media/Product/'. $product->getThumbnail()->name; ?>" width="80px" height="80px"> 
+						<img src="<?php echo $product->getThumbnail()->getImageUrl(); ?>" width="80px" height="80px"> 
 						<?php endif; ?>
 					</td>
 					<td>
-						<?php if(!$product->getSmall()): echo "Image Not Available"; ?>
+						<?php if(!$product->getSmall()->getImageUrl()): echo "Image Not Available"; ?>
 								<?php else:?>
-						<img src="<?php echo 'Media/Product/'. $product->getSmall()->name; ?>" width="80px" height="80px"> 
+						<img src="<?php echo $product->getSmall()->getImageUrl(); ?>" width="80px" height="80px"> 
 						<?php endif; ?>
 					</td>
 					<td><?php echo $product->price; ?></td>

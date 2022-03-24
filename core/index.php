@@ -44,16 +44,18 @@ class Ccc
         unset($GLOBALS[$key]);
     }
 
-    public static function getConfig()
-    {
-        if (!($config = self::getRegistry('config'))) 
-        {
-            $config = self::loadFile('etc/config.php');
-            self::register('config',$config);
-        }
-        return $config;
-    }
-	
+   public static function getConfig($key)
+	{
+		if (!($config = self::getRegistry('config'))) {
+			$config = self::loadFile('etc/config.php');
+			self::register('config', $config);
+		}
+		if (array_key_exists($key, $config)) {
+			return $config[$key];
+		}
+		return null;
+	}
+
 	public static function loadFile($path)
 	{
 		return require_once(getcwd().DIRECTORY_SEPARATOR.$path);
@@ -97,8 +99,10 @@ class Ccc
 	public static function getBaseUrl($subUrl = null)
 	{
 		$url = self::getConfig('baseUrl');
+
 		if($subUrl)
 		{
+
 			return $url.$subUrl;
 		}
 		return $url;

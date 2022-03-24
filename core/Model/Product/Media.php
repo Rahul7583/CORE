@@ -3,6 +3,8 @@
 class Model_Product_Media extends Model_Core_Row
 {
 	protected $product = null;
+	protected $mediaPath = "Media/Product";
+
 
 	public function __construct()
 	{
@@ -23,10 +25,12 @@ class Model_Product_Media extends Model_Core_Row
 		{
 			return $productModel;
 		}
+
 		if($this->product && !$reload)
 		{
 			return $this->product;
 		}
+
 		$product = $productModel->fetchRow("SELECT * FROM `product` WHERE `productId` = {$this->productId}");
 		if(!$product)
 		{
@@ -37,6 +41,10 @@ class Model_Product_Media extends Model_Core_Row
 		return $this->product;
 	}
 
+	public function getImageUrl()
+	{
+		return Ccc::getBaseUrl($this->mediaPath.'/'.$this->name);
+	}
 }
 
 
