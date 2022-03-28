@@ -4,7 +4,7 @@ class Block_Product_Grid extends Block_Core_Template
 {
 	public function __construct()
 	{
-		$this->setTemplate('view/Product/grid.php');
+		$this->setTemplate('view/product/grid.php');
 	}
 	
 	public function getProductData()

@@ -4,6 +4,6 @@ Class Block_Core_Layout_Header_Menu extends Block_Core_Template
 {
 	public function __construct()
 	{
-		$this->setTemplate('view/Core/Layout/Header/menu.php');
+		$this->setTemplate('view/core/layout/header/menu.php');
 	}
 }

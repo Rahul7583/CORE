@@ -65,47 +65,92 @@ class Model_Core_View
 		return null;
 	}
 
-	public function getUrl($action = null, $controller = null,  array $id = null, bool $reset = TRUE)
+
+	public function getUrl($actionName = null, $controllerName = null, array $array = null, $reset = false)
 	{
-		$parameter = $_GET;
-		$newParameter = [];
-		if($controller)
-		{
-			$newParameter['c'] = $controller;
-		}
+		
+		$defaultUrl = Ccc::getFront()->getRequest()->getRequest();	
+		$url =[];
 
-		if($action)
+		if ($reset == true) 
 		{
-			$newParameter['a'] = $action;
-		}
+			if ($actionName) {
+				$url['a'] = $actionName;
+			}
+			else{
+				$url['a'] = 'grid';
+			}
 
-		if(is_array($id))
-		{
-			foreach ($id as $key => $value)
-			 {
-				if($value)
-				{
-					$newParameter[$key] = $value;
+			if ($controllerName) {
+				$url['c'] = $controllerName;
+			}
+			else{
+				$url['c'] = $defaultUrl['c'];
+			}
+
+			foreach ($defaultUrl as $key => $value) {
+				if ($key != 'c' && $key != 'a' ) {
+					unset($defaultUrl[$key]);
 				}
-			 }
+			}
+			if (is_array($array)) {
+				foreach ($array as $key => $value) {
+					$url[$key] = $value;
+				
+				}
+			}
+			
+			
 		}
 		else
 		{
-			foreach ($parameter as $key => $value)
-			 {
-				if ($key != 'c' && $key != 'a' )
-				{
-					unset($parameter[$key]);
+			if ($actionName) {
+				$url['a'] = $actionName;
+			}
+			else{
+				$url['a'] = $defaultUrl['a'];
+			}
+
+			if ($controllerName) {
+				$url['c'] = $controllerName;
+			}
+			else{
+				$url['c'] = $defaultUrl['c'];
+			}
+
+			foreach ($defaultUrl as $key => $value) {
+				if ($key != 'c' && $key != 'a' ) {
+					$url[$key] = $defaultUrl[$key];
+							
+				}				
+			}
+
+			if (is_array($array)) {
+				foreach ($array as $key => $value) {
+	
+					$url[$key] = $value;
+				
 				}
 			}
+
+			
 		}
 
-		$url = array_merge($parameter, $newParameter);
-
-		$finalUrl = 'index.php?'. http_build_query($url);
+		$finalElements = array_merge($defaultUrl, $url);
+		$finalUrl = 'index.php?'. http_build_query($finalElements);
 		return $finalUrl;
-
+		
 	}
 }
+
+
+
+
+
+
+
+
+
+
 
 ?>

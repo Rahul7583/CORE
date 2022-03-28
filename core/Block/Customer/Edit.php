@@ -1,22 +1,11 @@
-<?php Ccc::loadClass('Block_Core_Template');?>
+<?php Ccc::loadClass('Block_Core_Edit');?>
+<?php Ccc::loadClass('Block_Customer_Edit_Tab');?>
 <?php
-class Block_Customer_Edit extends Block_Core_Template
+class Block_Customer_Edit extends Block_Core_Edit
 {
-	protected $customer = null;
 
 	public function __construct()
 	{
-		$this->setTemplate('view/Customer/edit.php');
-	}
-
-	public function setCustomer($customer)
-	{
-		$this->customer = $customer;
-		return $this;
-	}
-
-	public function getCustomer()
-	{
-		return $this->customer;
+		parent::__construct();
 	}
 }

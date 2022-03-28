@@ -6,7 +6,7 @@ class Block_Cart_Edit extends Block_Core_Template
 
 	public function __construct()
 	{
-		$this->setTemplate('view/Cart/edit.php');
+		$this->setTemplate('view/cart/edit.php');
 	}
 
 	public function setCart($cart)
@@ -78,4 +78,9 @@ class Block_Cart_Edit extends Block_Core_Template
 		return $shippingMethod;
 	}
 
+	public function getGrandTotal($subTotal,$tax,$discount,$shippingCost)
+	{
+		return $grandTotal = $subTotal + $tax - $discount + $shippingCost;
+
+	}
 }
