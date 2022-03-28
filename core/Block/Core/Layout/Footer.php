@@ -4,7 +4,7 @@ class Block_Core_Layout_Footer extends Block_Core_Template
 {
 	public function __construct()
 	{
-		$this->setTemplate('view/Core/Layout/footer.php');
+		$this->setTemplate('view/core/layout/footer.php');
 	}
 
 	

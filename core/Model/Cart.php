@@ -7,6 +7,9 @@ class Model_Cart extends Model_Core_Row
 	protected $shippingAddress = null;
 	protected $session = null;
 	protected $shipping = null;
+	protected $payment = null;
+	protected $customer = null;
+	protected $item = null;
 
 	public function __construct()
 	{
@@ -112,7 +115,7 @@ class Model_Cart extends Model_Core_Row
 	public function getShippingMethod($reload = false)
 	{
 		$cartShippingModel = Ccc::getModel('Cart_Shipping');
-		if (!$this->shippingId) 
+		if (!$this->shippingMethod) 
 		{
 
 			return $cartShippingModel;
@@ -122,7 +125,7 @@ class Model_Cart extends Model_Core_Row
 			return $this->shipping;
 		}
 		$cartShippingRow = $cartShippingModel->fetchRow("SELECT * FROM `cart_shipping` 
-											WHERE `shippingId` = {$this->shippingId}");
+											WHERE `shippingId` = {$this->shippingMethod}");
 		if (!$cartShippingRow) 
 		{
 			return $cartShippingModel;
@@ -131,7 +134,89 @@ class Model_Cart extends Model_Core_Row
 		return $cartShippingRow;
 	}
 
+	public function setPaymentMethod(Model_Cart_Payment $payment)
+	{
+		$this->payment = $payment;
+		return $this;
+	}
 
+	public function getPaymentMethod($reload = false)
+	{
+		$cartPaymentModel = Ccc::getModel('Cart_Payment');
+		if (!$this->paymentMethod) 
+		{
+			return $cartPaymentModel;
+		}
+		if ($this->payment && !$reload) 
+		{
+			return $this->payment;
+		}
+		$cartPaymentRow = $cartPaymentModel->fetchRow("SELECT * FROM `cart_payment` 
+											WHERE `paymentId` = {$this->paymentMethod}");
+		if (!$cartPaymentRow) 
+		{
+			return $cartPaymentRow;
+		}
+		$this->setPaymentMethod($cartPaymentRow);
+		return $cartPaymentRow;
+	}
+
+
+	public function setCustomer($customer)
+	{
+		$this->customer = $customer;
+		return $this;
+	}
+
+	public function getCustomer($reload = false)
+	{
+		$customerModel = Ccc::getModel('Customer');
+		if (!$this->customerId) 
+		{
+			return $customerModel;
+		}
+		if ($this->customer && !$reload) 
+		{
+			return $this->customer;
+		}
+		$customer = $customerModel->fetchRow("SELECT * FROM `customer` 
+											WHERE `customerId` = {$this->customerId}");
+		if (!$customer) 
+		{
+			return $customerModel;
+		}
+		$this->setCustomer($customer);
+		return $customer;
+	}
+
+	public function setItems($items)
+	{
+		$this->items = $items;
+		return $this;
+	}
+
+	public function getItems($reload = false)
+	{
+		$cartItemModel = Ccc::getModel('Cart_Item'); 
+		if(!$this->cartId)
+		{
+			return $cartItemModel;
+		}
+
+		if($this->items && !$reload)
+		{
+			return $this->items;
+		}
+
+		$cartItem = $cartItemModel->fetchAll("SELECT * FROM `cart_item` WHERE `cartId` = {$this->cartId}");
+
+		if(!$cartItem)
+		{
+			return $cartItemModel;
+		}
+		$this->setItems($cartItem);
+		return $cartItem;
+	}
 }
 
 

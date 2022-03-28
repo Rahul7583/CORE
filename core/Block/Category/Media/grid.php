@@ -4,7 +4,7 @@ class Block_Category_Media_Grid extends Block_Core_Template
 {
 	public function __construct()
 	{
-		$this->setTemplate('view/Category/Media/grid.php');
+		$this->setTemplate('view/category/media/grid.php');
 	}
 
 	public function getCategoryMediaData()

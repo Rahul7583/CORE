@@ -31,7 +31,8 @@ class Controller_Admin extends Controller_Admin_Login
 			$this->setTitle('Admin Add');
 			$adminModel = Ccc::getModel('admin');				
 		}
-		$adminEdit = Ccc::getBlock('Admin_Edit')->setAdmin($adminModel);
+		Ccc::register('admin',$adminModel);
+		$adminEdit = Ccc::getBlock('Admin_Edit');
 		$content = $this->getLayout()->getContent()->addChild($adminEdit);
 		$this->renderLayout();
 	}
@@ -42,6 +43,7 @@ class Controller_Admin extends Controller_Admin_Login
 		{
 			$admin = $this->getRequest()->getPost('admin');
 			$id = (int)$this->getRequest()->getRequest('id');
+			
 
 			if(!$admin)
 			{
@@ -80,6 +82,7 @@ class Controller_Admin extends Controller_Admin_Login
 		try {
 				$adminModel = Ccc::getModel('admin');
 	 			$id = (int)$this->getRequest()->getRequest('id');
+
 				$result = $adminModel->delete($id);
 				if(!$result)
 				{

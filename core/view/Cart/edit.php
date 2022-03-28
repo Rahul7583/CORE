@@ -1,4 +1,5 @@
-<?php $products = $this->getProduct(); 
+<?php	$customerId = Ccc::getFront()->getRequest()->getRequest('id');
+ $products = $this->getProduct(); 
 	 $customers = $this->getCustomers();
 	 $cartItems = $this->getCatItems();
 	 $shippings = $this->getShipping();
@@ -6,18 +7,20 @@
 	 $cartShippingMethod = $this->getCartShippingMethod();
 	 $shippingMethod = $this->getShippingMethod();
 	 
-	$customerId = Ccc::getFront()->getRequest()->getRequest('id');
 	$cartId = $this->getCart()->getCart();
 	$cartId = $this->getCart()->getCart()['cartId'];
 	$cartModel = $this->getCart();
 	$cartModel->cartId = $cartId;
  	$billingAddress = $cartModel->getBillingAddresses();
  	$shippingAddress = $cartModel->getShippingAddresses();
+
 ?> 
 <script type="text/javascript">
-	function selectCustomer() {
+	
+	function selectCustomer() 
+	{
 		var customerId = document.getElementById('dropdown').value;
-
+		console.log(customerId);
 		var url = new URL(window.location.href);
 		var search_parameter = url.searchParams;
 		search_parameter.set('id', customerId);
@@ -38,12 +41,12 @@
 
 </script>
 <form method="post" action="<?php echo $this->getUrl('saveBillingAddress','cart')?>">
-		<table border="1" width="100%" cellspacing="4">
+		<table border="1" width="100%" cellspacing="4">		
 			
 			<select name="customer[customerId]" onchange="selectCustomer()" id="dropdown">
 				<option>Select Customers</option>
 				<?php foreach ($customers as $customer): ?>
-				<option value="<?php echo $customer->customerId; ?>"><?php echo $customer->customerId.'=>'.$customer->firstName; ?></option>
+				<option value="<?php echo $customer->customerId; ?>" <?php if($customer->customerId == $customerId):?> selected <?php endif;?>><?php echo $customer->customerId.'=>'.$customer->firstName; ?></option>
 				<?php endforeach; ?>		
 			</select>
 			
@@ -203,7 +206,7 @@
 
 			<tr id="itemTable">
 				<td>
-					<form method="post" action="<?php echo $this->getUrl('addItem','cart', [])?>">
+					<form method="post" action="<?php echo $this->getUrl('addItem','cart')?>">
 					<table  border="1" width="100%" cellspacing="4" id="table">
 						<tr>
 							<input type="button" name="Save" value="CANCEL">
@@ -285,11 +288,12 @@
 				</form>
 				<tr>
 					<td>
-						<form> 
+						<form method="Post" action="<?php echo $this->getUrl('save', 'cart')?>"> 
 							<table  border="1" width="100%" cellspacing="4">
 								<tr>
 									<td>Sub Total  </td>
-									<td><label><?php echo $subTotal;?></label></td>
+									<td><label><?php echo $subTotal; ?></label></td>
+									
 								</tr>
 
 								<tr>
@@ -313,10 +317,10 @@
 									<td><label><?php echo $shippingCost; ?></label></td>
 								</tr>
 
-								<?php $grandTotal = $subTotal + $tax - $discount + $shippingCost; ?>
 								<tr>
 									<td>Grand Total</td>
-									<td><label><?php echo $grandTotal; ?></label></td>
+									<input type="hidden" name="grandTotal" value="<?php echo $this->getGrandTotal($subTotal,$tax,$discount,$shippingCost); ?>">
+									<td><label><?php echo $this->getGrandTotal($subTotal,$tax,$discount,$shippingCost); ?></label></td>
 								</tr>
 
 								<tr>

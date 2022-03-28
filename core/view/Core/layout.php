@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+
 <?php echo $this->getHead()->toHtml(); ?>
 <body>
 	<table border="1" cellspacing="4" width="100%">
@@ -16,4 +15,3 @@
 		</tr>
 	</table>
 </body>
-</html>

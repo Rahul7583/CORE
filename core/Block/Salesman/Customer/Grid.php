@@ -4,7 +4,7 @@ class Block_Salesman_Customer_Grid extends Block_Core_Template
 {
 	public function __construct()
 	{
-		$this->setTemplate('view/Salesman/Customer/grid.php');
+		$this->setTemplate('view/salesman/customer/grid.php');
 	}
 
 	public function getCustomers()

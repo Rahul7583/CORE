@@ -4,7 +4,7 @@ class Block_Product_Media_Grid extends Block_Core_Template
 {
 	public function __construct()
 	{
-		$this->setTemplate('view/Product/Media/grid.php');
+		$this->setTemplate('view/product/media/grid.php');
 	}
 
 	public function getMediaData()

@@ -6,6 +6,7 @@ class Model_Customer extends Model_Core_Row
 	protected $billingAddress = null;
 	protected $shippingAddress = null;
 	protected $salesman	= null;
+	protected $cart = null;
 
 	public function __construct()
 	{
@@ -55,7 +56,7 @@ class Model_Customer extends Model_Core_Row
 			return $this->billingAddress;
 		}
 		$address = $addressModel->fetchRow("SELECT * FROM `address` 
-											WHERE `customerId` = {$this->customerId} AND BILLING");
+											WHERE `customerId` = {$this->customerId} AND billing = 1");
 		if (!$address) 
 		{
 			return $addressModel;
@@ -75,7 +76,7 @@ class Model_Customer extends Model_Core_Row
 		$addressModel = Ccc::getModel('Customer_Address');
 		$BILLING = Model_Customer_Address::SHIPPING; 
 
-		if (!$this->customerId) 
+		if(!$this->customerId) 
 		{
 			return $addressModel;
 		}
@@ -84,7 +85,7 @@ class Model_Customer extends Model_Core_Row
 			return $this->shippingAddress;
 		}
 		$address = $addressModel->fetchRow("SELECT * FROM `address` 
-											WHERE `customerId` = {$this->customerId} AND SHIPPING");
+											WHERE `customerId` = {$this->customerId} AND shipping = 1");
 		if (!$address) 
 		{
 			return $addressModel;
@@ -118,6 +119,34 @@ class Model_Customer extends Model_Core_Row
 		}
 		$this->setSalesman($salesman);
 		return $salesman;
+	}
+
+	public function setCart($cart)
+	{
+		$this->cart = $cart;
+		return $this;
+	}
+
+	public function getCart($reload = false)
+	{
+		$cartModel = Ccc::getModel('Cart');
+
+		if (!$this->customerId) 
+		{
+			return $cartModel;
+		}
+		if ($this->cart && !$reload) 
+		{
+			return $this->cart;
+		}
+		$cart = $cartModel->fetchRow("SELECT * FROM `cart` 
+											WHERE `customerId` = {$this->customerId}");
+		if (!$cart) 
+		{
+			return $cartModel;
+		}
+		$this->setCart($cart);
+		return $cart;
 	}
 }
 

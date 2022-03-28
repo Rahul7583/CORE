@@ -1,5 +1,5 @@
 <?php $result = $this->getAdmin(); ?>
-	<form method="POST" action="<?php echo $this->getUrl('save','admin', ['id' =>$result->adminId]);?>">
+
 		<table border="1" width="100%" cellspacing="4">
 			
 			<tr>
@@ -45,4 +45,3 @@
 				</td>
 			</tr>
 		</table>
-	</form>

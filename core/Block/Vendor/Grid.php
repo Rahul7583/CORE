@@ -4,7 +4,7 @@ class Block_Vendor_Grid extends Block_Core_Template
 {
 	public function __construct()
 	{
-		$this->setTemplate('view/Vendor/grid.php');
+		$this->setTemplate('view/vendor/grid.php');
 	}
 
 	public function getVendorData()

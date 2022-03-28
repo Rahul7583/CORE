@@ -4,7 +4,7 @@ class Block_Category_Grid extends Block_Core_Template
 {	
 	public function __construct()
 	{
-		$this->setTemplate('view/Category/grid.php');
+		$this->setTemplate('view/category/grid.php');
 	}
 
 	public function getCategoryData()

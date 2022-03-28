@@ -5,10 +5,22 @@ class Block_Core_Template extends Model_Core_View
 {
 	protected $children = [];
 	public $pager = null;
+	protected $layout = null; 
 
 	public function __construct()
 	{
-		$this->setTemplate('view/Core/Layout.php');
+		$this->setTemplate('view/core/layout.php');
+	}
+
+	public function setLayout($layout)
+	{
+		$this->layout = $layout;
+		return $this;
+	}
+
+	public function getLayout()
+	{
+		return $this->layout;
 	}
 
 	public function setChildren(array $children)
@@ -37,6 +49,7 @@ class Block_Core_Template extends Model_Core_View
 		{
 			$key = get_Class($object);
 		}
+		$object->setLayout($this->getLayout());
 		$this->children[$key] = $object;
 		return $this;
 	}
