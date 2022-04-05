@@ -22,12 +22,13 @@ class Controller_Admin_Login extends Controller_Admin_Action
 				throw new Exception("invalid request.", 1);
 			}
 			$loginData = $request->getPost('login');
+
 			$password = $loginData['password'];
 			$admin = $adminModel->fetchAll("SELECT * FROM `admin` WHERE `email` = '{$loginData['email']}' AND `password` = '{$password}'");
 
 			if(!$admin)
 			{
-				throw new Exception("invalid request.", 1);
+				throw new Exception("invalid password.", 1);
 			}
 			$loginModel->login($admin[0]->email);
 			$this->getMessage()->addMessage('You are Logedin.');

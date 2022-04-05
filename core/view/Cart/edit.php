@@ -41,9 +41,9 @@
 
 </script>
 <form method="post" action="<?php echo $this->getUrl('saveBillingAddress','cart')?>">
-		<table border="1" width="100%" cellspacing="4">		
+		<table class="table table-bordered table-striped">		
 			
-			<select name="customer[customerId]" onchange="selectCustomer()" id="dropdown">
+			<select class="form-control" name="customer[customerId]" onchange="selectCustomer()" id="dropdown">
 				<option>Select Customers</option>
 				<?php foreach ($customers as $customer): ?>
 				<option value="<?php echo $customer->customerId; ?>" <?php if($customer->customerId == $customerId):?> selected <?php endif;?>><?php echo $customer->customerId.'=>'.$customer->firstName; ?></option>
@@ -92,7 +92,7 @@
 			<tr>
 				<td width="10%">&nbsp;</td>
 				<td>
-					<input type="submit" name="Save" value="Save">
+					<input type="submit" class="btn btn-info" name="Save" value="Save">
 				</td>
 			</tr>
 </form>
@@ -137,7 +137,7 @@
 					
 					<tr>
 						<td width="10%">&nbsp;</td>
-						<td><input type="submit" name="Save" value="Save"></td>
+						<td><input type="submit" class="btn btn-info" name="Save" value="Save"></td>
 					</tr>
 				</table>
 			</td>
@@ -146,7 +146,7 @@
 			<tr>
 				<td>
 					<form method="post" action="<?php echo $this->getUrl('savePaymentMethod','cart')?>">
-					<table>
+					<table class="table table-bordered table-striped">
 						<tr>
 							<td colspan="2"><b>Payment Method</b></td>
 						</tr>
@@ -164,7 +164,7 @@
 							<?php endforeach ?>
 						<tr>
 							<td width="10%">&nbsp;</td>
-							<td><input type="submit" name="Save" value="UPDATE"></td>
+							<td><input type="submit" class="btn btn-info" name="Save" value="UPDATE"></td>
 						</tr>
 					</table>
 				</td>
@@ -173,7 +173,7 @@
 				<tr>
 					<td>
 						<form method="post" action="<?php echo $this->getUrl('saveShippingMethod','cart')?>">
-						<table>
+						<table class="table table-bordered table-striped">
 							<tr>
 								<td colspan="2"><b>Shipping Method</b></td>
 							</tr>
@@ -194,7 +194,7 @@
 
 							<tr>
 								<td width="10%">&nbsp;</td>
-								<td><input type="submit" name="Save" value="UPDATE"></td>
+								<td><input type="submit" class="btn btn-info" name="Save" value="UPDATE"></td>
 							</tr>
 						</table>
 					</td>
@@ -207,10 +207,10 @@
 			<tr id="itemTable">
 				<td>
 					<form method="post" action="<?php echo $this->getUrl('addItem','cart')?>">
-					<table  border="1" width="100%" cellspacing="4" id="table">
+					<table  class="table table-bordered table-striped">
 						<tr>
-							<input type="button" name="Save" value="CANCEL">
-							<input type="submit" name="Save" value="ADD ITEM">
+							<input type="button" class="btn btn-info" name="Save" value="CANCEL">
+							<input type="submit" class="btn btn-info" name="Save" value="ADD ITEM">
 						</tr>
 						<tr>
 							<td>Image</td>
@@ -245,10 +245,10 @@
 			<tr>
 				<td>
 					<form method="Post" action="<?php echo $this->getUrl('removeCartItem', 'cart')?>">
-					<table  border="1" width="100%" cellspacing="4">
+					<table  class="table table-bordered table-striped">
 						<tr>
-							<td><input type="submit" name="Save" value="UPDATE"></td>
-							<td><input type="button" name="Save" value="NEW ITEM" onClick='javascript:showTable();'></td>
+							<td><input type="submit" class="btn btn-info" name="Save" value="UPDATE"></td>
+							<td><input type="button" class="btn btn-info" name="Save" value="NEW ITEM" onClick='javascript:showTable();'></td>
 						</tr>
 						<tr>
 							<td>Image</td>
@@ -289,7 +289,7 @@
 				<tr>
 					<td>
 						<form method="Post" action="<?php echo $this->getUrl('save', 'cart')?>"> 
-							<table  border="1" width="100%" cellspacing="4">
+							<table  class="table table-bordered table-striped">
 								<tr>
 									<td>Sub Total  </td>
 									<td><label><?php echo $subTotal; ?></label></td>
@@ -325,7 +325,7 @@
 
 								<tr>
 									<td>&nbsp;</td>
-									<td><input type="submit" name="Save" value="Place Order"></td>
+									<td><input type="submit" class="btn btn-info" name="Save" value="Place Order"></td>
 								</tr>
 							</table>
 						</form>

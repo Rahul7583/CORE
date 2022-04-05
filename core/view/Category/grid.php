@@ -50,9 +50,14 @@
 	</button>
 	</tr>
 </table>
-
-<button type="button" name="addNew"><a href="<?php echo $this->getUrl('edit','categories');?>"> Add New </a></button>
-	<table border="1" width="100%" cellspacing="4">
+<div class="row">
+    <div class="col-md-2">
+        <div class="card card-primary">
+			<button type="button" name="addNew" class="btn btn-block btn-success"><a href="<?php echo $this->getUrl('edit','categories');?>"> Add New </a></button>
+		</div>
+	</div>
+</div>			
+	<table class="table table-bordered table-striped">
 		<tr>
 			<th>CategoryId</th>
 			<th>Name</th>
@@ -99,9 +104,9 @@
 					<td><?php echo $category->getStatus($category->status); ; ?></td>
 					<td><?php echo $category->createdDate ; ?></td>
 					<td><?php echo $category->updatedDate ; ?></td>
-					<td><a href="<?php echo $this->getUrl('edit','categories',['id' => $category->categoryId])?>">Edit</a></td>
-					<td><a href="<?php echo $this->getUrl('delete','categories',['id' => $category->categoryId])?>">Delete</a></td>
-					<td><a href="<?php echo $this->getUrl('grid','category_media',['id' => $category->categoryId])?>">Gallery</a></td>
+					<td><a class="btn btn-block btn-info" href="<?php echo $this->getUrl('edit','categories',['id' => $category->categoryId])?>">Edit</a></td>
+					<td><a class="btn btn-block btn-info" href="<?php echo $this->getUrl('delete','categories',['id' => $category->categoryId])?>">Delete</a></td>
+					<td><a class="btn btn-block btn-info" href="<?php echo $this->getUrl('grid','category_media',['id' => $category->categoryId])?>">Gallery</a></td>
 				</tr>
 			<?php endforeach; ?>
 		<?php endif; ?>	

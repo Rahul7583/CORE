@@ -1,22 +1,15 @@
-<?php Ccc::loadClass('Block_Core_Template');?>
+<?php Ccc::loadClass('Block_Core_Edit');?>
+<?php Ccc::loadClass('Block_Page_Edit_Tab');?>
 <?php
-class Block_Page_Edit extends Block_Core_Template
+class Block_Page_Edit extends Block_Core_Edit
 {
-	protected $page = null;
-
 	public function __construct()
 	{
-		$this->setTemplate('view/page/edit.php');
+		parent::__construct();
 	}
 
-	public function setPage($page)
+	public function getSaveUrl()
 	{
-		$this->page = $page;
-		return $this;
-	}
-
-	public function getPage()
-	{
-		return $this->page;
+		return $this->getUrl('save','page');
 	}
 }

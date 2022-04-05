@@ -1,8 +1,8 @@
 <?php Ccc::loadClass('Model_Core_View'); ?>
 <?php
-
 class Block_Core_Template extends Model_Core_View
 {
+	
 	protected $children = [];
 	public $pager = null;
 	protected $layout = null; 
@@ -61,6 +61,22 @@ class Block_Core_Template extends Model_Core_View
 			unset($this->children[$key]);
 		}
 		return $this;
+	}
+
+	public function getBlock($key)
+	{
+		$block = $this->getChild($key);
+		if($block)
+		{
+			return $block;
+		}
+		$block = Ccc::getBlock($key);
+		if($block)
+		{
+			$this->setLayout($this->getLayout());
+			return $block;
+		}
+		return null;
 	}
 
 	public function setPager($pager)

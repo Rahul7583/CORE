@@ -67,7 +67,7 @@
 				<td width="10%">&nbsp;</td>
 				<td>
 					<input type="submit" name="Save" value="Save">
-					<button type="button"><a href="<?php echo $this->getUrl('grid', 'customer') ?>">Cancel</button> 
+					<button type="button"><a href="<?php echo $this->getUrl('index', 'customer') ?>">Cancel</button> 
 				</td>
 			</tr>
 		</table>

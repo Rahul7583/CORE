@@ -10,14 +10,32 @@ class Controller_Salesman extends Controller_Admin_Login
 		}
     }
 
-	public function gridAction()			
+    public function indexAction()
+	{
+		$content = $this->getLayout()->getContent();
+		$salesmanGrid = Ccc::getBlock('Salesman_Index');
+		$content->addChild($salesmanGrid);
+		$this->renderLayout();
+	}
+
+	public function gridBlockAction()
+	{
+		$salesmanGrid = Ccc::getBlock('Salesman_Grid')->toHtml();
+		$response = [
+			'status' => 'success',
+			'content' => $salesmanGrid
+		];
+		$this->renderJson($response);
+	}
+
+	/*public function gridAction()			
 	{
 		$this->setTitle('Salesman Grid');
 		$salesmanGrid= Ccc::getBlock('Salesman_Grid');
 		$content = $this->getLayout()->getContent();
 		$content->addChild($salesmanGrid);
 		$this->renderLayout();
-	}
+	}*/
 
 	public function editAction()
 	{
@@ -31,10 +49,16 @@ class Controller_Salesman extends Controller_Admin_Login
 		{
 			$this->setTitle('Salesman Add');
 			$salesmanModel = Ccc::getModel('Salesman');	
-		}		
-		$salesmanEdit = Ccc::getBlock('Salesman_Edit')->setSalesman($salesmanModel);
-		$content = $this->getLayout()->getContent()->addChild($salesmanEdit);
-		$this->renderLayout();
+		}
+		Ccc::register('salesman', $salesmanModel);		
+		$salesmanEdit = Ccc::getBlock('Salesman_Edit')->toHtml();
+		$response = [
+			'status' => 'success',
+			'content' => $salesmanEdit
+		];
+		$this->renderJson($response);
+		/*$content = $this->getLayout()->getContent()->addChild($salesmanEdit);
+		$this->renderLayout();*/
 	}
 
 	public function saveAction()
@@ -65,11 +89,15 @@ class Controller_Salesman extends Controller_Admin_Login
 		 		{
 		 			throw new Exception("system is unable to insert.", 1);
 		 		} 		
-			 	$this->getMessge()->addMessage('Data Saved.');
-			 	$this->redirect($this->getLayout()->getUrl('grid'));
+			 	$this->getMessage()->addMessage('Data Saved.');
+				$this->gridBlockAction();			
+
+			 	//$this->redirect($this->getLayout()->getUrl('grid'));
 			} catch (Exception $e) {
-				$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-				$this->redirect($this->getLayout()->getUrl('grid'));
+				$this->getMessage()->addMessage($e->getMessage(), 
+					Model_Core_Message::ERROR);
+				$this->gridBlockAction();			
+				//$this->redirect($this->getLayout()->getUrl('grid'));
 			}	
 	}
 
@@ -84,10 +112,12 @@ class Controller_Salesman extends Controller_Admin_Login
 					throw new Exception("system is unable to delete", 1);
 				}
 				$this->getMessage()->addMessage('Data Deleted.');
-				$this->redirect($this->getLayout()->getUrl('grid'));
+				$this->gridBlockAction();			
+				//$this->redirect($this->getLayout()->getUrl('grid'));
 		} catch (Exception $e) {
 			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$this->redirect($this->getLayout()->getUrl('grid'));
+			$this->gridBlockAction();			
+			//$this->redirect($this->getLayout()->getUrl('grid'));
 		}
 	}
 }

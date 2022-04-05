@@ -1,9 +1,11 @@
 <?php $media = $this->getCategoryMediaData(); ?> 
 <?php $id = Ccc::getFront()->getRequest()->getRequest('id'); ?>
 	<form method="POST" action="<?php echo $this->getUrl('save', 'category_media', ['id' => $id]);?>">
-		<button type="submit" name="update"> Update </a></button>
-		<button type="button" name="cancel"><a href="<?php echo $this->getUrl('grid','categories')?>"> Cancel </a></button>
-			<table border="1" width="100%" cellspacing="4">
+<div class="card-footer">		
+	<button type="submit" class="btn btn-info" name="update"> Update </a></button>
+	<button type="button" class="btn btn-default" name="cancel"><a href="<?php echo $this->getUrl('grid','categories')?>"> Cancel </a></button>
+</div>	
+			<table class="table table-bordered table-striped">
 				<tr>
 					<th>Image Id</th>
 					<th>Category Id</th>
@@ -13,7 +15,6 @@
 					<th>Thumbnail</th>
 					<th>Small</th>
 					<th>Gallery</th>
-					<th>Status</th>
 					<th>Remove</th>	
 				</tr>
 					<?php if(!$media):?>
@@ -42,9 +43,6 @@
 								<?php if ($row->small == 1):?> checked <?php endif;?> ></td>
 
 							<td><input type="checkbox" name="image[gallery][]" value="<?php echo ($row->imageId); ?>"<?php if ($row->gallery == 1):?> checked <?php endif;?> ></td>
-							<td><input type="radio" name="image[status]" value="<?php echo ($row->imageId); ?>"
-								<?php if ($row->status == 1):?> checked <?php endif;?> ></td>
-
 							<td><input type="checkbox" name="image[remove][]" value="<?php echo ($row->imageId); ?>"<?php if ($row->remove == 1):?> checked <?php endif;?>></td>
 
 						</tr>
@@ -54,7 +52,7 @@
 	</form>
 	
 	<form method="POST" action="<?php echo $this->getUrl('save', 'category_media', ['id' =>  $id]);?>" enctype="multipart/form-data">
-		<table border="1" width="100%" cellspacing="4">
+		<table class="table table-bordered table-striped">
 			
 			<tr>
 				<td colspan="2"><b>Image Upload</b></td>
@@ -62,13 +60,13 @@
 
 			<tr>
 				<td width="10%">Browse</td>
-				<td><input type="file" name="image" ></td>
+				<td><input class="btn btn-default" type="file" name="image" ></td>
 			</tr>
 			
 			<tr>
 				<td width="10%">&nbsp;</td>
 				<td>
-					<button type="submit">Upload</button> 
+					<button class="btn btn-info" type="submit">Upload</button> 
 				</td>
 			</tr>
 		</table>

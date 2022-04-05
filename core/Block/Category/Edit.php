@@ -1,15 +1,16 @@
-<?php Ccc::loadClass('Block_Core_Template'); ?>
+<?php Ccc::loadClass('Block_Core_Edit');?>
+<?php Ccc::loadClass('Block_Category_Edit_Tab');?>
 <?php
-class Block_Category_Edit extends Block_Core_Template
+class Block_Category_Edit extends Block_Core_Edit
 {
-	protected $category = null;
 
 	public function __construct()
 	{
-		$this->setTemplate('view/category/edit.php');
+		parent::__construct();
+		//$this->setTemplate('view/category/edit.php');
 	}
 
-	public function setCategory($category)
+	/*public function setCategory($category)
 	{
 		$this->category = $category;
 		return $this;
@@ -18,9 +19,9 @@ class Block_Category_Edit extends Block_Core_Template
 	public function getCategory()
 	{
 		return $this->category;
-	}
+	}*/
 
-	public function getPath()
+	/*public function getPath()
 	{
 		$categoryModel = Ccc::getModel('Category');
 		$category = $categoryModel->fetchAll("SELECT * FROM categories ORDER BY path");
@@ -35,5 +36,5 @@ class Block_Category_Edit extends Block_Core_Template
 			}
 		}
 		return $category;
-	}
+	}*/
 } 
