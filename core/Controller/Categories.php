@@ -32,7 +32,8 @@ class Controller_Categories extends Controller_Admin_Login
 			$this->setTitle('Category Add');
 			$categoryModel = Ccc::getModel('Category');	
 		}
-		$CategoryEdit = Ccc::getBlock('Category_Edit')->setCategory($categoryModel);
+		Ccc::register('category', $categoryModel);
+		$CategoryEdit = Ccc::getBlock('Category_Edit');
 		$content = $this->getLayout()->getContent()->addChild($CategoryEdit);
 		$this->renderLayout();
 	}

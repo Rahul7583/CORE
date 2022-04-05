@@ -31,7 +31,8 @@ class Controller_Product extends Controller_Admin_Login
 			$this->setTitle('Product Add');
 			$productModel = Ccc::getModel('Product');	
 		}
-		$productEdit = Ccc::getBlock('Product_Edit')->setProduct($productModel);
+		Ccc::register('product', $productModel);
+		$productEdit = Ccc::getBlock('Product_Edit');
 		$content = $this->getLayout()->getContent();
 		$content->addChild($productEdit);
 		$this->renderLayout();

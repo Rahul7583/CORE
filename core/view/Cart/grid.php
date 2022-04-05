@@ -1,10 +1,12 @@
 <?php $orders = $this->getOrderData(); ?>
 
-<form method="POST" action="<?php echo $this->getUrl('edit','cart')?>">
-	<input type="submit" name="addCart" value="Add to Cart">
+<form method="POST" action="<?php echo $this->getUrl('edit','cart', ['id' => 1])?>">
+<div class="card-footer">
+	<input type="submit" class="btn btn-success" name="addOrder" value="Add Order">
+</div>
 </form>
 
-<table border="1" width="100%" cellspacing="4">
+<table class="table table-bordered table-striped">
 		<tr>
 			<th>First Name</th>
 			<th>Last Name</th>
@@ -30,8 +32,8 @@
 					<td><?php echo $order->paymentId; ?></td>
 					<td><?php echo $order->getState($order->state); ?></td>
 					<td><?php echo $order->getStatus($order->status); ?></td>
-					<td><a href="<?php echo $this->getUrl('edit','order',['id' => $order->orderId])?>">View</a></td>
-					<td><a href="<?php echo $this->getUrl('delete','order',['id' => $order->orderId])?>">Delete</a></td>
+					<td><a class="btn btn-block btn-info" href="<?php echo $this->getUrl('edit','order',['id' => $order->orderId])?>">View</a></td>
+					<td><a class="btn btn-block btn-info" href="<?php echo $this->getUrl('delete','order',['id' => $order->orderId])?>">Delete</a></td>
 				</tr>
 			<?php endforeach; ?>
 		<?php endif; ?>	

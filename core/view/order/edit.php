@@ -6,7 +6,7 @@
 <?php $orderItem = $this->getOrder()->getItems(); ?>
 
 
-<table border="1" width="100%" cellspacing="4">
+<table class="table table-bordered table-striped">
 			<tr>
 				<td colspan="2"><b>Customer Information</b><br>
 					<label><?php echo $customerInfo->firstName ?></b></label>
@@ -17,19 +17,18 @@
 			</tr>
 		</table>
 
-<table border="1" width="100%" cellspacing="4">
+<table class="table table-bordered table-striped">
 			<tr>
 				<td colspan="2"><b>Billing Address</b><br>
 					<label><?php echo $billingAddress->address ?><br></label>
 					<label><?php echo $billingAddress->city ?><br></label>
 					<label><?php echo $billingAddress->state ?><br></label>
 					<label><?php echo $billingAddress->postalCode ?></label>
-
 				</td>
 			</tr>
 		</table>
 		
-		<table border="1" width="100%" cellspacing="4">
+		<table class="table table-bordered table-striped">
 			<tr>
 				<td colspan="2"><b>Shipping Address</b><br>
 					<label><?php echo $shippingAddress->address ?><br></label>
@@ -40,7 +39,7 @@
 			</tr>
 		</table>
 
-		<table border="1" width="100%" cellspacing="4">
+		<table class="table table-bordered table-striped">
 			<tr>
 				<td colspan="2"><b>Payment Method</b><br>
 					<label><?php echo $paymentMethod->name ?></label>
@@ -48,7 +47,7 @@
 			</tr>
 		</table>
 				
-		<table border="1" width="100%" cellspacing="4">
+		<table class="table table-bordered table-striped">
 			<tr>
 				<td colspan="2"><b>Shipping Method</b><br>
 					<label><?php echo $shippingMethod->name ?></label>
@@ -57,7 +56,7 @@
 			</tr>
 		</table>
 
-		<table border="1" width="100%" cellspacing="4">
+		<table class="table table-bordered table-striped">
 			<tr>
 				<td colspan="2"><b>Product Details</b><br>
 
@@ -74,7 +73,7 @@
 			</tr>
 		</table>
 			
-		<table   border="1" width="100%" cellspacing="4">
+		<table   class="table table-bordered table-striped">
 			<tr>
 				<td colspan="2"><b>Order Summery</b></td>
 			</tr>

@@ -41,6 +41,12 @@ class Controller_Core_Action
 		echo $this->getResponse()->setHeader('Content-type','text/html')->render($this->getLayout()->toHtml());
 	}
 
+	public function renderJson($content)
+	{
+		
+		$this->getResponse()->setHeader('Content-Type', 'application/json')->render(json_encode($content));
+	}
+
 	public function redirect($url)				
 	{
 		header("location:$url");

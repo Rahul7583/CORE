@@ -50,9 +50,15 @@
 	</button>
 	</tr>
 </table>
-
-<button type="button" name="addNew"><a href="<?php echo $this->getUrl('edit','product')?>"> Add New </a></button>
-	<table border="1" width="100%" cellspacing="4">
+<div class="row">
+    <div class="col-md-2">
+        <div class="card card-primary">
+			<button type="button" class="btn btn-block btn-success" name="addNew"><a href="<?php echo $this->getUrl('edit','product')?>"> Add New </a>
+			</button>
+		</div>
+	</div>
+</div>			
+	<table class="table table-bordered table-striped">
 		<tr>
 			<th>Product_Id</th>
 			<th>Name</th>
@@ -109,9 +115,9 @@
 					<td><?php echo $product->getStatus($product->status); ?></td>
 					<td><?php echo $product->createdDate; ?></td>
 					<td><?php echo $product->updatedDate; ?></td>
-					<td><a href="<?php echo $this->getUrl('edit','product',['id' => $product->productId])?>">Edit</a></td>
-					<td><a href="<?php echo $this->getUrl('delete','product',['id' => $product->productId])?>">Delete</a></td>
-					<td><a href="<?php echo $this->getUrl('grid','product_media',['id' => $product->productId])?>">Gallery</a></td>
+					<td><a class="btn btn-block btn-info" href="<?php echo $this->getUrl('edit','product',['id' => $product->productId])?>">Edit</a></td>
+					<td><a class="btn btn-block btn-info" href="<?php echo $this->getUrl('delete','product',['id' => $product->productId])?>">Delete</a></td>
+					<td><a class="btn btn-block btn-info" href="<?php echo $this->getUrl('grid','product_media',['id' => $product->productId])?>">Gallery</a></td>
 				</tr>
 			<?php endforeach; ?>
 		<?php endif; ?>			

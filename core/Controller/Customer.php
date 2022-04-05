@@ -11,12 +11,24 @@ class Controller_Customer extends Controller_Admin_Login
 		}
     }
     
-	public function gridAction()			
+
+    public function indexAction()
 	{
-		$this->setTitle('Customer Grid');
-		$customerGrid = Ccc::getBlock('Customer_Grid');
-		$content = $this->getLayout()->getContent()->addChild($customerGrid);
+		$content = $this->getLayout()->getContent();
+		$customerGrid = Ccc::getBlock('Customer_Index');
+		$content->addChild($customerGrid);
 		$this->renderLayout();
+
+	}
+
+	public function gridBlockAction()
+	{
+		$customerGrid = Ccc::getBlock('Customer_Grid')->toHtml();
+		$response = [
+			'status' => 'success',
+			'content' => $customerGrid
+		];
+		$this->renderJson($response);
 	}
 
 	public function editAction()
@@ -34,82 +46,65 @@ class Controller_Customer extends Controller_Admin_Login
 			$customerModel = Ccc::getModel('Customer');	
 		}
 		Ccc::register('customer', $customerModel);
-		$customerEdit = Ccc::getBlock('Customer_Edit');
-		$content = $this->getLayout()->getContent()->addChild($customerEdit);
-		$this->renderLayout();
+		$customerEdit = Ccc::getBlock('Customer_Edit')->toHtml();
+		$response = [
+			'status' => 'success',
+			'content' => $customerEdit
+		];
+		$this->renderJson($response);
 	}
 
 	public function saveCustomer()
 	{
-				$customer = $this->getRequest()->getPost('customer');
-				$id = (int)$this->getRequest()->getRequest('id');
-				$customerModel = Ccc::getModel('Customer');
+		$customer = $this->getRequest()->getPost('customer');
+		$id = (int)$this->getRequest()->getRequest('id');
+		$customerModel = Ccc::getModel('Customer');
 
-				if($this->getRequest()->getRequest('tab') == 'personal'){
-				if(!$customer)
-				{
-					throw new Exception("Missing Customer data in request.", 1);
-				}
+		if($this->getRequest()->getRequest('tab') == 'personal')
+		{
+			if(!$customer)
+			{
+				throw new Exception("Missing Customer data in request.", 1);
+			}
 
-				$customerModel->setData($customer);
+			$customerModel->setData($customer);
 
-				if($id)
-				{
-					$customerModel->customerId = $id;	
-					$customerModel->updatedDate = date('Y-m-d H:m:s');
-				}
-				else
-				{	
-					$customerModel->createdDate = date('Y-m-d H:m:s');	
-				}
-				$customerRow = $customerModel->save();
+			if($id)
+			{
+				$customerModel->customerId = $id;	
+				$customerModel->updatedDate = date('Y-m-d H:m:s');
+			}
+			else
+			{	
+				$customerModel->createdDate = date('Y-m-d H:m:s');	
+			}
+			$customerRow = $customerModel->save();
 
-		 		if (!$customerRow) 
-		 		{
-					$customerRow = $customerModel->load($id);
-		 			throw new Exception("ssystem is unable to insert.", 1);
-		 		}
-		 		$customerId = $customerRow->customerId;
-				$this->redirect($this->getLayout()->getUrl('edit','customer', ['id'=>$customerId]));
-			
-				return $customerRow;
-		 		}
-				/*print_r($customerRow->customerId);
-				exit();*/
-			
-
-			
+	 		if (!$customerRow) 
+	 		{
+				$customerRow = $customerModel->load($id);
+	 			throw new Exception("ssystem is unable to insert.", 1);
+	 		}
+			// $this->redirect($this->getLayout()->getUrl('index','customer', ['id'=>$customerRow->customerId, 'tab' => 'address']));
+		
+			return $customerRow;
+ 		}	
 	}
 
 	public function saveBillingAddress($customerRow = null)
 	{
+				$customerId = $this->getRequest()->getRequest('id');
+				$customerModel = Ccc::getModel('Customer')->load($customerId);
+
 				$request = $this->getRequest();
 				$address = $request->getPost('billingAddress');
+				$resultAddress = $customerModel->getBillingAddresses();
 
-			
-		if(!$customerRow)
-		{
-			$customerId = $this->getRequest()->getRequest('id');
-
-			if(!$customerId)
-			{
-				throw new Exception("System is unable to Save Address without Customer.", 1);
-			}
-			$customer = Ccc::getModel('customer')->load($customerId);
-		}
-				
-				//$customerId = $customerRow->customerId;
-				if(!$address)
-				{
-					throw new Exception("Missing Billing Address data in Request ", 1);	
-				}
-				
 				 $address["billing"] = Model_Customer_Address::BILLING;
 					
 				 $addressModel = Ccc::getModel('Customer_Address');
 				 $addressModel->setData($address);
 
-				$resultAddress = $customer->getBillingAddresses();
 				if($resultAddress->addressId)
 				{	
 					$addressModel->addressId = $resultAddress->addressId;
@@ -129,29 +124,19 @@ class Controller_Customer extends Controller_Admin_Login
 
 	public function saveShippingAddress($customerRow = null)
 	{
-		if(!$customerRow)
-		{
-			$customerId = $this->getRequest()->getRequest('id');
-			if(!$customerId)
-			{
-				throw new Exception("System is unable to Save Address without Customer.", 1);
-			}
-			$customer = Ccc::getModel('customer')->load($customerId);
-		}
-	
+				$customerId = $this->getRequest()->getRequest('id');
+				$customerModel = Ccc::getModel('Customer')->load($customerId);
+
 				$request = $this->getRequest();
 				$address = $request->getPost('shippingAddress');
-				//$customerId = $customerRow->customerId;
-				if(!$address)
-				{
-					throw new Exception("Missing Shipping Address data in Request ", 1);	
-				}
+				$resultAddress = $customerModel->getShippingAddresses();
+
 				
 				 $address["shipping"] = Model_Customer_Address::SHIPPING;
-									
+					
 				 $addressModel = Ccc::getModel('Customer_Address');
 				 $addressModel->setData($address);
-				 $resultAddress = $customer->getShippingAddresses();
+
 				if($resultAddress->addressId)
 				{	
 					$addressModel->addressId = $resultAddress->addressId;
@@ -174,18 +159,16 @@ class Controller_Customer extends Controller_Admin_Login
 		try 
 		{
 			$customerRow = $this->saveCustomer();
-			//print_r($customerRow);
 			$this->saveBillingAddress();	
-			//$this->saveShippingAddress($customerRow);
-			//$this->redirect($this->getLayout()->getUrl('grid'));
-
-
+			$this->saveShippingAddress();
+			$this->gridBlockAction();
 
 		} 
 		catch (Exception $e) 
 		{
-			/*$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$this->redirect($this->getLayout()->getUrl('grid'));*/
+			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+			$this->gridBlockAction();
+			
 		}	
 	}
 	public function deleteAction()
@@ -199,10 +182,12 @@ class Controller_Customer extends Controller_Admin_Login
 					throw new Exception("system is unable to delete", 1);
 				}
 				$this->getMessage()->addMessage('Data Deleted.');
-				$this->redirect($this->getLayout()->getUrl('grid'));
+				$this->gridBlockAction();
+
 		} catch (Exception $e) {
 			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$this->redirect($this->getLayout()->getUrl('grid'));
+			$this->gridBlockAction();
+
 		}
 	}
 }

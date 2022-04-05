@@ -15,6 +15,7 @@ class Block_Core_Layout_Head extends Block_Core_Template
 
 	public function getTitle()
 	{
+		
 		return $this->title;
 	}
 
