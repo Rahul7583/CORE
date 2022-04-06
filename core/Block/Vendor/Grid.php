@@ -5,16 +5,17 @@ class Block_Vendor_Grid extends Block_Core_Grid
 	public function __construct()
 	{
 		parent::__construct();
+		//$this->setTemplate('view/vendor/grid.php');
 	}
 
-	public function getEditUrl($id)
+	public function getEditUrl($vendor)
 	{
-		return $this->getUrl('edit', 'vendor', ['id' => $id]);
+		return $this->getUrl('edit', 'vendor', ['id' => $vendor->vendorId]);
 	}
 
-	public function getDeleteUrl($id)
+	public function getDeleteUrl($vendor)
 	{
-		return $this->getUrl('delete', 'vendor', ['id' => $id]);
+		return $this->getUrl('delete', 'vendor', ['id' => $vendor->vendorId]);
 	}
 
 	public function prepareCollections()

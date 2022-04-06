@@ -1,46 +1,58 @@
-<?php $vendor = $this->getVendor(); 
- $vendorAddress = $vendor->getAddress(); 
+<?php $vendor = $this->getVendor(); ?>
+<?php $vendorAddress = $vendor->getAddress(); ?>
 
-?>
-<form method="post" action="<?php echo $this->getUrl('save','vendor', ['id' => $result->vendorId])?>">
-		<table border="1" width="100%" cellspacing="4">
-			<tr>
-				<td colspan="2"><b>Address Information</b></td>
-			</tr>
+<!-- <form method="post" action="<?php //echo $this->getUrl('save','vendor', ['id' => $result->vendorId])?>"> -->
 
-			<tr>
-				<td width="10%">Address</td>
-				<td><input type="text" name="vendor_address[address]" value="<?php echo $vendorAddress->address ?>"></td>
-			</tr>
-			
-			<tr>
-				<td width="10%">Postal Code</td>
-				<td><input type="text" name="vendor_address[postalCode]" value="<?php echo $vendorAddress->postalCode ?>"></td>
-			</tr>
+	<div class="card card-info">
+    <div class="card-body">
+      <div class="form-group row">
+        <label for="firstName" class="col-sm-2 col-form-label">Address</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="vendor_address[address]" id="address" value="<?php echo $vendorAddress->address ?>" placeholder="Address">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="postalCode" class="col-sm-2 col-form-label">Postal Code</label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control"  name="vendor_address[postalCode]" id="postalCode" value="<?php echo $vendorAddress->postalCode ?>" placeholder="PostalCode">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="city" class="col-sm-2 col-form-label">City</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="vendor_address[city]" id="city" value="<?php echo $vendorAddress->city ?>" placeholder="City">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="state" class="col-sm-2 col-form-label">State</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="vendor_address[state]" id="state" value="<?php echo $vendorAddress->state ?>" placeholder="State">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="country" class="col-sm-2 col-form-label">Country</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="vendor_address[country]" id="country" value="<?php echo $vendorAddress->country ?>" placeholder="Country">
+        </div>
+      </div>
+		<div class="card-footer">
+			<button type="button" class="btn btn-info" id="vendorAddressSaveBtn" name="Save">Save</button>
+			<button type="button" class="btn btn-default" id="vendorAddressCancelBtn">Cancel</button>
+		</div>
+	</div>
+</div>	
+<script type="text/javascript">
+			jQuery('#vendorAddressCancelBtn').click(function() {
+				admin.setUrl("<?php echo $this->getUrl('gridBlock', 'vendor'); ?>");
+				admin.load();
+			});
 
-			<tr>
-				<td width="10%">City</td>
-				<td><input type="text" name="vendor_address[city]" value="<?php echo $vendorAddress->city ?>"></td>
-			</tr>
-			
-			<tr>
-				<td width="10%">State</td>
-				<td><input type="text" name="vendor_address[state]" value="<?php echo $vendorAddress->state ?>"></td>
-			</tr>
+			$('#vendorAddressSaveBtn').click(function() {
 
-			<tr>
-				<td width="10%">Country</td>
-				<td><input type="text" name="vendor_address[country]" value="<?php echo $vendorAddress->country ?>"></td>
-			</tr>
-			
-			<tr>
-				<td width="10%">&nbsp;</td>
-				<td>
-					<input type="submit" name="Save">
-					<button type="button"><a href="<?php echo $this->getUrl('grid', 'vendor') ?>">Cancel</button> 
-				</td>
-			</tr>
-		</table>
-	</form>
-</body>
-</html>
+				admin.setForm(jQuery("#indexForm"));
+				admin.setUrl("<?php echo $this->getEdit()->getSaveUrl(); ?>");
+				//alert(admin.getUrl());
+				admin.load();
+			});
+</script>		 			
+</form>

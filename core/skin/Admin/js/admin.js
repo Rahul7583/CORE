@@ -97,8 +97,7 @@
 			data : this.getData(),
 			success : function(data){
 				$("#indexContent").html(data.content);
-				
-				
+				$("#indexMessage").html(data.message);
 			},
 			dataType : this.getDataType()
 		});

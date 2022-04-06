@@ -15,9 +15,13 @@ class Controller_Order extends Controller_Admin_Login
 		$orderId = (int) $this->getRequest()->getRequest('id');
 		$this->setTitle('Order');
     	$orderModel = Ccc::getModel('Order')->load($orderId);
-		$orderEdit = Ccc::getBlock('Order_Edit')->setOrder($orderModel);
-		$content = $this->getLayout()->getContent();
-		$content->addChild($orderEdit);
-		$this->renderLayout();
+
+    	Ccc::register('order',$orderModel);
+		$orderEdit = Ccc::getBlock('Order_Edit')->toHtml();
+		$response = [
+			'status' => 'success',
+			'content' => $orderEdit
+		];
+		$this->renderJson($response);
 	}
 }

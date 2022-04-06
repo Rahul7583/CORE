@@ -49,8 +49,7 @@ class Controller_Page extends Controller_Admin_Login
 			'content' => $pageEdit
 		];
 		$this->renderJson($response);
-		//$content = $this->getLayout()->getContent()->addChild($pageEdit);
-		//$this->renderLayout();
+	
 	}
 
 	public function saveAction()
@@ -75,18 +74,32 @@ class Controller_Page extends Controller_Admin_Login
 					$pageModel->createdDate = date('Y-m-d H:m:s');
 			 	}
 				$pageId = $pageModel->save();
-		 		if (!$pageId) 
+		 		if ($pageId) 
 		 		{
-		 			throw new Exception("system is unable to insert.", 1);
+			 		$this->getMessage()->addMessage('Data Saved.'); 		
+		 			$pageEdit = Ccc::getBlock('Page_Edit')->toHtml();
+			 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+			 		$response = [
+					'status' => 'sucess',
+					'content' => $pageEdit,
+					'message' => $message
+					];
+					$this->renderJson($response);
 		 		}
-			 	$this->getMessage()->addMessage('Data Saved.'); 		
 				$this->gridBlockAction();			
 			 	
-			 	//$this->redirect($this->getLayout()->getUrl('grid'));
 			} 
 			catch (Exception $e) 
 			{
 				$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+	 			$pageEdit = Ccc::getBlock('Page_Edit')->toHtml();
+		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+		 		$response = [
+				'status' => 'sucess',
+				'content' => $pageEdit,
+				'message' => $message
+				];
+				$this->renderJson($response);
 				$this->gridBlockAction();			
 
 			}	
@@ -96,7 +109,6 @@ class Controller_Page extends Controller_Admin_Login
 	{
 		try 
 		{
-
 			$pageModel = Ccc::getModel('Page');
 			$id = (int)$this->getRequest()->getRequest('id');
 			$result = $pageModel->delete($id);
@@ -105,14 +117,28 @@ class Controller_Page extends Controller_Admin_Login
 				throw new Exception("system is unable to delete", 1);
 			}
 			$this->getMessage()->addMessage('Data Deleted.');
-			$this->gridBlockAction();			
-
-			//$this->redirect($this->getLayout()->getUrl(null, null, null, true));
+			$pageEdit = Ccc::getBlock('Page_Edit')->toHtml();
+	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+	 		$response = [
+			'status' => 'sucess',
+			'content' => $pageEdit,
+			'message' => $message
+			];
+			$this->renderJson($response);
+			$this->gridBlockAction();						
 		} 
 		catch (Exception $e) 
 		{
 			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$this->redirect($this->getLayout()->getUrl(null, null, null, true));
+			$pageEdit = Ccc::getBlock('Page_Edit')->toHtml();
+	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+	 		$response = [
+			'status' => 'sucess',
+			'content' => $pageEdit,
+			'message' => $message
+			];
+			$this->renderJson($response);
+			$this->gridBlockAction();
 		}
 	}
 

@@ -10,14 +10,24 @@ class Controller_Product extends Controller_Admin_Login
 		}
     }
 
-	public function gridAction()			
+    public function indexAction()
 	{
-		$this->setTitle('Product Grid');
-		$productGrid = Ccc::getBlock('Product_Grid');
-		$content = $this->getLayout()->getContent()->addChild($productGrid);
+		$content = $this->getLayout()->getContent();
+		$productGrid = Ccc::getBlock('Product_Index');
+		$content->addChild($productGrid);
 		$this->renderLayout();
 	}
-
+	
+	public function gridBlockAction()
+	{
+		$productGrid = Ccc::getBlock('Product_Grid')->toHtml();
+		$response = [
+			'status' => 'success',
+			'content' => $productGrid
+		];
+		$this->renderJson($response);
+	}
+	
 	public function editAction()
 	{
 		if((int)$this->getRequest()->getRequest('id'))
@@ -32,10 +42,13 @@ class Controller_Product extends Controller_Admin_Login
 			$productModel = Ccc::getModel('Product');	
 		}
 		Ccc::register('product', $productModel);
-		$productEdit = Ccc::getBlock('Product_Edit');
-		$content = $this->getLayout()->getContent();
-		$content->addChild($productEdit);
-		$this->renderLayout();
+		$productEdit = Ccc::getBlock('Product_Edit')->toHtml();
+		$response = [
+			'status' => 'success',
+			'content' => $productEdit
+		];
+		$this->renderJson($response);
+		
 	}
 
 	public function saveAction()
@@ -90,19 +103,31 @@ class Controller_Product extends Controller_Admin_Login
 						$row->categoryId = $value;
 						$row->productId = $insertId;
 						$row->save();	
-					}	
-					
-			 		if(!$insertId)
-			 		{
-			 			throw new Exception("System is unable to insert.", 1);	
-			 		}			
+					}				
 				}
 				$this->getMessage()->addMessage('Data Saved.');
-				$this->redirect($this->getLayout()->getUrl('grid'));
+				$productEdit = Ccc::getBlock('Product_Edit')->toHtml();
+		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+		 		$response = [
+				'status' => 'sucess',
+				'content' => $productEdit,
+				'message' => $message
+				];
+				$this->renderJson($response);
+				$this->gridBlockAction();
+
 			
 		} catch (Exception $e) {
 			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$this->redirect($this->getLayout()->getUrl('grid'));
+			$productEdit = Ccc::getBlock('Product_Edit')->toHtml();
+	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+	 		$response = [
+			'status' => 'sucess',
+			'content' => $productEdit,
+			'message' => $message
+			];
+			$this->renderJson($response);
+			$this->gridBlockAction();
 		}
 	}
 
@@ -112,17 +137,33 @@ class Controller_Product extends Controller_Admin_Login
 				$productTable = Ccc::getModel('product');
 				$id = (int)$this->getRequest()->getRequest('id');
 				$result = $productTable->delete($id);
-					if (!$result)
-					{
-						throw new Exception("system is unable to delete.", 1);
-					}
-					$this->getMessage()->addMessage('Data Deleted.');
-					$this->redirect($this->getLayout()->getUrl('grid'));	
+				if (!$result)
+				{
+					throw new Exception("system is unable to delete.", 1);
+				}
+				$this->getMessage()->addMessage('Data Deleted.');
+				$productEdit = Ccc::getBlock('Product_Edit')->toHtml();
+		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+		 		$response = [
+				'status' => 'sucess',
+				'content' => $productEdit,
+				'message' => $message
+				];
+				$this->renderJson($response);
+				$this->gridBlockAction();
 		} 
 		catch (Exception $e)
 		{
 			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$this->redirect($this->getLayout()->getUrl('grid'));			
+			$productEdit = Ccc::getBlock('Product_Edit')->toHtml();
+	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+	 		$response = [
+			'status' => 'sucess',
+			'content' => $productEdit,
+			'message' => $message
+			];
+			$this->renderJson($response);
+			$this->gridBlockAction();
 		}	
 	}
 }

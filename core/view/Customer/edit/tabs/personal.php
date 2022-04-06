@@ -36,10 +36,23 @@
 		</div>
       </div>	
 		<div class="card-footer">
-			<input type="submit" class="btn btn-info" name="Save" value="Save and Next">
-			<button type="button" class="btn btn-default"><a href="<?php echo $this->getUrl('index', 'customer') ?>">Cancel</a></button>
+			<button type="button" class="btn btn-info" id="customerSaveBtn">Save</button>
+			<button type="button" class="btn btn-default" id="customerCancelBtn">Cancel</button>
 		</div>
 	</div>
-</div>			
+</div>
+<script type="text/javascript">
+      jQuery('#customerCancelBtn').click(function() {
+        admin.setUrl("<?php echo $this->getUrl('gridBlock', 'customer'); ?>");
+        admin.load();
+      });
+
+      $('#customerSaveBtn').click(function() {
+        admin.setForm(jQuery("#indexForm"));
+        admin.setUrl("<?php echo $this->getEdit()->getSaveUrl(); ?>");
+        alert(admin.getUrl());
+        admin.load();
+      });
+</script>			
 
 		

@@ -11,4 +11,20 @@ class Block_Product_Edit_Tabs_Product extends Block_Core_Template
 	{
 		return Ccc::getRegistry('product');
 	}
+
+	public function setEdit($edit)
+    {
+        $this->edit = $edit;
+        return $this;
+    }
+
+    public function getEdit()
+    {
+        return $this->edit;
+    }
+
+    public function getSaveUrl()
+	{
+		return $this->getUrl('save','product');
+	}
 }

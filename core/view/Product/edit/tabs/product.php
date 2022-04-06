@@ -54,9 +54,23 @@
 		</div>
       </div>	
 		<div class="card-footer">
-			<input type="submit" class="btn btn-info" name="Save">
-			<button type="button" class="btn btn-default" ><a href="<?php echo $this->getUrl('grid', 'product') ?>">Cancel</a></button>
+			<button type="button" class="btn btn-info" id="productFormSaveBtn">Save</button>
+			<button type="button" class="btn btn-default" id="productFormCancelBtn">Cancel</button>
 		</div>
 	</div>	
-</div>			
+</div>	
+
+<script type="text/javascript">
+      jQuery('#productFormCancelBtn').click(function() {
+        admin.setUrl("<?php echo $this->getUrl('gridBlock', 'product'); ?>");
+        alert(admin.getUrl());
+        admin.load();
+      });
+
+      $('#productFormSaveBtn').click(function() {
+        admin.setForm(jQuery("#indexForm"));
+        admin.setUrl("<?php echo $this->getEdit()->getSaveUrl(); ?>");
+        admin.load();
+      });
+    </script>		
 

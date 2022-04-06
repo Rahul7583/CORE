@@ -11,4 +11,20 @@ class Block_Customer_Edit_Tabs_Personal extends Block_Core_Template
 	{
 		return Ccc::getRegistry('customer');
 	}
+
+	public function setEdit($edit)
+    {
+        $this->edit = $edit;
+        return $this;
+    }
+
+    public function getEdit()
+    {
+        return $this->edit;
+    }
+
+	public function getSaveUrl()
+	{
+		return $this->getUrl('save','customer');
+	}
 }

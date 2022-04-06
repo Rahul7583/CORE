@@ -3,71 +3,92 @@
 	$billingAddress = $result->getBillingAddresses();
 	$shippingAddress = $result->getShippingAddresses();
  ?>
-<table border="1" width="100%" cellspacing="4">
-<tr>
-				<td colspan="2"><b>Billing Address</b></td>
-			</tr>
+<div class="card card-info">
+    <div class="card-body">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Billing Address</label>
+    </div>
+      <div class="form-group row">
+        <label for="firstName" class="col-sm-2 col-form-label">Address</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="billingAddress[address]" id="address" value="<?php echo $billingAddress->address ?>" placeholder="Address">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="postalCode" class="col-sm-2 col-form-label">Postal Code</label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control"  name="billingAddress[postalCode]" id="postalCode" value="<?php echo $billingAddress->postalCode ?>" placeholder="PostalCode">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="city" class="col-sm-2 col-form-label">City</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="billingAddress[city]" id="city" value="<?php echo $billingAddress->city ?>" placeholder="City">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="state" class="col-sm-2 col-form-label">State</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="billingAddress[state]" id="state" value="<?php echo $billingAddress->state ?>" placeholder="State">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="country" class="col-sm-2 col-form-label">Country</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="billingAddress[country]" id="country" value="<?php echo $billingAddress->country ?>" placeholder="Country">
+        </div>
+      </div>
 
-			<tr>
-				<td width="10%">Address</td>
-				<td><input type="text" name="billingAddress[address]" value="<?php echo $billingAddress->address ?>"></td>
-			</tr>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Shipping Address</label>
+    </div>
 			
-			<tr>
-				<td width="10%">Postal Code</td>
-				<td><input type="text" name="billingAddress[postalCode]" value="<?php echo $billingAddress->postalCode ?>"></td>
-			</tr>
+		 <div class="form-group row">
+        <label for="firstName" class="col-sm-2 col-form-label">Address</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="shippingAddress[address]" id="address" value="<?php echo $shippingAddress->address ?>" placeholder="Address">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="postalCode" class="col-sm-2 col-form-label">Postal Code</label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control"  name="shippingAddress[postalCode]" id="postalCode" value="<?php echo $shippingAddress->postalCode ?>" placeholder="PostalCode">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="city" class="col-sm-2 col-form-label">City</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="shippingAddress[city]" id="city" value="<?php echo $shippingAddress->city ?>" placeholder="City">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="state" class="col-sm-2 col-form-label">State</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="shippingAddress[state]" id="state" value="<?php echo $shippingAddress->state ?>" placeholder="State">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="country" class="col-sm-2 col-form-label">Country</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control"  name="shippingAddress[country]" id="country" value="<?php echo $shippingAddress->country ?>" placeholder="Country">
+        </div>
+      </div>
+      <div class="card-footer">
+		<button type="button" class="btn btn-info" name="Save" value="Save">Save</button>
+		<button type="button" class="btn btn-default" id="customerAddressCancelBtn">Cancel</button>
+		</div>
+	</div>
+</div>	
+<script type="text/javascript">
+			jQuery('#customerAddressCancelBtn').click(function() {
+				admin.setUrl("<?php echo $this->getUrl('gridBlock', 'customer'); ?>");
+				admin.load();
+			});
 
-			<tr>
-				<td width="10%">City</td>
-				<td><input type="text" name="billingAddress[city]" value="<?php echo $billingAddress->city ?>"></td>
-			</tr>
-			
-			<tr>
-				<td width="10%">State</td>
-				<td><input type="text" name="billingAddress[state]" value="<?php echo $billingAddress->state ?>"></td>
-			</tr>
-
-			<tr>
-				<td width="10%">Country</td>
-				<td><input type="text" name="billingAddress[country]" value="<?php echo $billingAddress->country ?>"></td>
-			</tr>
-
-			<tr>
-				<td colspan="2"><b>Shipping Address</b></td>
-			</tr>
-
-			<tr>
-				<td width="10%">Address</td>
-				<td><input type="text" name="shippingAddress[address]" value="<?php echo $shippingAddress->address ?>"></td>
-			</tr>
-			
-			<tr>
-				<td width="10%">Postal Code</td>
-				<td><input type="text" name="shippingAddress[postalCode]" value="<?php echo $shippingAddress->postalCode ?>"></td>
-			</tr>
-
-			<tr>
-				<td width="10%">City</td>
-				<td><input type="text" name="shippingAddress[city]" value="<?php echo $shippingAddress->city ?>"></td>
-			</tr>
-			
-			<tr>
-				<td width="10%">State</td>
-				<td><input type="text" name="shippingAddress[state]" value="<?php echo $shippingAddress->state ?>"></td>
-			</tr>
-
-			<tr>
-				<td width="10%">Country</td>
-				<td><input type="text" name="shippingAddress[country]" value="<?php echo $shippingAddress->country ?>"></td>
-			</tr>
-			
-			
-			<tr>
-				<td width="10%">&nbsp;</td>
-				<td>
-					<input type="submit" name="Save" value="Save">
-					<button type="button"><a href="<?php echo $this->getUrl('index', 'customer') ?>">Cancel</button> 
-				</td>
-			</tr>
-		</table>
+			/*$('#vendorAddressSaveBtn').click(function() {
+				admin.setForm(jQuery("#indexForm"));
+				admin.setUrl("<?php //echo $this->getEdit()->getSaveUrl(); ?>");
+				admin.load();
+			});*/
+</script>		 
+				

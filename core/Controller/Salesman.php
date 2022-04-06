@@ -28,15 +28,6 @@ class Controller_Salesman extends Controller_Admin_Login
 		$this->renderJson($response);
 	}
 
-	/*public function gridAction()			
-	{
-		$this->setTitle('Salesman Grid');
-		$salesmanGrid= Ccc::getBlock('Salesman_Grid');
-		$content = $this->getLayout()->getContent();
-		$content->addChild($salesmanGrid);
-		$this->renderLayout();
-	}*/
-
 	public function editAction()
 	{
 		if((int)$this->getRequest()->getRequest('id'))
@@ -57,8 +48,6 @@ class Controller_Salesman extends Controller_Admin_Login
 			'content' => $salesmanEdit
 		];
 		$this->renderJson($response);
-		/*$content = $this->getLayout()->getContent()->addChild($salesmanEdit);
-		$this->renderLayout();*/
 	}
 
 	public function saveAction()
@@ -85,20 +74,23 @@ class Controller_Salesman extends Controller_Admin_Login
 					$salesmanModel->createdDate = date('Y-m-d H:m:s');
 				}
 				$salesmanId = $salesmanModel->save();
-		 		if (!$salesmanId) 
+		 		if ($salesmanId) 
 		 		{
-		 			throw new Exception("system is unable to insert.", 1);
+				 	$this->getMessage()->addMessage('Data Saved.');
+				 	$salesmanEdit = Ccc::getBlock('Vendor_Edit')->toHtml();
+			 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+			 		$response = [
+					'status' => 'sucess',
+					'content' => $salesmanEdit,
+					'message' => $message
+					];
+					$this->renderJson($response);
 		 		} 		
-			 	$this->getMessage()->addMessage('Data Saved.');
 				$this->gridBlockAction();			
-
-			 	//$this->redirect($this->getLayout()->getUrl('grid'));
 			} catch (Exception $e) {
 				$this->getMessage()->addMessage($e->getMessage(), 
 					Model_Core_Message::ERROR);
-				$this->gridBlockAction();			
-				//$this->redirect($this->getLayout()->getUrl('grid'));
-			}	
+				$this->gridBlockAction();						}	
 	}
 
 	public function deleteAction()
@@ -112,12 +104,18 @@ class Controller_Salesman extends Controller_Admin_Login
 					throw new Exception("system is unable to delete", 1);
 				}
 				$this->getMessage()->addMessage('Data Deleted.');
+				$salesmanEdit = Ccc::getBlock('Vendor_Edit')->toHtml();
+		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+		 		$response = [
+				'status' => 'sucess',
+				'content' => $salesmanEdit,
+				'message' => $message
+				];
+				$this->renderJson($response);
 				$this->gridBlockAction();			
-				//$this->redirect($this->getLayout()->getUrl('grid'));
 		} catch (Exception $e) {
 			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
 			$this->gridBlockAction();			
-			//$this->redirect($this->getLayout()->getUrl('grid'));
 		}
 	}
 }

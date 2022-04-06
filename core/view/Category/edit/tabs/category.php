@@ -1,8 +1,6 @@
 <?php $result = $this->getCategory(); ?>
 <?php $path = $this->getPath(); ?>
 <?php $categoryId = (isset($_GET['id'])) ? $_GET['id'] : null; ?>
-	
-	<form method="POST" action="<?php echo $this->getUrl('save','categories',['id'=>$result->categoryId]) ?>" >
 		<table class="table table-bordered table-striped">
 			
 			<tr>
@@ -39,8 +37,21 @@
 			<tr>
 				<td width="10%">&nbsp;</td>
 				<td>
-					<input type="submit" class="btn btn-info" name="Save">
-					<button type="button" class="btn btn-default"><a href="<?php echo $this->getUrl('grid', 'categories') ?>">Cancel</button> 
+					<button type="button" class="btn btn-info" name="Save" id="categoryFormSaveBtn">Save</button>
+					<button type="button" class="btn btn-default" id="categoryFormCancelBtn">Cancel</button> 
 				</td>
 			</tr>
 		</table>
+		<script type="text/javascript">
+			jQuery('#categoryFormCancelBtn').click(function() {
+				admin.setUrl("<?php echo $this->getUrl('gridBlock', 'categories'); ?>");
+				alert(admin.getUrl());
+				admin.load();
+			});
+
+			$('#categoryFormSaveBtn').click(function() {
+				admin.setForm(jQuery("#indexForm"));
+				admin.setUrl("<?php echo $this->getEdit()->getSaveUrl(); ?>");
+				admin.load();
+			});
+		</script>

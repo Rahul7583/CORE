@@ -1,5 +1,5 @@
 <?php $vendor = $this->getVendor(); ?>
-<form method="post" action="<?php echo $this->getUrl('save','vendor', ['id' => $result->vendorId])?>">
+<!-- <form method="post" action="<?php //echo $this->getUrl('save','vendor', ['id' => $result->vendorId])?>"> -->
 <div class="card card-info">
     <div class="card-body">
       <div class="form-group row">
@@ -37,10 +37,23 @@
 		</div>
       </div>	
 		<div class="card-footer">
-			<input type="submit" class="btn btn-info" name="Save">
-			<button type="button" class="btn btn-default"><a href="<?php echo $this->getUrl('index', 'vendor') ?>">Cancel</a></button>
+			<button type="button"  class="btn btn-info" id="vendorFormSaveBtn" name="Save">Save</button>
+			<button type="button" class="btn btn-default" id="vendorFormCancelBtn">Cancel</button>
 		</div>
 	</div>
-</div>			 
+</div>
+<script type="text/javascript">
+			jQuery('#vendorFormCancelBtn').click(function() {
+				admin.setUrl("<?php echo $this->getUrl('gridBlock', 'vendor'); ?>");
+				admin.load();
+			});
+
+			jQuery('#vendorFormSaveBtn').click(function() {
+				admin.setForm(jQuery("#indexForm"));
+				admin.setUrl("<?php echo $this->getEdit()->getSaveUrl(); ?>");
+				/*admin.setUrl("<?php //echo $this->getUrl('saveVendor','vendor',['tab'=>'address']); ?>");*/
+				admin.load();
+			});
+</script>			 
 			
 	</form>
