@@ -43,6 +43,7 @@ class Controller_Vendor extends Controller_Admin_Login
 			$this->setTitle('Vendor Add');
 			$vendorModel = Ccc::getModel('Vendor');
 		}
+
 		Ccc::register('vendor', $vendorModel);
 		$vendorEdit = Ccc::getBlock('Vendor_Edit')->toHtml();
 		$response = [
@@ -57,6 +58,7 @@ class Controller_Vendor extends Controller_Admin_Login
 		try {
 				$request = $this->getRequest();
 				$vendor = $request->getPost('vendor');
+
 				$id = (int)$request->getRequest('id');
 				if(!$vendor)
 				{
@@ -79,30 +81,32 @@ class Controller_Vendor extends Controller_Admin_Login
 		 		{
 		 			throw new Exception("system is unable to insert.", 1);
 		 		}
+		 	
 			 	return $vendorRow;
 			} catch (Exception $e) {
-				$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-				$this->redirect($this->getLayout()->getUrl('grid'));
+				$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);				
 			}	
 	}
 
 	public function saveAddress($vendorRow)
 	{
-		$vendorId = $this->getRequest()->getRequest('id');
-		$vendorModel = Ccc::getModel('Vendor')->load($vendorId);
+		$vendorId = $vendorRow->vendorId;
+		$vendor = Ccc::getModel('vendor')->load($vendorId);
 		
-		$request = $this->getRequest();
-		$address = $request->getPost('vendor_address');
-		$resultAddress = $vendorModel->getAddress();
+		$address = $this->getRequest()->getPost('vendor_address');
 		
 		if(!$address)
 		{
 			throw new Exception("Missing Address data in Request ", 1);	
 		}
-
 		$addressModel = Ccc::getModel('Vendor_Address');
-		$addressModel->setData($address);
+		if($address)
+		{
+			$addressModel->setData($address);
+		}
 		
+		$resultAddress = $vendorRow->getAddress();
+			
 		if($resultAddress->addressId)
 		{	
 			$addressModel->addressId = $resultAddress->addressId;
@@ -111,13 +115,12 @@ class Controller_Vendor extends Controller_Admin_Login
 		{
 			$addressModel->vendorId = $vendorId;
 		}
+
 		$result = $addressModel->save();
  		if(!$result)
  		{
  			throw new Exception("System is unable to insert.", 1);	
  		}
- 		$this->getMessage()->addMessage('Data Saved.');
-		$this->redirect($this->getLayout()->getUrl('grid'));	
 	}
 
 	public function saveAction()
@@ -125,16 +128,32 @@ class Controller_Vendor extends Controller_Admin_Login
 		try 
 		{
 			$vendorRow = $this->saveVendor();
-			$this->saveAddress();
-			$this->redirect($this->getLayout()->getUrl('grid'));
-
+			$this->saveAddress($vendorRow);
+ 			$this->getMessage()->addMessage('Data Saved.');
+		 	$vendorEdit = Ccc::getBlock('Vendor_Edit')->toHtml();
+	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+	 		$response = [
+			'status' => 'sucess',
+			'content' => $vendorEdit,
+			'message' => $message
+			];
+			$this->renderJson($response);
+	 		$this->gridBlockAction();	
 		} 
 		catch (Exception $e) 
 		{	
 			$this->getMessage()->addMessage($e->getMessage(), Model_core_Message::ERROR);
-			$this->redirect($this->getLayout()->getUrl('grid'));
-		}	
-	}
+			$vendorEdit = Ccc::getBlock('Vendor_Edit')->toHtml();
+	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+	 		$response = [
+			'status' => 'sucess',
+			'content' => $vendorEdit,
+			'message' => $message
+			];
+			$this->renderJson($response);
+	 		$this->gridBlockAction();	
+		}
+	}	
 
 	public function deleteAction()
 	{
@@ -148,10 +167,26 @@ class Controller_Vendor extends Controller_Admin_Login
 				throw new Exception("system is unable to delete.", 1);
 			}
 			$this->getMessage()->addMessage('Data Deleted.');
-			$this->redirect($this->getLayout()->getUrl('grid'));
+			$vendorEdit = Ccc::getBlock('Vendor_Edit')->toHtml();
+	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+	 		$response = [
+			'status' => 'sucess',
+			'content' => $vendorEdit,
+			'message' => $message
+			];
+			$this->renderJson($response);
+	 		$this->gridBlockAction();	
 		} catch (Exception $e) {
 			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$this->redirect($this->getLayout()->getUrl('grid'));
+			$vendorEdit = Ccc::getBlock('Vendor_Edit')->toHtml();
+	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+	 		$response = [
+			'status' => 'sucess',
+			'content' => $vendorEdit,
+			'message' => $message
+			];
+			$this->renderJson($response);
+	 		$this->gridBlockAction();	
 		}
 	}
 }

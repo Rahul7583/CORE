@@ -10,6 +10,39 @@ class Controller_Cart extends Controller_Admin_Login
 		}
     }
 
+     public function indexAction()
+	{
+		$content = $this->getLayout()->getContent();
+		$cartGrid = Ccc::getBlock('Cart_Index');
+		$content->addChild($cartGrid);
+		$this->renderLayout();
+	}
+	
+	public function gridBlockAction()
+	{
+		$cartGrid = Ccc::getBlock('Cart_Grid')->toHtml();
+		$response = [
+			'status' => 'success',
+			'content' => $cartGrid
+		];
+		$this->renderJson($response);
+	}
+
+	public function editAction()			
+	{
+		$cartModel = Ccc::getModel('Cart');
+
+		$this->setTitle('Cart Edit');
+
+		Ccc::register('cart',$cartModel);
+		$cartEdit = Ccc::getBlock('Cart_Edit')->toHtml();
+		$response = [
+			'status' => 'success',
+			'content' => $cartEdit
+		];
+		$this->renderJson($response);
+	}
+
     public function getCartAction()
     {
     	$customerId = $this->getRequest()->getRequest('id');
@@ -31,34 +64,12 @@ class Controller_Cart extends Controller_Admin_Login
 	 		$cartModel->setCart($result->cartId);
     	}
     	$this->redirect($this->getLayout()->getUrl('edit'));
-    	
-
     }
-
-	public function gridAction()			
-	{
-		$this->setTitle('Cart Grid');
-		$cartGrid = Ccc::getBlock('Cart_Grid');
-		$content = $this->getLayout()->getContent()->addChild($cartGrid);
-		$this->renderLayout();
-	}
-
-	public function editAction()			
-	{
-		$cartModel = Ccc::getModel('Cart');
-
-		$this->setTitle('Cart Edit');
-
-		$cartEdit = Ccc::getBlock('Cart_Edit')->setCart($cartModel);
-		$content = $this->getLayout()->getContent()->addChild($cartEdit);
-		$this->renderLayout();
-	}
 
 	public function saveBillingAddressAction()
 	{
 		try 
 		{	
-
 			$cartModel = Ccc::getModel('Cart');
 			$billingAddress = $this->getRequest()->getPost('billingAddress');
 			$cartId = $cartModel->getCart()['cartId'];

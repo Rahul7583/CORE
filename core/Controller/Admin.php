@@ -48,9 +48,7 @@ class Controller_Admin extends Controller_Admin_Login
 			'status' => 'success',
 			'content' => $adminEdit
 		];
-		$this->renderJson($response);
-		//$content = $this->getLayout()->getContent()->addChild($adminEdit);
-		//$this->renderLayout();
+		$this->renderJson($response);		
 	}
 
 	public function saveAction()
@@ -59,8 +57,6 @@ class Controller_Admin extends Controller_Admin_Login
 		{ 
 			$admin = $this->getRequest()->getPost('admin');
 			$id = (int)$this->getRequest()->getRequest('id');
-			
-
 			if(!$admin)
 			{
 				throw new Exception("Missing admin data in request.", 1);
@@ -79,19 +75,32 @@ class Controller_Admin extends Controller_Admin_Login
 			}
 					
 			$adminId = $adminModel->save();
-	 		if (!$adminId) 
+	 		if ($adminId) 
 	 		{
-	 			throw new Exception("system is unable to insert.", 1);
+		 		$this->getMessage()->addMessage('Data Saved.');
+		 		$adminEdit = Ccc::getBlock('Admin_Edit')->toHtml();
+		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+		 		$response = [
+				'status' => 'sucess',
+				'content' => $adminEdit,
+				'message' => $message
+				];
+				$this->renderJson($response);
 	 		}
-	 		$this->getMessage()->addMessage('Data Saved.');
-			$this->gridBlockAction();
+		//$this->gridBlockAction();
 		} 
 		catch (Exception $e) 
 		{
 		 	$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-		 	$this->gridBlockAction();
-
-		 	//$this->redirect($this->getLayout()->getUrl('grid'));
+		 	$adminEdit = Ccc::getBlock('Admin_Edit')->toHtml();
+		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+		 		$response = [
+				'status' => 'sucess',
+				'content' => $adminEdit,
+				'message' => $message
+				];
+				$this->renderJson($response);
+		 	//$this->gridBlockAction();
 		}	 
 	}
 

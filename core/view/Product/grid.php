@@ -1,4 +1,12 @@
 <?php $products = $this->getProductData(); ?>
+<script type="text/javascript">
+	function edit(url)
+		{
+			admin.setUrl(url);
+			alert(admin.getUrl());
+	        admin.load();
+		}
+</script>
 <table>
 	<tr>
 		<script type="text/javascript"> 
@@ -53,8 +61,7 @@
 <div class="row">
     <div class="col-md-2">
         <div class="card card-primary">
-			<button type="button" class="btn btn-block btn-success" name="addNew"><a href="<?php echo $this->getUrl('edit','product')?>"> Add New </a>
-			</button>
+			<button type="button" class="btn btn-block btn-success" id="addNew"> Add New </button>
 		</div>
 	</div>
 </div>			
@@ -115,10 +122,20 @@
 					<td><?php echo $product->getStatus($product->status); ?></td>
 					<td><?php echo $product->createdDate; ?></td>
 					<td><?php echo $product->updatedDate; ?></td>
-					<td><a class="btn btn-block btn-info" href="<?php echo $this->getUrl('edit','product',['id' => $product->productId])?>">Edit</a></td>
-					<td><a class="btn btn-block btn-info" href="<?php echo $this->getUrl('delete','product',['id' => $product->productId])?>">Delete</a></td>
+					<td><button type="button" class="btn btn-block btn-info" 
+						onclick="edit('<?php echo $this->getUrl('edit','product',['id' => $product->productId])?>')">Edit</button></td>
+					<td><button type="button" class="btn btn-block btn-info" 
+						onclick="edit('<?php echo $this->getUrl('delete','product',['id' => $product->productId])?>')">Delete</button></td>
 					<td><a class="btn btn-block btn-info" href="<?php echo $this->getUrl('grid','product_media',['id' => $product->productId])?>">Gallery</a></td>
 				</tr>
 			<?php endforeach; ?>
 		<?php endif; ?>			
 	</table>
+	<script type="text/javascript">
+		$("#addNew").click(function(){
+			admin.setType("GET");
+			admin.setData({'id' : null});
+		    admin.setUrl("<?php echo $this->getUrl('edit'); ?>");
+		    admin.load();
+		});
+    </script>	

@@ -66,12 +66,12 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="<?php echo $this->getUrl('grid','cart')?>" class="nav-link">
+                <a href="<?php echo $this->getUrl('index','cart')?>" class="nav-link">
                     <p>Order</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="<?php echo $this->getUrl('grid','Categories')?>" class="nav-link">
+                <a href="<?php echo $this->getUrl('index','Categories')?>" class="nav-link">
                     <p>Category</p>
                 </a>
             </li>
@@ -91,7 +91,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="<?php echo $this->getUrl('grid','product')?>" class="nav-link">
+                <a href="<?php echo $this->getUrl('index','product')?>" class="nav-link">
                     <p>Product</p>
                 </a>
             </li>

@@ -8,11 +8,10 @@ class Block_Order_Edit extends Block_Core_Template
 	{
 		$this->setTemplate('view/order/edit.php');
 	}
-
-
+	
 	public function getOrder()
 	{
-		return $this->order;
+		return Ccc::getRegistry('order');
 	}
 
 	public function setOrder($order)

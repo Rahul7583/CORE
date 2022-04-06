@@ -1,10 +1,17 @@
 <?php $orders = $this->getOrderData(); ?>
 
-<form method="POST" action="<?php echo $this->getUrl('edit','cart', ['id' => 1])?>">
-<div class="card-footer">
-	<input type="submit" class="btn btn-success" name="addOrder" value="Add Order">
+<!-- <form method="POST" action="<?php //echo $this->getUrl('edit','cart', ['id' => 1])?>"> -->
+<script type="text/javascript">
+	function edit(url)
+		{
+			admin.setUrl(url);
+			alert(admin.getUrl());
+	        admin.load();
+		}
+</script>	
+<div class="card-footer"> 
+	<button type="button" class="btn btn-success" id="addOrder" >Add Order</button>
 </div>
-</form>
 
 <table class="table table-bordered table-striped">
 		<tr>
@@ -32,9 +39,19 @@
 					<td><?php echo $order->paymentId; ?></td>
 					<td><?php echo $order->getState($order->state); ?></td>
 					<td><?php echo $order->getStatus($order->status); ?></td>
-					<td><a class="btn btn-block btn-info" href="<?php echo $this->getUrl('edit','order',['id' => $order->orderId])?>">View</a></td>
-					<td><a class="btn btn-block btn-info" href="<?php echo $this->getUrl('delete','order',['id' => $order->orderId])?>">Delete</a></td>
+					<td><button type="button" class="btn btn-block btn-info" 
+						onclick="edit('<?php echo $this->getUrl('edit','order',['id' => $order->orderId])?>')">View</button></td>
+					<td><button type="button" class="btn btn-block btn-info" 
+						onclick="edit('<?php echo $this->getUrl('delete','order',['id' => $order->orderId])?>')">Delete</button></td>
 				</tr>
 			<?php endforeach; ?>
 		<?php endif; ?>	
 	</table>
+	<script type="text/javascript">
+		$("#addOrder").click(function(){
+			admin.setType("GET");
+			admin.setData({'id' : null});
+		    admin.setUrl("<?php echo $this->getUrl('edit'); ?>");
+		    admin.load();
+		});
+    </script>			

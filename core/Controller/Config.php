@@ -28,14 +28,6 @@ class Controller_Config extends Controller_Admin_Login
 		$this->renderJson($response);
 	}
 
-	/*public function gridAction()			
-	{
-		$this->setTitle('Config Grid');
-		$configGrid = Ccc::getBlock('Config_Grid');
-		$content = $this->getLayout()->getContent()->addChild($configGrid);
-		$this->renderLayout();
-	}
-*/
 	public function editAction()
 	{
 		if((int)$this->getRequest()->getRequest('id'))
@@ -56,8 +48,6 @@ class Controller_Config extends Controller_Admin_Login
 			'content' => $configEdit
 		];
 		$this->renderJson($response);
-		//$content = $this->getLayout()->getContent()->addChild($configEdit);
-		//$this->renderLayout();
 	}
 
 	public function saveAction()
@@ -83,13 +73,19 @@ class Controller_Config extends Controller_Admin_Login
 					$configModel->createdDate = date('Y-m-d H:m:s');
 			}
 			$insertId = $configModel->save();
-	 		if(!$insertId)
+	 		if($insertId)
 	 		{
-	 			throw new Exception("System is unable to insert.", 1);	
+	 			$this->getMessage()->addMessage('Data Saved.');
+		 		$configEdit = Ccc::getBlock('Config_Edit')->toHtml();
+		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+		 		$response = [
+				'status' => 'sucess',
+				'content' => $configEdit,
+				'message' => $message
+				];
+				$this->renderJson($response);
 	 		}
-		 	$this->getMessage()->addMessage('Data Saved');
 			$this->gridBlockAction();			
-			//$this->redirect($this->getLayout()->getUrl('grid'));
 		}
 		catch (Exception $e)
 		{
@@ -110,10 +106,17 @@ class Controller_Config extends Controller_Admin_Login
 			{
 				throw new Exception("system is unable to delete.", 1);
 			}
-			$this->getMessage()->addMessage('Data Deleted.');
-			$this->gridBlockAction();
+				$this->getMessage()->addMessage('Data Deleted.');
+				$configEdit = Ccc::getBlock('Config_Edit')->toHtml();
+		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+		 		$response = [
+				'status' => 'sucess',
+				'content' => $configEdit,
+				'message' => $message
+				];
+				$this->renderJson($response);
+				$this->gridBlockAction();
 			
-			//$this->redirect($this->getLayout()->getUrl('grid'));
 		} 
 		catch (Exception $e)
 		{

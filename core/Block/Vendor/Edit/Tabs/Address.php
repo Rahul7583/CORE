@@ -11,4 +11,20 @@ class Block_Vendor_Edit_Tabs_Address extends Block_Core_Template
 	{
 		return Ccc::getRegistry('vendor');
 	}
+
+	public function setEdit($edit)
+    {
+        $this->edit = $edit;
+        return $this;
+    }
+
+    public function getEdit()
+    {
+        return $this->edit;
+    }
+
+    public function getSaveUrl()
+	{
+		return $this->getUrl('save','vendor');
+	}
 }

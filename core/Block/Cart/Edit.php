@@ -17,7 +17,8 @@ class Block_Cart_Edit extends Block_Core_Template
 
 	public function getCart()
 	{
-		return $this->cart;
+		return Ccc::getRegistry('cart');
+		//return $this->cart;
 	}
 
 	public function getCustomers()

@@ -10,12 +10,22 @@ class Controller_Categories extends Controller_Admin_Login
 		}
     }
 
-	public function gridAction()			
+    public function indexAction()
 	{
-		$this->setTitle('Category Grid');
-		$categoryGrid = Ccc::getBlock('Category_Grid');
-		$content = $this->getLayout()->getContent()->addChild($categoryGrid);
+		$content = $this->getLayout()->getContent();
+		$categoryGrid = Ccc::getBlock('Category_Index');
+		$content->addChild($categoryGrid);
 		$this->renderLayout();
+	}
+	
+	public function gridBlockAction()
+	{
+		$categoryGrid = Ccc::getBlock('Category_Grid')->toHtml();
+		$response = [
+			'status' => 'success',
+			'content' => $categoryGrid
+		];
+		$this->renderJson($response);
 	}
 
 	public function editAction()
@@ -33,9 +43,12 @@ class Controller_Categories extends Controller_Admin_Login
 			$categoryModel = Ccc::getModel('Category');	
 		}
 		Ccc::register('category', $categoryModel);
-		$CategoryEdit = Ccc::getBlock('Category_Edit');
-		$content = $this->getLayout()->getContent()->addChild($CategoryEdit);
-		$this->renderLayout();
+		$categoryEdit = Ccc::getBlock('Category_Edit')->toHtml();
+		$response = [
+			'status' => 'success',
+			'content' => $categoryEdit
+		];
+		$this->renderJson($response);
 	}
 
 	public function saveAction()
@@ -72,7 +85,6 @@ class Controller_Categories extends Controller_Admin_Login
 
 			} catch (Exception $e) {
 				$this->getMessage()->addMessage($e->getMessage(),Model_Core_Message::ERROR);
-
 			}
 		}
 		else{
@@ -87,7 +99,15 @@ class Controller_Categories extends Controller_Admin_Login
 			}		
 		}
 		$this->getMessage()->addMessage('Data Saved.');
-		$this->redirect($this->getLayout()->getUrl('grid'));
+		$categoryEdit = Ccc::getBlock('CategoryEdit')->toHtml();
+ 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+ 		$response = [
+		'status' => 'sucess',
+		'content' => $categoryEdit,
+		'message' => $message
+		];
+		$this->renderJson($response);
+		$this->gridBlockAction();
 	}
 
 	public function deleteAction()
@@ -102,11 +122,20 @@ class Controller_Categories extends Controller_Admin_Login
 				throw new Exception("system is unable to delete", 1);
 			}
 			$this->getMessage()->addMessage('Deleted SuccessFully.');
-			$this->redirect($this->getLayout()->getUrl('grid'));
+			$categoryEdit = Ccc::getBlock('CategoryEdit')->toHtml();
+	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+	 		$response = [
+			'status' => 'sucess',
+			'content' => $categoryEdit,
+			'message' => $message
+			];
+			$this->renderJson($response);
+			$this->gridBlockAction();
+
 			
 		} catch (Exception $e) {
 			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$this->redirect($this->getLayout()->getUrl('grid'));
+			$this->gridBlockAction();
 		}
 	}	
 }

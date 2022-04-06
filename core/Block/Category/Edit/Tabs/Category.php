@@ -28,4 +28,20 @@ class Block_Category_Edit_Tabs_Category extends Block_Core_Template
 		}
 		return $category;
 	}
-}
+
+	public function setEdit($edit)
+    {
+        $this->edit = $edit;
+        return $this;
+    }
+
+    public function getEdit()
+    {
+        return $this->edit;
+    }
+
+    public function getSaveUrl()
+	{
+		return $this->getUrl('save','categories');
+	}
+} 
