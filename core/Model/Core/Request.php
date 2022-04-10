@@ -18,7 +18,7 @@ class Model_Core_Request{
 	{
 			
 		if ($key == null) {
-			return $_REQUEST;
+			return $_GET;
 		}
 
 		if (!array_key_exists($key, $_REQUEST)) {

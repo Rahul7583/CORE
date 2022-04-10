@@ -130,28 +130,26 @@ class Controller_Vendor extends Controller_Admin_Login
 			$vendorRow = $this->saveVendor();
 			$this->saveAddress($vendorRow);
  			$this->getMessage()->addMessage('Data Saved.');
-		 	$vendorEdit = Ccc::getBlock('Vendor_Edit')->toHtml();
+		 	$vendorGrid = Ccc::getBlock('Vendor_Grid')->toHtml();
 	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 	 		$response = [
-			'status' => 'sucess',
-			'content' => $vendorEdit,
+			'status' => 'success',
+			'content' => $vendorGrid,
 			'message' => $message
 			];
-			$this->renderJson($response);
-	 		$this->gridBlockAction();	
+			$this->renderJson($response);	
 		} 
 		catch (Exception $e) 
 		{	
 			$this->getMessage()->addMessage($e->getMessage(), Model_core_Message::ERROR);
-			$vendorEdit = Ccc::getBlock('Vendor_Edit')->toHtml();
+			$vendorGrid = Ccc::getBlock('Vendor_Grid')->toHtml();
 	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 	 		$response = [
-			'status' => 'sucess',
-			'content' => $vendorEdit,
+			'status' => 'success',
+			'content' => $vendorGrid,
 			'message' => $message
 			];
 			$this->renderJson($response);
-	 		$this->gridBlockAction();	
 		}
 	}	
 
@@ -167,26 +165,24 @@ class Controller_Vendor extends Controller_Admin_Login
 				throw new Exception("system is unable to delete.", 1);
 			}
 			$this->getMessage()->addMessage('Data Deleted.');
-			$vendorEdit = Ccc::getBlock('Vendor_Edit')->toHtml();
+			$vendorGrid = Ccc::getBlock('Vendor_Grid')->toHtml();
 	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 	 		$response = [
-			'status' => 'sucess',
-			'content' => $vendorEdit,
+			'status' => 'success',
+			'content' => $vendorGrid,
 			'message' => $message
 			];
 			$this->renderJson($response);
-	 		$this->gridBlockAction();	
 		} catch (Exception $e) {
 			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$vendorEdit = Ccc::getBlock('Vendor_Edit')->toHtml();
+			$vendorGrid = Ccc::getBlock('Vendor_Grid')->toHtml();
 	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 	 		$response = [
-			'status' => 'sucess',
-			'content' => $vendorEdit,
+			'status' => 'success',
+			'content' => $vendorGrid,
 			'message' => $message
 			];
 			$this->renderJson($response);
-	 		$this->gridBlockAction();	
 		}
 	}
 }

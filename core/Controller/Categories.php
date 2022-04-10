@@ -83,8 +83,17 @@ class Controller_Categories extends Controller_Admin_Login
 				$updatePath->path = $newPath;
 				$updatePath->save();
 
-			} catch (Exception $e) {
+			} catch (Exception $e) 
+			{
 				$this->getMessage()->addMessage($e->getMessage(),Model_Core_Message::ERROR);
+				$categoryGrid = Ccc::getBlock('Category_Grid')->toHtml();
+		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+		 		$response = [
+				'status' => 'sucess',
+				'content' => $categoryGrid,
+				'message' => $message
+				];
+				$this->renderJson($response);
 			}
 		}
 		else{
@@ -94,20 +103,28 @@ class Controller_Categories extends Controller_Admin_Login
 				$categoryModel->updatedDate = date('Y-m-d H:m:s');
 				$result = $categoryModel->save();
 
-			}catch(Exception $e){
+			}catch(Exception $e)
+			{
 				$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
+				$categoryGrid = Ccc::getBlock('Category_Grid')->toHtml();
+		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+		 		$response = [
+				'status' => 'sucess',
+				'content' => $categoryGrid,
+				'message' => $message
+				];
+				$this->renderJson($response);
 			}		
 		}
 		$this->getMessage()->addMessage('Data Saved.');
-		$categoryEdit = Ccc::getBlock('CategoryEdit')->toHtml();
+		$categoryGrid = Ccc::getBlock('Category_Grid')->toHtml();
  		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
  		$response = [
-		'status' => 'sucess',
-		'content' => $categoryEdit,
+		'status' => 'success',
+		'content' => $categoryGrid,
 		'message' => $message
 		];
 		$this->renderJson($response);
-		$this->gridBlockAction();
 	}
 
 	public function deleteAction()
@@ -122,20 +139,26 @@ class Controller_Categories extends Controller_Admin_Login
 				throw new Exception("system is unable to delete", 1);
 			}
 			$this->getMessage()->addMessage('Deleted SuccessFully.');
-			$categoryEdit = Ccc::getBlock('CategoryEdit')->toHtml();
+			$categoryGrid = Ccc::getBlock('Category_Grid')->toHtml();
 	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 	 		$response = [
-			'status' => 'sucess',
-			'content' => $categoryEdit,
+			'status' => 'success',
+			'content' => $categoryGrid,
 			'message' => $message
 			];
 			$this->renderJson($response);
-			$this->gridBlockAction();
 
 			
 		} catch (Exception $e) {
 			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$this->gridBlockAction();
+			$categoryGrid = Ccc::getBlock('Category_Grid')->toHtml();
+	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+	 		$response = [
+			'status' => 'sucess',
+			'content' => $categoryGrid,
+			'message' => $message
+			];
+			$this->renderJson($response);
 		}
 	}	
 }

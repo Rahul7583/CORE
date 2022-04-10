@@ -5,7 +5,6 @@ class Block_Vendor_Grid extends Block_Core_Grid
 	public function __construct()
 	{
 		parent::__construct();
-		//$this->setTemplate('view/vendor/grid.php');
 	}
 
 	public function getEditUrl($vendor)
@@ -20,15 +19,18 @@ class Block_Vendor_Grid extends Block_Core_Grid
 
 	public function prepareCollections()
 	{
-		/*$vendors = $this->getVendorData();
+		//$this->setCollection($this->getVendorData());
+		$vendors = $this->getVendorData();
         foreach ($vendors as &$vendor) 
         {
             $vendorAddress = $vendor->getAddress()->getData();
+        	//print_r($vendorAddress);
             $vendor->setData($vendorAddress);
         }
+        print_r($vendors);
+        exit();
         $this->setCollection($vendors);
-        return $this;*/
-		$this->setCollection($this->getVendorData());
+        return $this;
 	}
 	
 	public function prepareColumns()

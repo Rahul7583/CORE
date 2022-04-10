@@ -73,25 +73,32 @@ class Controller_Config extends Controller_Admin_Login
 					$configModel->createdDate = date('Y-m-d H:m:s');
 			}
 			$insertId = $configModel->save();
-	 		if($insertId)
+	 		if(!$insertId)
 	 		{
+	 			throw new Exception("System can't save config data", 1);
+	 		}
 	 			$this->getMessage()->addMessage('Data Saved.');
-		 		$configEdit = Ccc::getBlock('Config_Edit')->toHtml();
+		 		$configGrid = Ccc::getBlock('Config_Grid')->toHtml();
 		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 		 		$response = [
-				'status' => 'sucess',
-				'content' => $configEdit,
+				'status' => 'success',
+				'content' => $configGrid,
 				'message' => $message
 				];
 				$this->renderJson($response);
-	 		}
-			$this->gridBlockAction();			
+						
 		}
 		catch (Exception $e)
 		{
 		 	$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$this->gridBlockAction();			
-			
+		 		$configGrid = Ccc::getBlock('Config_Grid')->toHtml();
+		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+		 		$response = [
+				'status' => 'success',
+				'content' => $configGrid,
+				'message' => $message
+				];
+				$this->renderJson($response);
 		}
 	}
 
@@ -107,22 +114,27 @@ class Controller_Config extends Controller_Admin_Login
 				throw new Exception("system is unable to delete.", 1);
 			}
 				$this->getMessage()->addMessage('Data Deleted.');
-				$configEdit = Ccc::getBlock('Config_Edit')->toHtml();
+				$configGrid = Ccc::getBlock('Config_Grid')->toHtml();
 		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 		 		$response = [
-				'status' => 'sucess',
-				'content' => $configEdit,
+				'status' => 'success',
+				'content' => $configGrid,
 				'message' => $message
 				];
 				$this->renderJson($response);
-				$this->gridBlockAction();
 			
 		} 
 		catch (Exception $e)
 		{
 			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$this->gridBlockAction();			
-						
+				$configGrid = Ccc::getBlock('Config_Grid')->toHtml();
+		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+		 		$response = [
+				'status' => 'success',
+				'content' => $configGrid,
+				'message' => $message
+				];
+				$this->renderJson($response);									
 		}	
 	}
 }

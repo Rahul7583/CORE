@@ -74,34 +74,31 @@ class Controller_Page extends Controller_Admin_Login
 					$pageModel->createdDate = date('Y-m-d H:m:s');
 			 	}
 				$pageId = $pageModel->save();
-		 		if ($pageId) 
+		 		if (!$pageId) 
 		 		{
+		 			throw new Exception("system is unable to Saved", 1);
+		 		}
 			 		$this->getMessage()->addMessage('Data Saved.'); 		
-		 			$pageEdit = Ccc::getBlock('Page_Edit')->toHtml();
+		 			$pageGrid = Ccc::getBlock('Page_Grid')->toHtml();
 			 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 			 		$response = [
-					'status' => 'sucess',
-					'content' => $pageEdit,
+					'status' => 'success',
+					'content' => $pageGrid,
 					'message' => $message
 					];
-					$this->renderJson($response);
-		 		}
-				$this->gridBlockAction();			
-			 	
+					$this->renderJson($response);	 	
 			} 
 			catch (Exception $e) 
 			{
 				$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-	 			$pageEdit = Ccc::getBlock('Page_Edit')->toHtml();
+	 			$pageGrid = Ccc::getBlock('Page_Grid')->toHtml();
 		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 		 		$response = [
-				'status' => 'sucess',
-				'content' => $pageEdit,
+				'status' => 'success',
+				'content' => $pageGrid,
 				'message' => $message
 				];
 				$this->renderJson($response);
-				$this->gridBlockAction();			
-
 			}	
 	}
 
@@ -117,28 +114,26 @@ class Controller_Page extends Controller_Admin_Login
 				throw new Exception("system is unable to delete", 1);
 			}
 			$this->getMessage()->addMessage('Data Deleted.');
-			$pageEdit = Ccc::getBlock('Page_Edit')->toHtml();
+			$pageGrid = Ccc::getBlock('Page_Grid')->toHtml();
 	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 	 		$response = [
-			'status' => 'sucess',
-			'content' => $pageEdit,
+			'status' => 'success',
+			'content' => $pageGrid,
 			'message' => $message
 			];
-			$this->renderJson($response);
-			$this->gridBlockAction();						
+			$this->renderJson($response);					
 		} 
 		catch (Exception $e) 
 		{
 			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$pageEdit = Ccc::getBlock('Page_Edit')->toHtml();
+			$pageGrid = Ccc::getBlock('Page_Grid')->toHtml();
 	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 	 		$response = [
-			'status' => 'sucess',
-			'content' => $pageEdit,
+			'status' => 'success',
+			'content' => $pageGrid,
 			'message' => $message
 			];
 			$this->renderJson($response);
-			$this->gridBlockAction();
 		}
 	}
 

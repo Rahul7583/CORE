@@ -156,11 +156,11 @@ class Controller_Customer extends Controller_Admin_Login
 			$this->saveShippingAddress();
 
 			$this->getMessage()->addMessage('Data Saved.');
-	 		$customerEdit = Ccc::getBlock('Customer_Edit')->toHtml();
+	 		$customerGrid = Ccc::getBlock('Customer_Grid')->toHtml();
 	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 	 		$response = [
-			'status' => 'sucess',
-			'content' => $customerEdit,
+			'status' => 'success',
+			'content' => $customerGrid,
 			'message' => $message
 			];
 			$this->renderJson($response);
@@ -169,8 +169,14 @@ class Controller_Customer extends Controller_Admin_Login
 		catch (Exception $e) 
 		{
 			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$this->gridBlockAction();
-			
+			$customerGrid = Ccc::getBlock('Customer_Grid')->toHtml();
+	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+	 		$response = [
+			'status' => 'success',
+			'content' => $customerGrid,
+			'message' => $message
+			];
+			$this->renderJson($response);		
 		}	
 	}
 	public function deleteAction()
@@ -184,20 +190,25 @@ class Controller_Customer extends Controller_Admin_Login
 					throw new Exception("system is unable to delete", 1);
 				}
 				$this->getMessage()->addMessage('Data Deleted.');
-				$customerEdit = Ccc::getBlock('Customer_Edit')->toHtml();
+				$customerGrid = Ccc::getBlock('Customer_Grid')->toHtml();
 		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 		 		$response = [
-				'status' => 'sucess',
-				'content' => $customerEdit,
+				'status' => 'success',
+				'content' => $customerGrid,
 				'message' => $message
 				];
 				$this->renderJson($response);
-				$this->gridBlockAction();
 
 		} catch (Exception $e) {
 			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$this->gridBlockAction();
-
+				$customerGrid = Ccc::getBlock('Customer_Grid')->toHtml();
+		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+		 		$response = [
+				'status' => 'success',
+				'content' => $customerGrid,
+				'message' => $message
+				];
+				$this->renderJson($response);
 		}
 	}
 }
