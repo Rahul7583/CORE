@@ -114,7 +114,7 @@
 					<td><?php echo $category->updatedDate ; ?></td>
 					<td><button type="button" class="btn btn-block btn-info" 
 						onclick="edit('<?php echo $this->getUrl('edit','categories',['id' => $category->categoryId])?>')">Edit</button></td>
-					<td><button class="btn btn-block btn-info" onclick="edit('<?php echo $this->getUrl('delete','categories',['id' => $category->categoryId])?>')">Delete</button></td>
+					<td><button type="button" class="btn btn-block btn-info" onclick="edit('<?php echo $this->getUrl('delete','categories',['id' => $category->categoryId])?>')">Delete</button></td>
 					<td><a class="btn btn-block btn-info" href="<?php echo $this->getUrl('grid','category_media',['id' => $category->categoryId])?>">Gallery</a></td>
 				</tr>
 			<?php endforeach; ?>

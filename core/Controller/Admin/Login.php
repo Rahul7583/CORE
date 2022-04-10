@@ -27,12 +27,12 @@ class Controller_Admin_Login extends Controller_Admin_Action
 			$admin = $adminModel->fetchAll("SELECT * FROM `admin` WHERE `email` = '{$loginData['email']}' AND `password` = '{$password}'");
 
 			if(!$admin)
-			{
+			{ 
 				throw new Exception("invalid password.", 1);
 			}
 			$loginModel->login($admin[0]->email);
 			$this->getMessage()->addMessage('You are Logedin.');
-			$this->redirect($this->getLayout()->getUrl('grid','Product'));
+			$this->redirect($this->getLayout()->getUrl('index','product'));
 		}
 		catch (Exception $e) 
 		{

@@ -106,28 +106,26 @@ class Controller_Product extends Controller_Admin_Login
 					}				
 				}
 				$this->getMessage()->addMessage('Data Saved.');
-				$productEdit = Ccc::getBlock('Product_Edit')->toHtml();
+				$productGrid = Ccc::getBlock('Product_Grid')->toHtml();
 		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 		 		$response = [
-				'status' => 'sucess',
-				'content' => $productEdit,
+				'status' => 'success',
+				'content' => $productGrid,
 				'message' => $message
 				];
 				$this->renderJson($response);
-				$this->gridBlockAction();
 
 			
 		} catch (Exception $e) {
 			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$productEdit = Ccc::getBlock('Product_Edit')->toHtml();
+			$productGrid = Ccc::getBlock('Product_Grid')->toHtml();
 	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 	 		$response = [
-			'status' => 'sucess',
-			'content' => $productEdit,
+			'status' => 'success',
+			'content' => $productGrid,
 			'message' => $message
 			];
 			$this->renderJson($response);
-			$this->gridBlockAction();
 		}
 	}
 
@@ -142,28 +140,26 @@ class Controller_Product extends Controller_Admin_Login
 					throw new Exception("system is unable to delete.", 1);
 				}
 				$this->getMessage()->addMessage('Data Deleted.');
-				$productEdit = Ccc::getBlock('Product_Edit')->toHtml();
+				$productGrid = Ccc::getBlock('Product_Grid')->toHtml();
 		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 		 		$response = [
-				'status' => 'sucess',
-				'content' => $productEdit,
+				'status' => 'success',
+				'content' => $productGrid,
 				'message' => $message
 				];
 				$this->renderJson($response);
-				$this->gridBlockAction();
 		} 
 		catch (Exception $e)
 		{
 			$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-			$productEdit = Ccc::getBlock('Product_Edit')->toHtml();
+			$productGrid = Ccc::getBlock('Product_Grid')->toHtml();
 	 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 	 		$response = [
-			'status' => 'sucess',
-			'content' => $productEdit,
+			'status' => 'success',
+			'content' => $productGrid,
 			'message' => $message
 			];
 			$this->renderJson($response);
-			$this->gridBlockAction();
 		}	
 	}
 }

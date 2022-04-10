@@ -30,17 +30,11 @@ class Controller_Cart extends Controller_Admin_Login
 
 	public function editAction()			
 	{
-		$cartModel = Ccc::getModel('Cart');
-
-		$this->setTitle('Cart Edit');
-
-		Ccc::register('cart',$cartModel);
-		$cartEdit = Ccc::getBlock('Cart_Edit')->toHtml();
-		$response = [
-			'status' => 'success',
-			'content' => $cartEdit
-		];
-		$this->renderJson($response);
+		 $cartModel = Ccc::getModel('Cart');
+		$cartEdit = Ccc::getBlock('Cart_Edit')->setCart($cartModel);
+		$content = $this->getLayout()->getContent();
+		$content->addChild($cartEdit);
+		$this->renderLayout();
 	}
 
     public function getCartAction()
@@ -63,6 +57,7 @@ class Controller_Cart extends Controller_Admin_Login
 	 		}
 	 		$cartModel->setCart($result->cartId);
     	}
+
     	$this->redirect($this->getLayout()->getUrl('edit'));
     }
 

@@ -57,6 +57,7 @@ class Controller_Admin extends Controller_Admin_Login
 		{ 
 			$admin = $this->getRequest()->getPost('admin');
 			$id = (int)$this->getRequest()->getRequest('id');
+			
 			if(!$admin)
 			{
 				throw new Exception("Missing admin data in request.", 1);
@@ -75,32 +76,31 @@ class Controller_Admin extends Controller_Admin_Login
 			}
 					
 			$adminId = $adminModel->save();
-	 		if ($adminId) 
+	 		if (!$adminId) 
 	 		{
+	 			throw new Exception("System can't save admin data", 1); 
+	 		}
 		 		$this->getMessage()->addMessage('Data Saved.');
-		 		$adminEdit = Ccc::getBlock('Admin_Edit')->toHtml();
+		 		$adminGrid = Ccc::getBlock('Admin_Grid')->toHtml();
 		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 		 		$response = [
 				'status' => 'sucess',
-				'content' => $adminEdit,
+				'content' => $adminGrid,
 				'message' => $message
 				];
 				$this->renderJson($response);
-	 		}
-		//$this->gridBlockAction();
 		} 
 		catch (Exception $e) 
 		{
 		 	$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
-		 	$adminEdit = Ccc::getBlock('Admin_Edit')->toHtml();
+		 	$adminGrid = Ccc::getBlock('Admin_Grid')->toHtml();
 		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
 		 		$response = [
 				'status' => 'sucess',
-				'content' => $adminEdit,
+				'content' => $adminGrid,
 				'message' => $message
 				];
 				$this->renderJson($response);
-		 	//$this->gridBlockAction();
 		}	 
 	}
 
@@ -116,7 +116,14 @@ class Controller_Admin extends Controller_Admin_Login
 					throw new Exception("system is unable to delete.", 1);
 				}
 				$this->getMessage()->addMessage('Data Deleted.');
-				$this->gridBlockAction();
+				$adminGrid = Ccc::getBlock('Admin_Grid')->toHtml();
+		 		$message = Ccc::getBlock('Core_Layout_Header_Message')->toHtml();
+		 		$response = [
+				'status' => 'sucess',
+				'content' => $adminGrid,
+				'message' => $message
+				];
+				$this->renderJson($response);
 		} catch (Exception $e) {
 				$this->getMessage()->addMessage($e->getMessage(), Model_Core_Message::ERROR);
 				$this->gridBlockAction();

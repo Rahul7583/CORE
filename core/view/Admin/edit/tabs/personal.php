@@ -1,4 +1,6 @@
-<?php $admin = $this->getAdmin(); ?>
+<?php $admin = $this->getAdmin();
+print_r($admin->getStatus());
+ ?>
 
 <div class="card card-info">
     <div class="card-body">
